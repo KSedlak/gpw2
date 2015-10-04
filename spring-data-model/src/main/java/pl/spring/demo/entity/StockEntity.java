@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -23,11 +25,13 @@ import javax.persistence.UniqueConstraint;
 public class StockEntity implements Serializable {
 
 	private Long stockId;
-	@OneToOne(cascade=CascadeType.ALL, mappedBy="stock")  
+    @MapsId 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "company_id")
 	private CompanyEntity company;	
 	private Set<StockDailyRecordEntity> stockDailyRecords = new HashSet<StockDailyRecordEntity>(
 			0);
-	
+	                               
 
 	public StockEntity() {
 	}

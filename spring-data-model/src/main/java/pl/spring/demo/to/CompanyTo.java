@@ -15,26 +15,25 @@ public class CompanyTo implements Serializable {
     private Long id;
 
     private String name;
-  
-    private StockTo companyStock;
+
     
 
 
 
-	public CompanyTo(Long id, String name, StockTo companyStock) {
+	public CompanyTo(Long id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.companyStock = companyStock;
+
 	}
 
-	public StockTo getCompanyStock() {
-		return companyStock;
+
+	public CompanyTo(String name) {
+		super();
+		this.name = name;
+
 	}
 
-	public void setCompanyStock(StockTo companyStock) {
-		this.companyStock = companyStock;
-	}
 
 	public Long getId() {
 		return id;

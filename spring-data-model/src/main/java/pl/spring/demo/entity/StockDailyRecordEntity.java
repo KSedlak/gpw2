@@ -2,6 +2,8 @@ package pl.spring.demo.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,8 +23,8 @@ public class StockDailyRecordEntity implements Serializable {
 
 	private Long recordId;
 	private StockEntity stock;
-	private Date date;
-	private Double value;
+	private Date day;
+	private Double valueOfStock;
 
 	public StockDailyRecordEntity() {
 	}
@@ -31,16 +33,16 @@ public class StockDailyRecordEntity implements Serializable {
 		super();
 		this.recordId = recordId;
 		this.stock = stock;
-		this.date = date;
-		this.value = value;
+		this.day = date;
+		this.valueOfStock = value;
 	}
 
 	public Double getValue() {
-		return value;
+		return valueOfStock;
 	}
 
 	public void setValue(Double value) {
-		this.value = value;
+		this.valueOfStock = value;
 	}
 
 	@Id
@@ -54,8 +56,8 @@ public class StockDailyRecordEntity implements Serializable {
 		this.recordId = recordId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "STOCK_ID", nullable = false)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "STOCK_ID", nullable = true)
 	public StockEntity getStock() {
 		return this.stock;
 	}
@@ -67,10 +69,10 @@ public class StockDailyRecordEntity implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DATE", unique = true, nullable = false, length = 10)
 	public Date getDate() {
-		return this.date;
+		return this.day;
 	}
 
 	public void setDate(Date date) {
-		this.date = date;
+		this.day = date;
 	}
 }

@@ -9,14 +9,14 @@ public class CompanyMapper {
 
 	public static CompanyTo map(CompanyEntity companyEntity) {
 		if (companyEntity != null) {
-			return new CompanyTo(companyEntity.getId(),companyEntity.getName(), StockMapper.map(companyEntity.getCompanyStock()));
+			return new CompanyTo(companyEntity.getId(),companyEntity.getName());
 		}
 		return null;
 	}
 
 	public static CompanyEntity map(CompanyTo companyTo) {
 		if (companyTo != null) {
-			return new CompanyEntity(companyTo.getId(),companyTo.getName(),StockMapper.map(companyTo.getCompanyStock()));
+			return new CompanyEntity(companyTo.getId(),companyTo.getName());
 		}
 		return null;
 	}

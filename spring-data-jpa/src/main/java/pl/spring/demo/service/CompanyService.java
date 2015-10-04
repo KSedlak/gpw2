@@ -10,5 +10,6 @@ public interface CompanyService {
 
     List<CompanyTo> findAllCompanies();
     CompanyTo findCompanyByName(String name);
+    CompanyTo saveCompany(CompanyTo c);
 
 }

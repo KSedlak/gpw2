@@ -37,6 +37,14 @@ public class StockDailyRecordTo implements Serializable {
 		this.setValue(value);
 	}
 
+	public StockDailyRecordTo(StockTo stock, LocalDate date, Double value) {
+		super();
+		this.recordId = recordId;
+		this.stock = stock;
+		this.date = date;
+		this.setValue(value);
+	}
+
 
 	public Long getRecordId() {
 		return recordId;

@@ -4,8 +4,7 @@ package pl.spring.demo.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Entity
 @Table(name = "company")
@@ -15,13 +14,11 @@ public class CompanyEntity implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "COMPANY_ID")
     private Long id;
     @Column(nullable = false, length = 50)
     private String name;
-	@OneToOne(cascade=CascadeType.ALL)  
-    @JoinColumn(name="STOCK_ID")  
-    private StockEntity companyStock;
     
     protected CompanyEntity() {
 }
@@ -30,28 +27,14 @@ public class CompanyEntity implements Serializable {
 
 
 
-	public CompanyEntity(Long id, String name, StockEntity companyStock) {
+	public CompanyEntity(Long id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.companyStock = companyStock;
+		
 	}
 
 
-
-
-
-	public StockEntity getCompanyStock() {
-		return companyStock;
-	}
-
-
-
-
-
-	public void setCompanyStock(StockEntity companyStock) {
-		this.companyStock = companyStock;
-	}
 
 
 

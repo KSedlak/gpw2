@@ -28,5 +28,10 @@ public class CompanyServiceImpl implements CompanyService {
 		return CompanyMapper.map(companyRepository.findCompanyByName(name));
 		}
 
+	@Override
+	public CompanyTo saveCompany(CompanyTo c) {
+		return CompanyMapper.map(companyRepository.save(CompanyMapper.map(c)));
+	}
+
 }
 

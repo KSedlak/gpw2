@@ -26,6 +26,12 @@ public class StockTo implements Serializable {
 	}
 
 
+	public StockTo( CompanyTo company) {
+		super();
+		this.company = company;
+
+	}
+
 	public Long getStockId() {
 		return stockId;
 	}

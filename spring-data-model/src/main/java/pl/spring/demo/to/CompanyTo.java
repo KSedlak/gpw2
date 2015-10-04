@@ -1,58 +1,56 @@
 package pl.spring.demo.to;
 
-import java.util.Set;
 
-public class BookTo {
+
+
+import java.io.Serializable;
+
+
+public class CompanyTo implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
     private Long id;
-    private String title;
-    private Set<AuthorTo> authors;
 
-	public BookTo() {
-    }
+    private String name;
+  
+    private StockTo companyStock;
+    
 
 
-    public BookTo(Long id, String title, Set<AuthorTo> authors) {
+
+	public CompanyTo(Long id, String name, StockTo companyStock) {
+		super();
 		this.id = id;
-		this.title = title;
-		this.authors = authors;
+		this.name = name;
+		this.companyStock = companyStock;
 	}
 
+	public StockTo getCompanyStock() {
+		return companyStock;
+	}
+
+	public void setCompanyStock(StockTo companyStock) {
+		this.companyStock = companyStock;
+	}
 
 	public Long getId() {
 		return id;
 	}
 
-
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-
-	public String getTitle() {
-		return title;
+	public String getName() {
+		return name;
 	}
 
-
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-
-	public Set<AuthorTo> getAuthors() {
-		return authors;
-	}
-
-
-	public void setAuthors(Set<AuthorTo> authors) {
-		this.authors = authors;
-	}
-
-	public String getAuthorsString(){
-		String returned="";
-		for(AuthorTo a:authors){
-			returned=returned+a.getFirstName()+" "+a.getLastName()+", ";
-		}
-return returned.substring(0,returned.length()-2);
-	}
-
+ 
 }

@@ -3,15 +3,13 @@ package pl.spring.demo.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import pl.spring.demo.entity.BookEntity;
+import pl.spring.demo.entity.CompanyEntity;
 
 import java.util.List;
 
-public interface BookRepository extends JpaRepository<BookEntity, Long> {
+public interface CompanyRepository extends JpaRepository<CompanyEntity, Long> {
 
-    @Query("select book from BookEntity book where book.title like :title%")
-    public List<BookEntity> findBookByTitle(@Param("title") String title);
+    @Query("select com from CompanyEntity com where com.name like :name%")
+    public CompanyEntity findCompanyByName(@Param("name") String name);
 
-    @Query("select book from BookEntity book where book.authors like %:author%")
-    public List<BookEntity> findBookByAuthor(@Param("author") String author);
 }

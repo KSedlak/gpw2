@@ -1,15 +1,14 @@
 package pl.spring.demo.service;
 
-import pl.spring.demo.to.BookTo;
+
 
 import java.util.List;
 
-public interface BookService {
+import pl.spring.demo.to.CompanyTo;
 
-    List<BookTo> findAllBooks();
-    List<BookTo> findBooksByTitle(String title);
-    List<BookTo> findBooksByAuthor(String author);
+public interface CompanyService {
 
-    BookTo saveBook(BookTo book);
-    void deleteBook(long id);
+    List<CompanyTo> findAllCompanies();
+    CompanyTo findCompanyByName(String name);
+
 }

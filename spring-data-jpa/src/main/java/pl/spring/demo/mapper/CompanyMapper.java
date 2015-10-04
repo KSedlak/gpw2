@@ -1,32 +1,31 @@
 package pl.spring.demo.mapper;
 
-import pl.spring.demo.entity.BookEntity;
-import pl.spring.demo.to.BookTo;
-
 import java.util.List;
 import java.util.stream.Collectors;
+import pl.spring.demo.entity.CompanyEntity;
+import pl.spring.demo.to.CompanyTo;
 
-public class BookMapper {
+public class CompanyMapper {
 
-    public static BookTo map(BookEntity bookEntity) {
-        if (bookEntity != null) {
-            return new BookTo(bookEntity.getId(), bookEntity.getTitle(), AuthorMapper.map2To(bookEntity.getAuthors()));
-        }
-        return null;
-    }
+	public static CompanyTo map(CompanyEntity companyEntity) {
+		if (companyEntity != null) {
+			return new CompanyTo(companyEntity.getId(),companyEntity.getName(), StockMapper.map(companyEntity.getCompanyStock()));
+		}
+		return null;
+	}
 
-    public static BookEntity map(BookTo bookTo) {
-        if (bookTo != null) {
-            return new BookEntity(bookTo.getId(), bookTo.getTitle() ,AuthorMapper.map2Entity(bookTo.getAuthors()));
-        }
-        return null;
-    }
+	public static CompanyEntity map(CompanyTo companyTo) {
+		if (companyTo != null) {
+			return new CompanyEntity(companyTo.getId(),companyTo.getName(),StockMapper.map(companyTo.getCompanyStock()));
+		}
+		return null;
+	}
 
-    public static List<BookTo> map2To(List<BookEntity> bookEntities) {
-        return bookEntities.stream().map(BookMapper::map).collect(Collectors.toList());
-    }
+	public static List<CompanyTo> map2To(List<CompanyEntity> companyEntities) {
+		return companyEntities.stream().map(CompanyMapper::map).collect(Collectors.toList());
+	}
 
-    public static List<BookEntity> map2Entity(List<BookTo> bookEntities) {
-        return bookEntities.stream().map(BookMapper::map).collect(Collectors.toList());
-    }
+	public static List<CompanyEntity> map2Entity(List<CompanyTo> companyEntities) {
+		return companyEntities.stream().map(CompanyMapper::map).collect(Collectors.toList());
+	}
 }

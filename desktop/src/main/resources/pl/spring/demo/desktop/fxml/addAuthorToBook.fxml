@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="186.0" prefWidth="471.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox layoutX="40.0" layoutY="31.0" prefHeight="124.0" prefWidth="392.0">
+         <children>
+            <Label text="Imie">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <TextField fx:id="name" />
+            <Label text="Nazwisko">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <TextField fx:id="lastName" />
+            <Separator prefHeight="64.0" prefWidth="392.0" />
+            <Pane prefHeight="70.0" prefWidth="392.0">
+               <children>
+                  <ButtonBar layoutX="192.0" layoutY="6.0" prefHeight="40.0" prefWidth="200.0">
+                    <buttons>
+
+                        <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonAction" text="Anuluj">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Button>
+                      <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonAction" prefHeight="25.0" prefWidth="107.0" text="Zapisz">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView glyphName="CHECK_SQUARE" />
+                           </graphic></Button>
+                    </buttons>
+                  </ButtonBar>
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+
+
+
+
+   </children>
+</Pane>

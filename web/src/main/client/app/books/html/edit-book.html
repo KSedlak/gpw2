@@ -1,0 +1,34 @@
+<div>
+
+        <div class="modal-header">
+            <h3 class="modal-title">Edytuj Ksiazke</h3>
+        </div>
+        <div class="modal-body">
+		<form name="form.BookAddForm" novalidate>
+
+      <div class="form-group">
+            <label>Tytul Ksiazki:</label>
+            <input type="text" name="modalBookTitle" class="form-control" ng-model="newBookTitle" ng-minlength="2"  required>
+            <p ng-show="form.BookAddForm.modalBookTitle.$error.minlength" class="help-block">Tytul musi miec conajmniej 2 litery</p>
+ 
+        </div>
+        </form>
+        
+        <label>Pod autorstwem:</label>
+
+<h4 class="text-info" ng-repeat="author in selectedBook.authors"> {{author.firstName}} {{author.lastName}} 
+
+<button type="button" class="btn btn-xs btn-danger" ng-click="remove(author.id)"><span class="glyphicon glyphicon-ban-circle"></span> Usun</button>
+ <button type="button" class="btn btn-xs btn-primary" ng-click="editAuthor(author)"><span class="glyphicon glyphicon-edit"></span> Edytuj</button>
+</h4>
+<button type="button" class="btn btn-xs btn-success" ng-click="addAuthor()"><span class="glyphicon glyphicon-ban-plus"></span> Dodaj autora</button>
+        
+             </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" ng-click="$dismiss()">Zamknij</button>
+   <button class="btn btn-success" ng-click="save()"  ng-disabled="!form.BookAddForm.$valid ||  selectedBook.authors.length<1" >Zapisz</button>
+   
+    
+</div>
+
+</div>

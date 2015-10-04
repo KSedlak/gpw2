@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="702.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.spring.demo.desktop.controller.BookPageController">
+   <children>
+      <HBox layoutX="14.0" layoutY="14.0" prefHeight="478.0" prefWidth="664.0">
+         <children>
+            <GridPane alignment="CENTER" prefHeight="478.0" prefWidth="675.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchBookButtonAction" prefHeight="117.0" prefWidth="275.0" text="SZUKAJ" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="42.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView glyphName="SEARCH" size="60.0" />
+                     </graphic></Button>
+                  <Button fx:id="addButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#addButtonAction" prefHeight="117.0" prefWidth="275.0" text="DODAJ" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="42.0" />
+                     </font>
+                     <graphic>
+                        <FontAwesomeIconView glyphName="PLUS" size="60.0" />
+                     </graphic></Button>
+               </children>
+            </GridPane>
+         </children>
+      </HBox>
+      <AnchorPane prefHeight="127.0" prefWidth="328.0">
+         <children>
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonAction" prefHeight="28.0" prefWidth="17.0">
+               <graphic>
+                  <FontAwesomeIconView glyphName="ARROW_LEFT" size="20.0" />
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>

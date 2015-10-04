@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.materialdesignicons.*?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="702.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.spring.demo.desktop.controller.FirstPageController">
+   <children>
+      <VBox layoutX="159.0" prefHeight="522.0" prefWidth="400.0">
+         <children>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="books" layoutX="29.0" layoutY="14.0" mnemonicParsing="false" onAction="#booksButtonAction" prefHeight="173.0" prefWidth="342.0" text="Ksiazki">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <FontAwesomeIconView glyphName="BOOK" layoutX="66.0" layoutY="136.0" size="100" wrappingWidth="46.285715103149414" />
+
+               </children>
+            </Pane>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="authors" layoutX="29.0" layoutY="14.0" mnemonicParsing="false" onAction="#authorsButtonAction" prefHeight="173.0" prefWidth="342.0" text="Autorzy">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <FontAwesomeIconView glyphName="USERS" layoutX="45.0" layoutY="135.0" size="100" />
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+   </children>
+</Pane>

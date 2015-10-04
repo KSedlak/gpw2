@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "Company")
+@Table(name = "company")
 public class CompanyEntity implements Serializable {
     /**
 	 * 
@@ -19,7 +19,8 @@ public class CompanyEntity implements Serializable {
     private Long id;
     @Column(nullable = false, length = 50)
     private String name;
-    @Column(name="company_stock")
+	@OneToOne(cascade=CascadeType.ALL)  
+    @JoinColumn(name="STOCK_ID")  
     private StockEntity companyStock;
     
     protected CompanyEntity() {
@@ -39,7 +40,7 @@ public class CompanyEntity implements Serializable {
 
 
 
-	 @OneToOne(mappedBy="company", cascade=CascadeType.ALL)
+
 	public StockEntity getCompanyStock() {
 		return companyStock;
 	}

@@ -23,6 +23,7 @@ import javax.persistence.UniqueConstraint;
 public class StockEntity implements Serializable {
 
 	private Long stockId;
+	@OneToOne(cascade=CascadeType.ALL, mappedBy="stock")  
 	private CompanyEntity company;	
 	private Set<StockDailyRecordEntity> stockDailyRecords = new HashSet<StockDailyRecordEntity>(
 			0);
@@ -51,8 +52,6 @@ public class StockEntity implements Serializable {
 		this.stockId = stockId;
 	}
 
-	@OneToOne
-    @PrimaryKeyJoinColumn
 	public CompanyEntity getCompany() {
 		return company;
 	}

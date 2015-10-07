@@ -2,40 +2,51 @@ package pl.spring.demo.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
+
 
 @Entity
 @Table(name = "stock_daily_record")
 public class StockDailyRecordEntity implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2701249247584509851L;
 	private Long recordId;
-	private StockEntity stock;
+
+	private CompanyEntity company;
 	private Date day;
 	private Double valueOfStock;
 
 	public StockDailyRecordEntity() {
 	}
 
-	public StockDailyRecordEntity(Long recordId, StockEntity stock, Date date, Double value) {
+	public StockDailyRecordEntity(Long recordId, CompanyEntity comp, Date date, Double value) {
 		super();
 		this.recordId = recordId;
-		this.stock = stock;
+		this.company = comp;
 		this.day = date;
 		this.valueOfStock = value;
 	}
+	public StockDailyRecordEntity(Long recordId, Date date, Double value) {
+		super();
+		this.recordId = recordId;
+		this.day = date;
+		this.valueOfStock = value;
+	}
+
 
 	public Double getValue() {
 		return valueOfStock;
@@ -46,7 +57,7 @@ public class StockDailyRecordEntity implements Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "RECORD_ID", unique = true, nullable = false)
 	public Long getRecordId() {
 		return this.recordId;
@@ -56,18 +67,18 @@ public class StockDailyRecordEntity implements Serializable {
 		this.recordId = recordId;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "STOCK_ID", nullable = true)
-	public StockEntity getStock() {
-		return this.stock;
+	@ManyToOne()
+	   @JoinColumn(name = "COMPANY_ID")
+	public CompanyEntity getCompany() {
+		return this.company;
 	}
 
-	public void setStock(StockEntity stock) {
-		this.stock = stock;
+	public void setCompany(CompanyEntity comp) {
+		this.company = comp;
 	}
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "DATE", unique = true, nullable = false, length = 10)
+	@Column(name = "DATE", unique = false, nullable = false, length = 10)
 	public Date getDate() {
 		return this.day;
 	}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Login page</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" th:href="@{/static/application.css}"
+	href="/static/application.css" />
+	</head>
+    <body class="bodyLogin">
+     <section class="container">
+<div class="login">
+
+
+        <form th:action="@{/login}" method="post">
+            <label for="username" class="loginLabel">Nazwa uzytkownika</label>:
+            <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
+            <label for="password" class="loginLabel">Haslo</label>:
+            <input type="password" id="password" name="password" /> <br />
+            <input  class ="button AddButton" type="submit" value="Zaloguj" />
+        </form>
+  
+        </div>
+                <p th:if="${loginError}" class="error">Niepoprawna nazwa uzytkownika lub haslo</p>
+                 <a href="#" th:href="@{/}" th:if="${loginError}" class="button backButton">Wroc do listy</a>
+       </section>
+    </body>
+</html>

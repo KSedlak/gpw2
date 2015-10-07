@@ -1,0 +1,281 @@
+.error {
+	color: red;
+	font-size: 30px;
+	font-weight: bold;
+	text-align: center;
+}
+
+
+.labelP{
+	font-size: 30px;
+	font-weight: bold;
+	font-family: "Arial";
+}
+bodyLogin {
+  font: 13px/20px 'Lucida Grande', Tahoma, Verdana, sans-serif;
+  color: #404040;
+  background: #0ca3d2;
+}
+
+.container {
+  margin: 80px auto;
+  width: 640px;
+}
+
+.button {
+	-moz-box-shadow: 0px 1px 0px 0px #f0f7fa;
+	-webkit-box-shadow: 0px 1px 0px 0px #f0f7fa;
+	box-shadow: 0px 1px 0px 0px #f0f7fa;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #33bdef
+		), color-stop(1, #019ad2));
+	background: -moz-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background: -webkit-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background: -o-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background: -ms-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background: linear-gradient(to bottom, #33bdef 5%, #019ad2 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bdef',
+		endColorstr='#019ad2', GradientType=0);
+	background-color: #33bdef;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	border: 1px solid #057fd0;
+	display: inline-block;
+	cursor: pointer;
+	color: #ffffff;
+	font-family:"Arial";
+	font-size: 20px;
+	font-weight: bold;
+	text-decoration: none;
+	float: center;
+	margin-right:10px;
+	text-shadow: 0px -1px 0px #5b6178;
+}
+
+.AddButton {
+	margin-top: 6px;
+	text-align:center;
+	width: 200px;
+	float: right;
+}
+.ModalButton {
+
+	width: 200px;
+	height:40px;
+}
+
+.msg {
+	font-family: Arial;
+	font-size: 20px;
+	text-align: center;
+	font-weight: bold;
+	vertical-align: center;
+	text-align: cenetr;
+	color: #00529B;
+	background-color: #BDE5F8;
+	background-image:
+		url('http://icons.iconarchive.com/icons/rimshotdesign/nod2/96/Toolbar-Regular-Get-Info-icon.png');
+	border: 1px solid;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px 10px 10px 10px;
+	background-repeat: no-repeat;
+}
+
+.button:hover {
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #019ad2
+		), color-stop(1, #33bdef));
+	background: -moz-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background: -webkit-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background: -o-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background: -ms-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background: linear-gradient(to bottom, #019ad2 5%, #33bdef 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#019ad2',
+		endColorstr='#33bdef', GradientType=0);
+	background-color: #019ad2;
+}
+
+.button:active {
+	position: relative;
+	top: 1px;
+}
+
+.booksTable {
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	box-shadow: 10px 10px 5px #888888;
+	border: 1px solid #000000;
+	-moz-border-radius-bottomleft: 0px;
+	-webkit-border-bottom-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+	-moz-border-radius-bottomright: 0px;
+	-webkit-border-bottom-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+	-moz-border-radius-topright: 0px;
+	-webkit-border-top-right-radius: 0px;
+	border-top-right-radius: 0px;
+	-moz-border-radius-topleft: 0px;
+	-webkit-border-top-left-radius: 0px;
+	border-top-left-radius: 0px;
+}
+
+.booksTable table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+.booksTableHead {
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #33bdef
+		), color-stop(1, #019ad2));
+	background: -moz-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background: -webkit-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background: -o-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background: -ms-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background: linear-gradient(to bottom, #33bdef 5%, #019ad2 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bdef',
+		endColorstr='#019ad2', GradientType=0);
+	background-color: #33bdef;
+	border: 0px solid #000000;
+	text-align: center;
+	border-width: 0px 0px 1px 1px;
+	font-size: 24px;
+	font-family: Arial;
+	font-weight: bold;
+	color: #fcf9f9;
+}
+
+.tabButton{
+	width:30%;
+}
+.booksTable tr:last-child td:last-child {
+	-moz-border-radius-bottomright: 0px;
+	-webkit-border-bottom-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+
+.booksTable table tr:first-child td:first-child {
+	-moz-border-radius-topleft: 0px;
+	-webkit-border-top-left-radius: 0px;
+	border-top-left-radius: 0px;
+}
+
+.booksTable table tr:first-child td:last-child {
+	-moz-border-radius-topright: 0px;
+	-webkit-border-top-right-radius: 0px;
+	border-top-right-radius: 0px;
+}
+
+.booksTable tr:last-child td:first-child {
+	-moz-border-radius-bottomleft: 0px;
+	-webkit-border-bottom-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+
+.booksTable tr:hover td {
+	background-color: #d3e9ff;
+}
+
+.booksTable td {
+	vertical-align: middle;
+	background: -o-linear-gradient(bottom, #ffffff 5%, #d3e9ff 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffffff
+		), color-stop(1, #d3e9ff));
+	background: -moz-linear-gradient(center top, #ffffff 5%, #d3e9ff 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",
+		endColorstr="#d3e9ff");
+	background: -o-linear-gradient(top, #ffffff, d3e9ff);
+	background-color: #ffffff;
+	border: 1px solid #000000;
+	border-width: 0px 1px 1px 0px;
+	text-align: center;
+	padding: 7px;
+	font-size: 18px;
+	font-family: Arial;
+	font-weight: bold;
+	color: #000000;
+}
+
+.booksTable tr:last-child td {
+	border-width: 0px 1px 0px 0px;
+}
+
+.booksTable tr td:last-child {
+	border-width: 0px 0px 1px 0px;
+}
+
+.booksTable tr:last-child td:last-child {
+	border-width: 0px 0px 0px 0px;
+}
+
+#mask {
+	position: absolute; /* important */
+	top: 0px; /* start from top */
+	left: 0px; /* start from left */
+	height: 100%; /* cover the whole page */
+	width: 100%; /* cover the whole page */
+	display: none; /* don't show it '*/
+	/* styling bellow */
+	background-color: black;
+}
+
+.modal_window {
+	position: absolute;
+	/* important so we can position it on center later */
+	display: none; /* don't show it */
+	font-size: 30px;
+	/* styling bellow */
+	color: white;
+}
+
+input {
+	font-size: 30px
+}
+/* style a specific modal window  */
+#modal_window {
+	padding: 50px;
+	border: 1px solid gray;
+	background: #246493;
+	color: black;
+}
+.loginLabel{
+	font-size:22px;
+	font-family:"Arial";
+	margin-top:10px;
+}
+.backButton{
+	width: 200px;
+	position: absolute;
+	margin-left: 230px;
+	margin-right: auto;
+	text-align: center;
+	font-size:20px;
+	
+}
+
+.login {
+	border: 1px solid gray;
+  position: relative;
+  margin: 0 auto;
+  padding: 20px 20px 20px;
+  width: 370px;
+  height: 160px;
+  background: white;
+  border-radius: 3px;
+  @include box-shadow(0 0 200px rgba(white, .5), 0 1px 2px rgba(black, .3));
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: -8px; right: -8px; bottom: -8px; left: -8px;
+    z-index: -1;
+    background: rgba(black, .08);
+    border-radius: 4px;
+  }
+
+}
+}

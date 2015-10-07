@@ -1,16 +1,9 @@
 package pl.spring.demo.mapper;
 
 
-
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import pl.spring.demo.model.stockDailyRecord.StockDailyRecordEntity;
 import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 
@@ -23,8 +16,7 @@ import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 					CompanyMapper.map(stockDailyRecordEntity.getCompany()),
 					DateMapper.map(stockDailyRecordEntity.getDate()),
 					stockDailyRecordEntity.getValue()
-						
-						
+
 						);
 			}
 			return null;
@@ -35,7 +27,7 @@ import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 				return new StockDailyRecordEntity(stockDailyRecordTo.getRecordId(),
 						CompanyMapper.map(stockDailyRecordTo.getCompany()),
 						DateMapper.map(stockDailyRecordTo.getDate()),
-						stockDailyRecordTo.getValue()						
+						stockDailyRecordTo.getValue()
 						);
 			}
 			return null;
@@ -57,5 +49,5 @@ import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 		}
 
 	}
-	
-	
+
+

@@ -1,10 +1,8 @@
 package pl.spring.demo.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import pl.spring.demo.mapper.CompanyMapper;
 import pl.spring.demo.model.company.CompanyTo;
 import pl.spring.demo.repository.CompanyRepository;
@@ -16,7 +14,7 @@ import java.util.List;
 @Transactional()
 public class CompanyServiceImpl implements CompanyService {
 
-	
+
     @Autowired
     private CompanyRepository companyRepository;
 

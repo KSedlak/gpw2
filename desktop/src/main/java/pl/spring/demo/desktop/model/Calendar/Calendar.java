@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
-import pl.spring.demo.desktop.model.Calendar.Events.DayChanged;
+import pl.spring.demo.desktop.model.Calendar.event.DayChanged;
 
 @Component
 public class Calendar implements ApplicationContextAware {

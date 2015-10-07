@@ -9,8 +9,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
-import pl.spring.demo.desktop.model.Calendar.Events.DayChanged;
-import pl.spring.demo.desktop.model.NBP.Event.ExchangeRatesChanged;
+
+import pl.spring.demo.desktop.model.Calendar.event.DayChanged;
+import pl.spring.demo.desktop.model.NBP.event.ExchangeRatesChanged;
 import pl.spring.demo.desktop.model.currency.Currency;
 
 @Component

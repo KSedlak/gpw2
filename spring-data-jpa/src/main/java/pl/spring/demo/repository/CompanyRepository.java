@@ -3,10 +3,8 @@ package pl.spring.demo.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
 import pl.spring.demo.model.company.CompanyEntity;
 
-import java.util.List;
 
 public interface CompanyRepository extends JpaRepository<CompanyEntity, Long> {
 

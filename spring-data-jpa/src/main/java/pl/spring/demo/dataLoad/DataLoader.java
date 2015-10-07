@@ -1,23 +1,16 @@
 package pl.spring.demo.dataLoad;
 
-
-
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.annotation.PostConstruct;
 import javax.persistence.PersistenceContext;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Component;
-
 import pl.spring.demo.dataLoad.fileReader.CsvReader;
 import pl.spring.demo.model.company.CompanyTo;
 import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
@@ -28,22 +21,22 @@ import pl.spring.demo.service.StockDailyRecordService;
 @DependsOn("entityManagerFactory")
 @PersistenceContext
 public class DataLoader  {
-	
+
 	@Autowired
 	private StockDailyRecordService stockDailyRecordService;
 
 	@Autowired
 	private CompanyService comp;
-	
+
     @Autowired
 	private CsvReader reader;
-    
+
 
     private static final String SEPARATOR = ",";
-    
+
 	private Set<CompanyTo> companies;//keep unique objects
 	private List<StockDailyRecordTo> dailyRecords;
-	
+
 	public DataLoader() {
 		super();
 		this.companies= new HashSet<CompanyTo>();
@@ -75,27 +68,27 @@ public class DataLoader  {
 		companyStock=keepSameObjects(companyStock);
 		LocalDate date=getDateFromString(entry[1]);
 		Double value=getDoubleFromString(entry[2]);
-		
+
 
 		StockDailyRecordTo dailyRecord=new StockDailyRecordTo(companyStock, date, value);
 		dailyRecords.add(dailyRecord);
-	
+
 	});
 		companies.stream().forEach(c->comp.saveCompany(c));
 		dailyRecords.stream().forEach(stock->{
 		CompanyTo c =comp.findCompanyByName(stock.getCompany().getName());//get already saved entity
 		stock.setCompany(c);
 		stockDailyRecordService.saveStockDailyRecord(stock);
-		
+
 		});
 		stockDailyRecordService.findAll().stream().forEach(x->{
 			System.out.println("added: "+x.getCompany().getName()+" "+x.getDate()+" "+x.getValue());}
-		);	
-			
+		);
 
-		
-		
-		
+
+
+
+
 
 
 	}
@@ -118,7 +111,7 @@ public class DataLoader  {
 
 
 	}
-	
+
 	public static Double getDoubleFromString(String s){
 			try {
 				return Double.parseDouble(s);
@@ -128,5 +121,5 @@ public class DataLoader  {
 			}
 		return null;
 }
-	
-}	
+
+}

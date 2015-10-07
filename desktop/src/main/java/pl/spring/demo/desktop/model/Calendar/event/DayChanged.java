@@ -1,4 +1,4 @@
-package pl.spring.demo.desktop.model.Calendar.Events;
+package pl.spring.demo.desktop.model.Calendar.event;
 
 import java.time.LocalDate;
 import org.springframework.context.ApplicationEvent;

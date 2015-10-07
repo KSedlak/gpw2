@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
 
-import pl.spring.demo.desktop.model.NBP.Event.ExchangeRatesChanged;
+import pl.spring.demo.desktop.model.NBP.event.ExchangeRatesChanged;
 import pl.spring.demo.desktop.model.currency.Currency;
 
 @Service

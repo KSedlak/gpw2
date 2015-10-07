@@ -2,10 +2,8 @@ package pl.spring.demo.model.stockDailyRecord;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +21,7 @@ import pl.spring.demo.model.company.CompanyEntity;
 public class StockDailyRecordEntity implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 2701249247584509851L;
 	private Long recordId;

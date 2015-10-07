@@ -1,4 +1,4 @@
-package pl.spring.demo.desktop.model.NBP.Event;
+package pl.spring.demo.desktop.model.NBP.event;
 
 import java.util.HashMap;
 import org.springframework.context.ApplicationEvent;

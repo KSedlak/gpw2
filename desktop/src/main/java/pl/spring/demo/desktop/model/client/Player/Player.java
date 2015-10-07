@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import pl.spring.demo.desktop.model.cantor.Cantor;
 import pl.spring.demo.desktop.model.client.Person.Person;
+import pl.spring.demo.desktop.model.client.Player.Wallet.Wallet;
 import pl.spring.demo.desktop.model.currency.Currency;
 
 @Component

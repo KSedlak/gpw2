@@ -1,4 +1,4 @@
-package pl.spring.demo.desktop.model.client.Player;
+package pl.spring.demo.desktop.model.client.Player.Wallet;
 
 import java.util.HashMap;
 

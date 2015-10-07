@@ -1,6 +1,7 @@
 package pl.spring.demo.desktop;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -15,8 +16,9 @@ import javafx.scene.Parent;
 
 public class App  extends Application
 {
-	static ApplicationContext context;
 
+	@Value("${app.title}")
+	private static String title;
 
 	public static void main(String[] args) {
 	        launch(args);
@@ -25,27 +27,20 @@ public class App  extends Application
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-
-
-    	
+	    primaryStage.setTitle(title);
     	Scene scene=SceneMaker.getSceneFromFXML("welcomePage");
         primaryStage.setScene(scene);
         primaryStage.show();
-        scene.getStylesheets().add(getClass().getResource("css/standard.css").toExternalForm());
-        
 
-	
+        scene.getStylesheets().add(getClass().getResource("css/standard.css").toExternalForm());
+
+
+
 
 		}
 
 
 
 
-	public static ApplicationContext getContext() {
-		return context;
-	}
 
-	public static void setContext(ApplicationContext context) {
-		App.context = context;
-	}
 }

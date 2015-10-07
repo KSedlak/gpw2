@@ -19,10 +19,10 @@ import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Component;
 
 import pl.spring.demo.dataLoad.fileReader.CsvReader;
+import pl.spring.demo.model.company.CompanyTo;
+import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 import pl.spring.demo.service.CompanyService;
 import pl.spring.demo.service.StockDailyRecordService;
-import pl.spring.demo.to.CompanyTo;
-import pl.spring.demo.to.StockDailyRecordTo;
 
 @Component
 @DependsOn("entityManagerFactory")

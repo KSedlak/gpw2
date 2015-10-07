@@ -1,4 +1,4 @@
-package pl.spring.demo.entity;
+package pl.spring.demo.model.stockDailyRecord;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import pl.spring.demo.model.company.CompanyEntity;
 
 
 @Entity

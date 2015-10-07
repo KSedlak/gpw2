@@ -6,14 +6,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import pl.spring.demo.mapper.CompanyMapper;
+import pl.spring.demo.model.company.CompanyTo;
 import pl.spring.demo.repository.CompanyRepository;
 import pl.spring.demo.service.CompanyService;
-import pl.spring.demo.to.CompanyTo;
 
 import java.util.List;
 
-@Service("companyServicexxxx")
-@Qualifier("companyServicexxxx")
+@Service
 @Transactional()
 public class CompanyServiceImpl implements CompanyService {
 

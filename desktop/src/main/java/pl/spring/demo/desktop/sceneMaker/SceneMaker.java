@@ -1,4 +1,4 @@
-package pl.spring.demo.sprinLoader;
+package pl.spring.demo.desktop.sceneMaker;
 
 import javafx.fxml.FXMLLoader;
 import org.springframework.context.ApplicationContext;

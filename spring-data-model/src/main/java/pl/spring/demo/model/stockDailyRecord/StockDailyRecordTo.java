@@ -1,8 +1,10 @@
-package pl.spring.demo.to;
+package pl.spring.demo.model.stockDailyRecord;
 
 
 import java.io.Serializable;
 import java.time.LocalDate;
+
+import pl.spring.demo.model.company.CompanyTo;
 
 
 

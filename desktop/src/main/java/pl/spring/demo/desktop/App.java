@@ -7,11 +7,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import pl.spring.demo.desktop.sceneMaker.SceneMaker;
 import pl.spring.demo.service.CompanyService;
 import pl.spring.demo.service.StockDailyRecordService;
 import pl.spring.demo.service.impl.CompanyServiceImpl;
-import pl.spring.demo.sprinLoader.SceneMaker;
 import javafx.scene.Parent;
 
 public class App  extends Application

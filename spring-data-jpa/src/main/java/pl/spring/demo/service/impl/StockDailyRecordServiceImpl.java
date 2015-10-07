@@ -7,18 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.spring.demo.entity.StockDailyRecordEntity;
+
 import pl.spring.demo.mapper.StockDailyRecordMapper;
+import pl.spring.demo.model.stockDailyRecord.StockDailyRecordEntity;
+import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 import pl.spring.demo.repository.StockDailyRecordRepository;
 import pl.spring.demo.service.StockDailyRecordService;
-import pl.spring.demo.to.StockDailyRecordTo;
 
 @Service
 @Transactional()
 public class StockDailyRecordServiceImpl implements StockDailyRecordService{
 
 	@Autowired
-	StockDailyRecordRepository stockRepo;
+	StockDailyRecordRepository  stockRepo;
 	
 	@Override
 	public StockDailyRecordTo saveStockDailyRecord(StockDailyRecordTo c) {

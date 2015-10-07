@@ -14,9 +14,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import pl.spring.demo.desktop.App;
-
+import pl.spring.demo.desktop.sceneMaker.SceneMaker;
 import pl.spring.demo.service.CompanyService;
-import pl.spring.demo.sprinLoader.SceneMaker;
 
 @Component
 public class WelcomeController {

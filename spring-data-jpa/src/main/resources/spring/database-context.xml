@@ -24,12 +24,11 @@
         </property>
         <property name="packagesToScan">
             <array>
-                <value>pl.spring.demo.entity</value>
+                     <value>pl.spring.demo.model.company</value>
+                <value>pl.spring.demo.model.stockDailyRecord</value>
             </array>
         </property>
     </bean>
-
-    <jpa:repositories base-package="pl.spring.demo.repository" />
-
-
+    <jpa:repositories base-package="pl.spring.demo.repository" repository-impl-postfix="JinqImpl"/>
+	<bean id="jinq" class="pl.spring.demo.jinq.JinqSource"/>
 </beans>

@@ -10,8 +10,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-	import pl.spring.demo.entity.StockDailyRecordEntity;
-	import pl.spring.demo.to.StockDailyRecordTo;
+
+import pl.spring.demo.model.stockDailyRecord.StockDailyRecordEntity;
+import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 
 	public class StockDailyRecordMapper {
 
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 				return new StockDailyRecordTo(
 						stockDailyRecordEntity.getRecordId(),
 					CompanyMapper.map(stockDailyRecordEntity.getCompany()),
-					convertDateToLocal(stockDailyRecordEntity.getDate()),
+					DateMapper.map(stockDailyRecordEntity.getDate()),
 					stockDailyRecordEntity.getValue()
 						
 						
@@ -33,7 +34,7 @@ import java.util.stream.Collectors;
 			if (stockDailyRecordTo != null) {
 				return new StockDailyRecordEntity(stockDailyRecordTo.getRecordId(),
 						CompanyMapper.map(stockDailyRecordTo.getCompany()),
-						convertLocalToDate(stockDailyRecordTo.getDate()),
+						DateMapper.map(stockDailyRecordTo.getDate()),
 						stockDailyRecordTo.getValue()						
 						);
 			}
@@ -54,25 +55,7 @@ import java.util.stream.Collectors;
 		public static List<StockDailyRecordEntity> mapList2Entity(List<StockDailyRecordTo> stockDailyRecordEntities) {
 			return stockDailyRecordEntities.stream().map(StockDailyRecordMapper::map).collect(Collectors.toList());
 		}
-		public static LocalDate convertDateToLocal(Date d){
 
-			Instant instant = convertFromSQLDateToJAVADate(d).toInstant();
-			ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());
-			LocalDate date = zdt.toLocalDate();		
-			return date;
-			
-			
-		}
-	public static java.util.Date convertFromSQLDateToJAVADate(Date d) {
-        java.util.Date javaDate = null;
-        if (d != null) {
-            javaDate = new Date(d.getTime());
-        } 
-        return javaDate;
-    } 
-		public static Date convertLocalToDate(LocalDate d){
-			return Date.from(d.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		}
 	}
 	
 	

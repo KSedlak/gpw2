@@ -2,8 +2,9 @@ package pl.spring.demo.mapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import pl.spring.demo.entity.CompanyEntity;
-import pl.spring.demo.to.CompanyTo;
+
+import pl.spring.demo.model.company.CompanyEntity;
+import pl.spring.demo.model.company.CompanyTo;
 
 public class CompanyMapper {
 

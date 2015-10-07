@@ -32,26 +32,32 @@ public class BrokerageOfficeImpl implements BrokerageOffice{
 
 	@Override
 	public List<StockDailyRecordTo> getStocksByCompanyName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return gpw.getStocksByCompanyName(name);
 	}
 
 	@Override
 	public List<StockDailyRecordTo> getStocksByCompanyNameAndDate(String name, LocalDate d) {
-		// TODO Auto-generated method stub
-		return null;
+		return gpw.getStocksByCompanyNameAndDate(name, d);
 	}
 
 	@Override
 	public List<StockDailyRecordTo> getStocksByCompanyNameFromDateToDate(String name, LocalDate A, LocalDate B) {
-		// TODO Auto-generated method stub
-		return null;
+		return gpw.getStocksByCompanyNameFromDateToDate(name, A, B);
 	}
 
 	@Override
-	public List<StockDailyRecordTo> getStocksByCompanyNameFromDateXDaysBefore(String name, LocalDate A) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<StockDailyRecordTo> getStocksByCompanyNameFromDateXDaysBefore(String name, LocalDate A, Integer X) {
+		return gpw.getStocksByCompanyNameFromDateToDate(name, A.minusDays(X), A);
+	}
+
+	@Override
+	public List<StockDailyRecordTo> getStocksByCompanyNameFromTodayXDaysBefore(String name, Integer X) {
+		return gpw.getStocksByCompanyNameFromTodayXDaysBefore(name, X);
+	}
+
+	@Override
+	public List<StockDailyRecordTo> getStocksFromTodayXDaysBefore(Integer X) {
+		return getStocksFromTodayXDaysBefore(X);
 	}
 
 

@@ -19,7 +19,7 @@ public class StockMarketServiceImpl implements StockMarketService {
 	StockDailyRecordRepository  stockDailyRecordDao;
 
 	@Override
-	public List<StockDailyRecordTo> getAllRecordsBySpecificdate(LocalDate date) {
+	public List<StockDailyRecordTo> findAllRecordsBySpecificdate(LocalDate date) {
 		return StockDailyRecordMapper.map2ToList(stockDailyRecordDao.findStockDailyRecordsByDate(DateMapper.map(date)));
 	}
 

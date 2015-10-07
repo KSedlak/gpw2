@@ -39,7 +39,7 @@ public class StockMarketServiceClientImpl implements StockMarketServiceClient {
 
 	@Override
 	public List<StockDailyRecordTo> getTodayValues() {
-		return service.getAllRecordsBySpecificdate(today);
+		return service.findAllRecordsBySpecificdate(today);
 	}
 
 	@Override
@@ -60,6 +60,16 @@ public class StockMarketServiceClientImpl implements StockMarketServiceClient {
 	@Override
 	public List<StockDailyRecordTo> getStockDailyRecordsFromDateAToB(LocalDate A, LocalDate B) {
 		return service.findStockDailyRecordsFromDateAToB(A, B);
+	}
+
+	@Override
+	public List<StockDailyRecordTo> getStocksByCompanyNameFromTodayXDaysBefore(String name, Integer X) {
+		return getStocksByCompanyNameFromDateToDate(name, today.minusDays(X), today);
+	}
+
+	@Override
+	public List<StockDailyRecordTo> getStocksFromTodayXDaysBefore(Integer X) {
+	return getStockDailyRecordsFromDateAToB(today.minusDays(X), today);
 	}
 
 

@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import pl.spring.demo.desktop.model.Calendar.event.DayChanged;
@@ -13,8 +12,6 @@ import pl.spring.demo.desktop.model.Calendar.event.DayChanged;
 @Component
 public class Calendar implements ApplicationContextAware {
 
-	@SuppressWarnings("unused")
-	private ApplicationEventPublisher eventPublisher;
 	private LocalDate currentDay;
 	private ApplicationContext applicationContext;
 

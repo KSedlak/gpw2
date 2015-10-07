@@ -2,11 +2,13 @@ package pl.spring.demo.desktop.controller;
 
 import java.io.IOException;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
 import javafx.event.ActionEvent;
@@ -14,40 +16,50 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import pl.spring.demo.desktop.App;
+import pl.spring.demo.desktop.model.client.Player.Player;
 import pl.spring.demo.desktop.sceneMaker.SceneMaker;
 import pl.spring.demo.service.CompanyService;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 @Component
+@DependsOn("player")
 public class WelcomeController {
 
 	@FXML
 	Button enterButton;
 
-	@Autowired  
-	CompanyService c;
-	
 
-    
-	public void setC(CompanyService c) {
-		this.c = c;
-	}
+	@Resource
+	Player p;
+
+	@FXML Label label;
+
+
+	@FXML ImageView image;
+
+
+
 
 	@FXML
 	public void enterButtonAction(ActionEvent event) throws IOException {
 		Stage stage = (Stage) enterButton.getScene().getWindow();
 		stage.setScene(SceneMaker.getSceneFromFXML("firstPage"));
-		
-		
-		
-		if(c==null){
-			System.out.println("null");
-       
 
 	}
-		else{
-			c.findAll().stream().forEach(c->{
-				System.out.println(c.getName());
-			});
-		}
 
-}}
+	@FXML
+	private void initialize() {
+			label.setText("Witaj, "+p.getFirstName()+" "+p.getLastName());
+			try {
+				image.setImage(new Image(App.class.getResource("images/startup.jpg").openStream())
+);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+
+}
+

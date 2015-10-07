@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import pl.spring.demo.jinq.JinqSource;
-import pl.spring.demo.mapper.DateMapper;
 import pl.spring.demo.model.stockDailyRecord.StockDailyRecordEntity;
 import pl.spring.demo.repository.StockDailyRecordAdditionalQueries;
 
@@ -16,14 +15,6 @@ public class StockDailyRecordRepositoryJinqImpl  implements StockDailyRecordAddi
 	    private JinqSource jinqSource;
 	    
 
-/*		@Override
-		public List<StockDailyRecordEntity> findStockDailyRecordsByDate(Date d) {
-
-			return jinqSource.dailyRecords().where(a->{
-				return DateMapper.map(a.getDate()).equals(DateMapper.map(d)); 
-			}
-					).toList();
-			}*/
 	    @Override
 		public List<StockDailyRecordEntity> findStockDailyRecordsByDate(Date d) {
 

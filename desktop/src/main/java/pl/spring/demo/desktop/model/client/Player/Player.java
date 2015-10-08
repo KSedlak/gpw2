@@ -39,7 +39,7 @@ public class Player extends Person implements ApplicationListener<BrokerageOffic
 
 
 
-	public double checkCurrencyBallanceMoneyInWallet(Currency a, Currency b){
+	private double checkCurrencyBallanceMoneyInWallet(Currency a, Currency b){
 		try {
 
 		if(wallet.getWallet().containsKey(a)&&wallet.getWallet().containsKey(b)){

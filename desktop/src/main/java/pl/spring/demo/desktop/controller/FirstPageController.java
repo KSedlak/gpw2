@@ -7,7 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import pl.spring.demo.desktop.sceneMaker.SceneMaker;
+import pl.spring.demo.desktop.view.sceneMaker.SceneMaker;
 import pl.spring.demo.service.StockMarketService;
 
 @Component

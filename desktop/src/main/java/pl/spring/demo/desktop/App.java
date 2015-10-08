@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import pl.spring.demo.desktop.sceneMaker.SceneMaker;
+import pl.spring.demo.desktop.view.sceneMaker.SceneMaker;
 
 
 public class App  extends Application

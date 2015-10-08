@@ -1,4 +1,4 @@
-package pl.spring.demo.desktop.model.NBP;
+package pl.spring.demo.desktop.model.NBP.impl;
 
 
 
@@ -8,25 +8,25 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationListener;
-import org.springframework.stereotype.Component;
-
+import org.springframework.stereotype.Service;
 import pl.spring.demo.desktop.model.Calendar.event.DayChanged;
+import pl.spring.demo.desktop.model.NBP.NationalBank;
 import pl.spring.demo.desktop.model.NBP.event.ExchangeRatesChanged;
 import pl.spring.demo.desktop.model.currency.Currency;
 
-@Component
-public class NBP implements ApplicationListener<DayChanged>,ApplicationContextAware {
+@Service
+public class NationalBankmpl implements ApplicationListener<DayChanged>,ApplicationContextAware, NationalBank {
 
 	private HashMap<Currency, Double> currentExchangeRateMap;
 	private ApplicationContext applicationContext;
 
-	private NBP(){
+	private NationalBankmpl(){
 		initMap();
 		changeExchangeRate();//first set rates
 	}
 
 
-	public void changeExchangeRate(){
+	private void changeExchangeRate(){
 		Random rand = new Random();
 		for(Currency c: Currency.values()){
 
@@ -37,7 +37,7 @@ public class NBP implements ApplicationListener<DayChanged>,ApplicationContextAw
 	}
 	}
 
-	public void initMap(){
+	private void initMap(){
 		currentExchangeRateMap=new HashMap<Currency,Double>();
 		for(Currency c: Currency.values()){
 			currentExchangeRateMap.put(c, new Double(0));
@@ -45,7 +45,7 @@ public class NBP implements ApplicationListener<DayChanged>,ApplicationContextAw
 	}
 
 
-
+	@Override
 	public Double getExchangeRate(Currency c) {
 		return currentExchangeRateMap.get(c);
 	}

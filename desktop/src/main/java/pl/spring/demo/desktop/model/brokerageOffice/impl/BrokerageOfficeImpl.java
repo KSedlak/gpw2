@@ -1,14 +1,11 @@
 package pl.spring.demo.desktop.model.brokerageOffice.impl;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
-
 import pl.spring.demo.desktop.model.GPW.StockMarketServiceClient;
 import pl.spring.demo.desktop.model.GPW.event.StockRatesChanged;
 import pl.spring.demo.desktop.model.Status.Status;

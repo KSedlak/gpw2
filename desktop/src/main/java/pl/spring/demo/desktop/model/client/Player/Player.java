@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
-
-import pl.spring.demo.desktop.model.GPW.event.StockRatesChanged;
 import pl.spring.demo.desktop.model.brokerageOffice.event.BrokerageOfficeOpened;
 import pl.spring.demo.desktop.model.cantor.Cantor;
 import pl.spring.demo.desktop.model.client.Person.Person;

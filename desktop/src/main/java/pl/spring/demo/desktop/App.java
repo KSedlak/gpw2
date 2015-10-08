@@ -2,17 +2,11 @@ package pl.spring.demo.desktop;
 
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pl.spring.demo.desktop.sceneMaker.SceneMaker;
-import pl.spring.demo.service.CompanyService;
-import pl.spring.demo.service.StockDailyRecordService;
-import pl.spring.demo.service.impl.CompanyServiceImpl;
-import javafx.scene.Parent;
+
 
 public class App  extends Application
 {

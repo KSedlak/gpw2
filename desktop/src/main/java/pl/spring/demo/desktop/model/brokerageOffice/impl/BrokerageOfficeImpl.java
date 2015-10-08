@@ -1,27 +1,44 @@
 package pl.spring.demo.desktop.model.brokerageOffice.impl;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Service;
 
 import pl.spring.demo.desktop.model.GPW.StockMarketServiceClient;
 import pl.spring.demo.desktop.model.GPW.event.StockRatesChanged;
 import pl.spring.demo.desktop.model.Status.Status;
+import pl.spring.demo.desktop.model.Transaction.Transaction;
 import pl.spring.demo.desktop.model.brokerageOffice.BrokerageOffice;
+import pl.spring.demo.desktop.model.brokerageOffice.TransactionHandler.TransactionHandler;
+import pl.spring.demo.desktop.model.brokerageOffice.event.BrokerageOfficeOpened;
 import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 
-
+@Service
 public class BrokerageOfficeImpl implements BrokerageOffice{
 	private Status status;
+	private ApplicationContext applicationContext;
+
 
 	@Autowired
 	StockMarketServiceClient gpw;
 
+	@Autowired
+	TransactionHandler transactionHandler;
+
+
+	public BrokerageOfficeImpl() {
+		super();
+	}
+
 	@Override
 	public void onApplicationEvent(StockRatesChanged event) {
-		status=Status.Open;//otworz biuro
-
+		status=Status.Open;
+		applicationContext.publishEvent(new BrokerageOfficeOpened(status));
 
 	}
 
@@ -60,6 +77,16 @@ public class BrokerageOfficeImpl implements BrokerageOffice{
 		return getStocksFromTodayXDaysBefore(X);
 	}
 
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		this.applicationContext = applicationContext;
+	}
+
+
+	@Override
+	public Transaction makeTransaction(Transaction t) {
+		return transactionHandler.handleTransaction(t);
+	}
 
 
 }

@@ -14,6 +14,8 @@ public class Calendar implements ApplicationContextAware {
 
 	private LocalDate currentDay;
 	private ApplicationContext applicationContext;
+	
+
 
 	public Calendar() {
 		super();

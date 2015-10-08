@@ -2,15 +2,18 @@ package pl.spring.demo.desktop.model.client.Player;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
+import pl.spring.demo.desktop.model.GPW.event.StockRatesChanged;
+import pl.spring.demo.desktop.model.brokerageOffice.event.BrokerageOfficeOpened;
 import pl.spring.demo.desktop.model.cantor.Cantor;
 import pl.spring.demo.desktop.model.client.Person.Person;
 import pl.spring.demo.desktop.model.client.Player.Wallet.Wallet;
 import pl.spring.demo.desktop.model.currency.Currency;
 
 @Component
-public class Player extends Person{
+public class Player extends Person implements ApplicationListener<BrokerageOfficeOpened>{
 
 	private Wallet wallet;
 
@@ -53,6 +56,23 @@ public class Player extends Person{
 			e.printStackTrace();
 		}
 		return 0;
+
+	}
+
+
+
+
+
+	@Override
+	public void onApplicationEvent(BrokerageOfficeOpened event) {
+//call strategy to get transactions
+//do transactions first buy then sell
+//after transaction update wallet money
+//do next transactions
+//tell brokerage to closed
+//change money
+//tell cantor to closed
+
 
 	}
 

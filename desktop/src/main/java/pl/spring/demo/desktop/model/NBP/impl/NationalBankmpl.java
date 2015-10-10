@@ -6,16 +6,14 @@ import java.util.HashMap;
 import java.util.Random;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
 import pl.spring.demo.desktop.model.Calendar.event.DayChanged;
 import pl.spring.demo.desktop.model.NBP.NationalBank;
 import pl.spring.demo.desktop.model.NBP.event.ExchangeRatesChanged;
 import pl.spring.demo.desktop.model.currency.Currency;
 
-@Service
-public class NationalBankmpl implements ApplicationListener<DayChanged>,ApplicationContextAware, NationalBank {
+@Service("NationalBank")
+public class NationalBankmpl implements  NationalBank {
 
 	private HashMap<Currency, Double> currentExchangeRateMap;
 	private ApplicationContext applicationContext;

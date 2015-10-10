@@ -1,6 +1,5 @@
 package pl.spring.demo.desktop.model.Transaction;
 
-import org.springframework.beans.factory.annotation.Value;
 
 import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 
@@ -13,18 +12,49 @@ public abstract class Transaction {
 	private StatusOfTransaction status;
 	private Double upperBoundPriceRandomizer;
 	private Double lowerBoundPriceRandomizer;
-
-	@Value("${transaction.lowerBoundNumberOfStockRandomizer}")
 	private Double lowerBoundWarrantedNumberOfStock;
-
-	@Value("${transaction.upperrBoundNumberOfStockRandomizer}")
 	private Double upperBoundWarrantedNumberOfStock;
+	private Double brokerageOfficeCommission;
+
+
+
+	public Double getBrokerageOfficeCommission() {
+		return brokerageOfficeCommission;
+	}
+
+
+	public void setBrokerageOfficeCommission(Double brokerageOfficeCommission) {
+		this.brokerageOfficeCommission = brokerageOfficeCommission;
+	}
+
+
+	public Transaction() {
+		super();
+		this.status=StatusOfTransaction.Created;
+	}
+
 
 	public Transaction(StockDailyRecordTo stock, int numberOfStockRequested) {
 		super();
 		this.stock = stock;
 		this.numberOfStockRequested = numberOfStockRequested;
+		this.status=StatusOfTransaction.Created;
 	}
+
+
+	public Transaction(StockDailyRecordTo stock, int numberOfStockRequested, Double upperBoundPriceRandomizer,
+			Double lowerBoundPriceRandomizer, Double lowerBoundWarrantedNumberOfStock,
+			Double upperBoundWarrantedNumberOfStock) {
+			super();
+			this.stock = stock;
+			this.numberOfStockRequested = numberOfStockRequested;
+			this.upperBoundPriceRandomizer = upperBoundPriceRandomizer;
+			this.lowerBoundPriceRandomizer = lowerBoundPriceRandomizer;
+			this.lowerBoundWarrantedNumberOfStock = lowerBoundWarrantedNumberOfStock;
+			this.upperBoundWarrantedNumberOfStock = upperBoundWarrantedNumberOfStock;
+			this.status=StatusOfTransaction.Created;
+		}
+
 
 	public StatusOfTransaction getStatus() {
 		return status;
@@ -75,5 +105,14 @@ public abstract class Transaction {
 		this.brokerageOfficeAcceptedNumber = brokerageOfficeAcceptedNumber;
 	}
 
+	public double getValueOfBrokerageOfficeOffer() {
+		return brokerageOfficeAcceptedRate*brokerageOfficeAcceptedNumber;
+	}
+	public double getChangeValueOFTransaction() {
+		double clientPropValue = getStock().getValue() * getNumberOfStockRequested();
+		double brokerPropValue = getValueOfBrokerageOfficeOffer();
 
+		double change=Math.abs(clientPropValue-brokerPropValue);
+		return (change/clientPropValue)*100;
+	}
 }

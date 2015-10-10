@@ -4,15 +4,17 @@ import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import pl.spring.demo.desktop.model.GPW.StockMarketServiceClient;
 import pl.spring.demo.desktop.model.GPW.event.StockRatesChanged;
 import pl.spring.demo.desktop.model.Status.Status;
+import pl.spring.demo.desktop.model.Transaction.StatusOfTransaction;
 import pl.spring.demo.desktop.model.Transaction.Transaction;
 import pl.spring.demo.desktop.model.brokerageOffice.BrokerageOffice;
 import pl.spring.demo.desktop.model.brokerageOffice.TransactionHandler.TransactionHandler;
-import pl.spring.demo.desktop.model.brokerageOffice.event.BrokerageOfficeOpened;
+import pl.spring.demo.desktop.model.brokerageOffice.event.BrokerageOfficeStatusChanged;
 import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 
 @Service
@@ -26,7 +28,10 @@ public class BrokerageOfficeImpl implements BrokerageOffice{
 
 	@Autowired
 	TransactionHandler transactionHandler;
-
+	@Value("${brokerageOffice.commissionPercent}")
+	Double commissionPercent;
+	@Value("${brokerageOffice.commissionFixed}")
+	Double fixedCommission;
 
 	public BrokerageOfficeImpl() {
 		super();
@@ -35,7 +40,7 @@ public class BrokerageOfficeImpl implements BrokerageOffice{
 	@Override
 	public void onApplicationEvent(StockRatesChanged event) {
 		status=Status.Open;
-		applicationContext.publishEvent(new BrokerageOfficeOpened(status));
+		applicationContext.publishEvent(new BrokerageOfficeStatusChanged(status));
 
 	}
 
@@ -82,9 +87,24 @@ public class BrokerageOfficeImpl implements BrokerageOffice{
 
 	@Override
 	public Transaction makeTransaction(Transaction t) {
-		return transactionHandler.handleTransaction(t);
+			setCommission(t);
+		Transaction result=transactionHandler.handleTransaction(t);
+		return  result;
 	}
 
+	private double calculateCommisionFromTransaction(Transaction t){
+		double valueOfTransaction=t.getValueOfBrokerageOfficeOffer();
+		double percentCommission=(commissionPercent/100)*valueOfTransaction;
+		if(percentCommission<fixedCommission){
+			return fixedCommission;
+		}
+		return percentCommission;
+
+	}
+	private void setCommission(Transaction t){
+		double commission= calculateCommisionFromTransaction(t);
+		t.setBrokerageOfficeCommission(commission);
+	}
 
 }
 

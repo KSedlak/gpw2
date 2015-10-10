@@ -4,12 +4,14 @@ package pl.spring.demo.desktop.model.brokerageOffice.TransactionsRandomizer.impl
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 import pl.spring.demo.desktop.model.Transaction.Transaction;
 import pl.spring.demo.desktop.model.brokerageOffice.TransactionsRandomizer.TransactionRandomizer;
 
 @Service
+@DependsOn("transactionFactory")
 public class TransactionRandomizerImpl implements TransactionRandomizer {
 
 	@Override
@@ -18,7 +20,7 @@ public class TransactionRandomizerImpl implements TransactionRandomizer {
 		int newNumberOfStock=getRandomNumberOfStockInTransaction(
 				t.getNumberOfStockRequested(),
 				t.getLowerBoundWarrantedNumberOfStock(),
-				t.getUpperBoundPriceRandomizer());
+				t.getUpperBoundWarrantedNumberOfStock());
 
 		t.setBrokerageOfficeAcceptedNumber(newNumberOfStock);
 
@@ -43,10 +45,8 @@ public class TransactionRandomizerImpl implements TransactionRandomizer {
 	}
 
 	private double getRandomPriceInTransaction(double input, Double lowerBound, Double upperBound){
-
 		double min=(lowerBound*input)/100;
 		double max=(upperBound*input)/100;
-
 		return ThreadLocalRandom.current().nextDouble(min, max);
 	}
 

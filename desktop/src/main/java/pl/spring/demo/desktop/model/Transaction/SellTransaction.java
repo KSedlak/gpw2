@@ -1,19 +1,26 @@
 package pl.spring.demo.desktop.model.Transaction;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 
+@Component
 public class SellTransaction extends Transaction {
 
-	@Value("${transaction.sell.lowerBoundPriceRandomizer}")
-	private Double lowerBoundPriceRandomizer;
 
-	@Value("${transaction.sell.lowerBoundPriceRandomizer}")
-	private Double upperBoundPriceRandomizer;
-
-	public SellTransaction(StockDailyRecordTo stock, int numberOfStockRequested) {
-		super(stock, numberOfStockRequested);
+	public SellTransaction(StockDailyRecordTo stock,
+			int numberOfStockRequested,
+			Double upperBoundPriceRandomizer,
+			Double lowerBoundPriceRandomizer,
+			Double lowerBoundWarrantedNumberOfStock,
+			Double upperBoundWarrantedNumberOfStock) {
+		super(stock, numberOfStockRequested, upperBoundPriceRandomizer, lowerBoundPriceRandomizer,
+				lowerBoundWarrantedNumberOfStock, upperBoundWarrantedNumberOfStock);
 	}
+
+	public SellTransaction() {
+		super();
+	}
+
 
 }

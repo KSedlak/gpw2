@@ -5,14 +5,14 @@ import org.springframework.context.ApplicationEvent;
 
 import pl.spring.demo.desktop.model.Status.Status;
 
-public class BrokerageOfficeOpened extends ApplicationEvent {
+public class BrokerageOfficeStatusChanged extends ApplicationEvent {
 
 	private static final long serialVersionUID = 1L;
 
 	private Status brokerageOfficeStatus;
 
 
-	public BrokerageOfficeOpened(Status source) {
+	public BrokerageOfficeStatusChanged(Status source) {
 		super(source);
 		this.brokerageOfficeStatus=source;
 	}

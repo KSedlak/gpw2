@@ -28,8 +28,15 @@ public class StockMarketServiceClientImpl implements StockMarketServiceClient {
 
 	@Override
 	public void onApplicationEvent(DayChanged event) {
-		applicationContext.publishEvent(new StockRatesChanged(true));
 		today=event.getCurrentDate();
+		if(getTodayValues().size()==0){
+			System.out.println("brak notowan");
+		}
+		if(getTodayValues().size()>0){
+			applicationContext.publishEvent(new StockRatesChanged(true));
+		}
+
+
 	}
 
 	@Override

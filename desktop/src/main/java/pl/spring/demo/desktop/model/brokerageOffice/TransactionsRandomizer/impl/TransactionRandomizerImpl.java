@@ -7,8 +7,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
-import pl.spring.demo.desktop.model.Transaction.Transaction;
 import pl.spring.demo.desktop.model.brokerageOffice.TransactionsRandomizer.TransactionRandomizer;
+import pl.spring.demo.desktop.model.transaction.Transaction;
 
 @Service
 @DependsOn("transactionFactory")

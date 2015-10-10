@@ -6,15 +6,17 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Service;
-import pl.spring.demo.desktop.model.GPW.StockMarketServiceClient;
-import pl.spring.demo.desktop.model.GPW.event.StockRatesChanged;
-import pl.spring.demo.desktop.model.Status.Status;
-import pl.spring.demo.desktop.model.Transaction.StatusOfTransaction;
-import pl.spring.demo.desktop.model.Transaction.Transaction;
+
 import pl.spring.demo.desktop.model.brokerageOffice.BrokerageOffice;
 import pl.spring.demo.desktop.model.brokerageOffice.TransactionHandler.TransactionHandler;
 import pl.spring.demo.desktop.model.brokerageOffice.event.BrokerageOfficeStatusChanged;
+import pl.spring.demo.desktop.model.client.player.event.IamDoneForToday;
+import pl.spring.demo.desktop.model.status.Status;
+import pl.spring.demo.desktop.model.stockMarket.StockMarketServiceClient;
+import pl.spring.demo.desktop.model.stockMarket.event.StockRatesChanged;
+import pl.spring.demo.desktop.model.transaction.Transaction;
 import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 
 @Service
@@ -37,12 +39,6 @@ public class BrokerageOfficeImpl implements BrokerageOffice{
 		super();
 	}
 
-	@Override
-	public void onApplicationEvent(StockRatesChanged event) {
-		status=Status.Open;
-		applicationContext.publishEvent(new BrokerageOfficeStatusChanged(status));
-
-	}
 
 	@Override
 	public List<StockDailyRecordTo> getTodayStockValues() {
@@ -104,6 +100,28 @@ public class BrokerageOfficeImpl implements BrokerageOffice{
 	private void setCommission(Transaction t){
 		double commission= calculateCommisionFromTransaction(t);
 		t.setBrokerageOfficeCommission(commission);
+	}
+
+	@Override
+	public void onApplicationEvent(ApplicationEvent event) {
+
+		if(event instanceof StockRatesChanged){
+			status=Status.Open;
+		}
+		if(event instanceof IamDoneForToday){
+			status=Status.Closed;
+		}
+		applicationContext.publishEvent(new BrokerageOfficeStatusChanged(status));
+	}
+
+
+	public Status getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 }

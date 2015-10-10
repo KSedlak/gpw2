@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
-import pl.spring.demo.desktop.model.Transaction.StatusOfTransaction;
-import pl.spring.demo.desktop.model.Transaction.Transaction;
 import pl.spring.demo.desktop.model.brokerageOffice.TransactionHandler.TransactionHandler;
 import pl.spring.demo.desktop.model.brokerageOffice.TransactionsRandomizer.TransactionRandomizer;
+import pl.spring.demo.desktop.model.transaction.StatusOfTransaction;
+import pl.spring.demo.desktop.model.transaction.Transaction;
 @Service
 @DependsOn("transactionFactory")
 public class TransactionHandlerImpl implements TransactionHandler {

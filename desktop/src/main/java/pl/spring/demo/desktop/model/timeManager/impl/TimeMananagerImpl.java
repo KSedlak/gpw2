@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Component;
 
-import pl.spring.demo.desktop.model.Calendar.Calendar;
-import pl.spring.demo.desktop.model.Status.Status;
 import pl.spring.demo.desktop.model.brokerageOffice.event.BrokerageOfficeStatusChanged;
+import pl.spring.demo.desktop.model.calendar.Calendar;
 import pl.spring.demo.desktop.model.cantor.event.CantorStatusChanged;
+import pl.spring.demo.desktop.model.status.Status;
 import pl.spring.demo.desktop.model.timeManager.TimeManager;
 
 @Component
@@ -24,8 +24,6 @@ public class TimeMananagerImpl implements TimeManager {
     private Status cantorStatus;
     private Status brokerageOfficeStatus;
 	final static Logger logger=Logger.getLogger("TimeManager");
-
-
 
     public TimeMananagerImpl() {
     	super();
@@ -75,7 +73,7 @@ public class TimeMananagerImpl implements TimeManager {
 	}
 	@Override
 	public void end() {
-
+		logger.info("Simulation end with date: "+calendar.getCurrentDay());
 
 	}
 	@Override

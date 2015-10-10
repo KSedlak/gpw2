@@ -3,7 +3,7 @@ package pl.spring.demo.desktop.model.brokerageOffice.event;
 
 import org.springframework.context.ApplicationEvent;
 
-import pl.spring.demo.desktop.model.Status.Status;
+import pl.spring.demo.desktop.model.status.Status;
 
 public class BrokerageOfficeStatusChanged extends ApplicationEvent {
 

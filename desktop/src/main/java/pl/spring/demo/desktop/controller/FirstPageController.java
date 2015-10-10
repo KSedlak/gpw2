@@ -1,25 +1,18 @@
 package pl.spring.demo.desktop.controller;
 
-import java.io.IOException;
 import java.time.LocalDate;
-
 import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
-import pl.spring.demo.desktop.App;
-import pl.spring.demo.desktop.model.Calendar.Calendar;
-import pl.spring.demo.desktop.model.client.Player.Player;
+import pl.spring.demo.desktop.model.calendar.Calendar;
+import pl.spring.demo.desktop.model.client.player.Player;
 import pl.spring.demo.desktop.model.currency.Currency;
-import pl.spring.demo.desktop.view.TextAreaAppender.TextAreaAppender;
-import pl.spring.demo.desktop.view.sceneMaker.SceneMaker;
+import pl.spring.demo.desktop.view.textAreaAppender.TextAreaAppender;
 import pl.spring.demo.service.StockMarketService;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 

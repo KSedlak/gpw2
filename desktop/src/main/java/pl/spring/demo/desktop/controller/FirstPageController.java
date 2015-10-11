@@ -111,7 +111,7 @@ public class FirstPageController implements ApplicationListener<NoMoreActionToda
 
 	private ObservableList<HistoricTableRow> historic = FXCollections.observableArrayList();
 
-	@FXML ComboBox combo;
+	@FXML ComboBox<String> combo;
 
 	@FXML
 	private void initialize() {

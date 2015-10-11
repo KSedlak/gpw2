@@ -19,7 +19,7 @@ import pl.spring.demo.desktop.model.brokerageOffice.BrokerageOffice;
 import pl.spring.demo.desktop.model.brokerageOffice.event.BrokerageOfficeStatusChanged;
 import pl.spring.demo.desktop.model.cantor.Cantor;
 import pl.spring.demo.desktop.model.client.person.Person;
-import pl.spring.demo.desktop.model.client.player.event.IamDoneForToday;
+import pl.spring.demo.desktop.model.client.player.event.NoMoreActionToday;
 import pl.spring.demo.desktop.model.client.player.stockWallet.StockWallet;
 import pl.spring.demo.desktop.model.client.player.strategy.Strategy;
 import pl.spring.demo.desktop.model.client.player.wallet.Wallet;
@@ -50,7 +50,6 @@ public class Player extends Person
 
 	@Value("${player.lastName}")
 	private String lastName;
-	@Autowired
 	private Strategy currentStrategy;
 	@Value("${transaction.changePercentToAccept}")
 	private Double TRANSACTION_CHANGE_PERCENT_TOLLERANCE;
@@ -74,6 +73,11 @@ public class Player extends Person
 			makeTaskForToday();
 		}
 
+	}
+
+
+	public void setCurrentStrategy(Strategy currentStrategy) {
+		this.currentStrategy = currentStrategy;
 	}
 
 	private void makeTodayOperationsOnMarket() {
@@ -180,13 +184,28 @@ public class Player extends Person
 		this.applicationContext = applicationContext;
 	}
 
+
+
 	public double howMuchMoneyHave(Currency c) {
+
 		return wallet.getMoney(c);
 	}
 
-
+	public double howMuchStockValueHave(){
+		return stockWallet.getValueOfWallet();
+	}
 	public HashMap<StockDailyRecordTo, Integer> showStockWallet() {
 		return stockWallet.showWallet();
+	}
+
+
+	public double getValueOfAllResources(){
+		double result=0;
+		result=result+howMuchMoneyHave(Currency.PLN);
+		result=result+howMuchMoneyHave(Currency.EURO)*cantor.getBuyRate(Currency.EURO);
+		result=result+howMuchStockValueHave();
+
+		return result;
 	}
 
 	public void makeTaskForToday() {
@@ -211,7 +230,7 @@ public class Player extends Person
 
 			public void succes() {
 				logger.info("Task for Today ends");
-				applicationContext.publishEvent(new IamDoneForToday(Status.Closed));
+				applicationContext.publishEvent(new NoMoreActionToday(Status.Closed));
 			}
 
 		});

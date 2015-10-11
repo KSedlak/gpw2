@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import pl.spring.demo.desktop.model.brokerageOffice.BrokerageOffice;
 import pl.spring.demo.desktop.model.brokerageOffice.event.BrokerageOfficeStatusChanged;
 import pl.spring.demo.desktop.model.brokerageOffice.transactionHandler.TransactionHandler;
-import pl.spring.demo.desktop.model.client.player.event.IamDoneForToday;
+import pl.spring.demo.desktop.model.client.player.event.NoMoreActionToday;
 import pl.spring.demo.desktop.model.status.Status;
 import pl.spring.demo.desktop.model.stockMarket.StockMarketServiceClient;
 import pl.spring.demo.desktop.model.stockMarket.event.StockRatesChanged;
@@ -54,7 +54,7 @@ public class BrokerageOfficeImpl implements BrokerageOffice{
 	}
 
 	@Override
-	public List<StockDailyRecordTo> getStocksByCompanyNameAndDate(String name, LocalDate d) {
+	public StockDailyRecordTo getStocksByCompanyNameAndDate(String name, LocalDate d) {
 		return gpw.getStocksByCompanyNameAndDate(name, d);
 	}
 
@@ -114,7 +114,7 @@ public class BrokerageOfficeImpl implements BrokerageOffice{
 			status=Status.Open;
 			applicationContext.publishEvent(new BrokerageOfficeStatusChanged(status));
 		}
-		if(event instanceof IamDoneForToday){
+		if(event instanceof NoMoreActionToday){
 			status=Status.Closed;
 			applicationContext.publishEvent(new BrokerageOfficeStatusChanged(status));
 		}
@@ -129,6 +129,18 @@ public class BrokerageOfficeImpl implements BrokerageOffice{
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+
+
+	@Override
+	public List<StockDailyRecordTo> getCheapesStocksFromToday(Integer X) {
+		return gpw.getChepestStockFromToday(X);
+	}
+
+
+	@Override
+	public StockDailyRecordTo getStocksByCompanyNameFromToday(String name) {
+	return gpw.getStocksByCompanyNameFromToday(name);
 	}
 
 }

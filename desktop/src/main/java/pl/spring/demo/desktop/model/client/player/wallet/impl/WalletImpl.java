@@ -47,12 +47,7 @@ public void removeFromWallet(Currency c, Double number) {
 		Double currentNumber=wallet.get(c);
 		if(currentNumber<number){//try remove more than have
 			logger.info("Client remove more than is allowed");
-			try {
-				throw new Exception();
-			} catch (Exception e) {
 
-				e.printStackTrace();
-			}
 		}
 		if(number==currentNumber){//sell all stock from wallet
 			wallet.remove(c);

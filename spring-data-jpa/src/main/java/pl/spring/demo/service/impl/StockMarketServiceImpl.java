@@ -24,8 +24,8 @@ public class StockMarketServiceImpl implements StockMarketService {
 	}
 
 	@Override
-	public List<StockDailyRecordTo> findStockDailyRecordsByDateAndCompanyName(LocalDate d, String name) {
-		return StockDailyRecordMapper.map2ToList(stockDailyRecordDao.findStockDailyRecordsByDateAndCompanyName(DateMapper.map(d), name));
+	public StockDailyRecordTo findStockDailyRecordsByDateAndCompanyName(LocalDate d, String name) {
+		return StockDailyRecordMapper.map(stockDailyRecordDao.findStockDailyRecordsByDateAndCompanyName(DateMapper.map(d), name));
 	}
 
 	@Override
@@ -41,6 +41,16 @@ public class StockMarketServiceImpl implements StockMarketService {
 	@Override
 	public List<StockDailyRecordTo> findStockDailyRecordsFromDateAToB(LocalDate A, LocalDate B) {
 	return StockDailyRecordMapper.map2ToList(stockDailyRecordDao.findStockDailyRecordsFromDateAToB(DateMapper.map(A), DateMapper.map(B)));
+	}
+
+	@Override
+	public List<StockDailyRecordTo> findCheapestFromDay(LocalDate d, int resultLimit) {
+		return StockDailyRecordMapper.map2ToList(stockDailyRecordDao.findStockDailyRecordsCheapestByDate(DateMapper.map(d), resultLimit));
+	}
+
+	@Override
+	public List<StockDailyRecordTo> findExpensiveFromDay(LocalDate d, int resultLimit, List<String> companiesToCheck) {
+		return StockDailyRecordMapper.map2ToList(stockDailyRecordDao.findStockDailyRecordsExpensiveByDate(DateMapper.map(d), resultLimit, companiesToCheck));
 	}
 
 

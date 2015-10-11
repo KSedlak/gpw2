@@ -13,9 +13,12 @@ public interface StockMarketServiceClient extends ApplicationListener<DayChanged
 
 List<StockDailyRecordTo> getTodayValues();
 List<StockDailyRecordTo> getStocksByCompanyName(String name);
-List<StockDailyRecordTo> getStocksByCompanyNameAndDate(String name, LocalDate d);
+StockDailyRecordTo getStocksByCompanyNameAndDate(String name, LocalDate d);
+StockDailyRecordTo getStocksByCompanyNameFromToday(String name);
 List<StockDailyRecordTo> getStocksByCompanyNameFromDateToDate(String name, LocalDate A, LocalDate B);
 List<StockDailyRecordTo> getStockDailyRecordsFromDateAToB(LocalDate A, LocalDate B);
 List<StockDailyRecordTo> getStocksByCompanyNameFromTodayXDaysBefore(String name, Integer X);
 List<StockDailyRecordTo> getStocksFromTodayXDaysBefore(Integer X);
+List<StockDailyRecordTo> getChepestStockFromToday(int limit);
+
 }

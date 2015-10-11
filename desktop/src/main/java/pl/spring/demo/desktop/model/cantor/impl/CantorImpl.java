@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 import pl.spring.demo.desktop.model.cantor.Cantor;
 import pl.spring.demo.desktop.model.cantor.event.CantorStatusChanged;
-import pl.spring.demo.desktop.model.client.player.event.IamDoneForToday;
+import pl.spring.demo.desktop.model.client.player.event.NoMoreActionToday;
 import pl.spring.demo.desktop.model.currency.Currency;
 import pl.spring.demo.desktop.model.nationalBank.event.ExchangeRatesChanged;
 import pl.spring.demo.desktop.model.status.Status;
@@ -94,7 +94,7 @@ public class CantorImpl implements Cantor {
 			this.currentExchangeRateMap = ((ExchangeRatesChanged) event).getCurrentExchangeRateMap();
 			applicationContext.publishEvent(new CantorStatusChanged(cantorStatus));
 		}
-		if (event instanceof IamDoneForToday) {
+		if (event instanceof NoMoreActionToday) {
 			cantorStatus = Status.Closed;
 			applicationContext.publishEvent(new CantorStatusChanged(cantorStatus));
 		}

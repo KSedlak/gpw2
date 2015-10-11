@@ -7,6 +7,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import pl.spring.demo.desktop.model.calendar.event.DayChanged;
+import pl.spring.demo.desktop.model.client.player.event.NoMoreActionToday;
+import pl.spring.demo.desktop.model.status.Status;
 import pl.spring.demo.desktop.model.stockMarket.StockMarketServiceClient;
 import pl.spring.demo.desktop.model.stockMarket.event.StockRatesChanged;
 import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
@@ -34,6 +36,7 @@ public class StockMarketServiceClientImpl implements StockMarketServiceClient {
 		today=event.getCurrentDate();
 		if(getTodayValues().size()==0){
 			logger.info("No data for today because market is closed");
+			applicationContext.publishEvent(new NoMoreActionToday(Status.Closed));
 		}
 		if(getTodayValues().size()>0){
 			logger.info("Data found and notify brokerageOffice");
@@ -59,7 +62,7 @@ public class StockMarketServiceClientImpl implements StockMarketServiceClient {
 	}
 
 	@Override
-	public List<StockDailyRecordTo> getStocksByCompanyNameAndDate(String name, LocalDate d) {
+	public StockDailyRecordTo getStocksByCompanyNameAndDate(String name, LocalDate d) {
 		return service.findStockDailyRecordsByDateAndCompanyName(d, name);
 	}
 
@@ -81,6 +84,17 @@ public class StockMarketServiceClientImpl implements StockMarketServiceClient {
 	@Override
 	public List<StockDailyRecordTo> getStocksFromTodayXDaysBefore(Integer X) {
 	return getStockDailyRecordsFromDateAToB(today.minusDays(X), today);
+	}
+
+	@Override
+	public List<StockDailyRecordTo> getChepestStockFromToday(int limit) {
+
+	return service.findCheapestFromDay(today, limit);
+	}
+
+	@Override
+	public StockDailyRecordTo getStocksByCompanyNameFromToday(String name) {
+	return getStocksByCompanyNameAndDate(name, today);
 	}
 
 

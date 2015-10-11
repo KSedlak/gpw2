@@ -1,12 +1,10 @@
-package pl.spring.demo.desktop.model.client.player.strategy.strategies.random;
+package pl.spring.demo.desktop.model.client.player.strategy.strategies.buyCheapSellDrop;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,14 +17,15 @@ import pl.spring.demo.desktop.model.transaction.marketTransaction.marketTransact
 import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 
 @Service
-public class RandomStrategy implements Strategy {
+public class BuyCheapSellDrop implements Strategy {
 
-	@Value("${randomStrategy.maxTransactionsPerKind}")
+	@Value("${buyCheapStrategy.maxTransactionsPerKind}")
 	int maximumNumberOfGeneratedTransactions;
-	final static Logger logger=Logger.getLogger("RandomStrategy");
-	@Value("${randomStrategy.name}")
+	final static Logger logger=Logger.getLogger("BuyCheapStrategy");
+	@Value("${buyCheapStrategy.daysToDropCheck}")
+	int daysToCheckDrop;
+	@Value("${buyCheapStrategy.name}")
 	String name;
-
 	@Autowired
 	BrokerageOffice brokerageOffice;
 
@@ -36,21 +35,18 @@ public class RandomStrategy implements Strategy {
 	@Override
 	public List<MarketBuyTransaction> whatShouldClientBuy(double PLN) {
 
-	List<StockDailyRecordTo> today = brokerageOffice.getTodayStockValues();
+	List<StockDailyRecordTo> today = brokerageOffice.getCheapesStocksFromToday(maximumNumberOfGeneratedTransactions);
 	List<MarketBuyTransaction> result=new ArrayList<MarketBuyTransaction>();
 
 	int numberTransactions=ThreadLocalRandom.current().nextInt(0, maximumNumberOfGeneratedTransactions + 1);
-	Set<Integer> indexes=generateNoRepetitionIndexes(numberTransactions, today.size()-1);
-
 	StockDailyRecordTo choosenStock = null;
 
-			for(Integer i:indexes){
+			for(int i=0;i<numberTransactions;i++){
 				choosenStock=today.get(i);
 				int maxWhichClientCanBuy=(int)(PLN/choosenStock.getValue());
 					int numberOfStockToBuy=getRandomInt(1,maxWhichClientCanBuy);
 					result.add(factory.createBuyTransaction(choosenStock, numberOfStockToBuy));
 			}
-
 		return result;
 
 	}
@@ -60,31 +56,41 @@ public class RandomStrategy implements Strategy {
 
 		List<MarketSellTransaction> result=new ArrayList<MarketSellTransaction>();
 
-		int numberTransactions=ThreadLocalRandom.current().nextInt(0, maximumNumberOfGeneratedTransactions + 1);
-		if(stocks.size()-1<=numberTransactions){
-			numberTransactions=stocks.size()-1;
-		}
-
-		Set<Integer> indexes=generateNoRepetitionIndexes(numberTransactions, stocks.size()-1);
 		List<StockDailyRecordTo> stocksWhichClientHave= new ArrayList<>(stocks.keySet());
-		StockDailyRecordTo choosenStock = null;
-
-		for(Integer i:indexes){
-			choosenStock=stocksWhichClientHave.get(i);
-				int numberOfStockToSell=getRandomInt(1,stocks.get(choosenStock));
-					result.add(factory.createSellTransaction(choosenStock, numberOfStockToSell));
-		}
+		List<StockDailyRecordTo> toSell=getWhatDropsAllTheTime(stocksWhichClientHave);
+		if(toSell.size()>0){
+		for(StockDailyRecordTo s:toSell){
+				int numberOfStockToSell=getRandomInt(1,stocks.get(s));
+					result.add(factory.createSellTransaction(s, numberOfStockToSell));
+		}}
 
 		return result;
 
 	}
 
-	private Set<Integer> generateNoRepetitionIndexes(int number, int maxIndex){
-		Set<Integer> noRepetitionIdx=new LinkedHashSet<Integer>();
-		for(int i=0;i<number;i++){
-			noRepetitionIdx.add(getRandomInt(number, maxIndex));
+
+	private List<StockDailyRecordTo> getWhatDropsAllTheTime(List<StockDailyRecordTo> stocksWhichClientHave){
+		List<StockDailyRecordTo> candidateToSell=new ArrayList<StockDailyRecordTo>();
+		List<StockDailyRecordTo> beforeValues;
+		Boolean alltimeDrop=true;
+		for(StockDailyRecordTo st:stocksWhichClientHave){
+			double todayValue=brokerageOffice.getStocksByCompanyNameFromToday(st.getCompany().getName()).getValue();
+			beforeValues=brokerageOffice.getStocksByCompanyNameFromTodayXDaysBefore(st.getCompany().getName(), daysToCheckDrop);
+			alltimeDrop=true;
+		for(StockDailyRecordTo before:beforeValues){
+			if(todayValue>=before.getValue()){
+				alltimeDrop=false;
+			}
 		}
-		return noRepetitionIdx;
+		if(alltimeDrop){
+			candidateToSell.add(st);
+		}
+
+
+		}
+
+
+		return candidateToSell;
 	}
 
 	private Integer getRandomInt(int min, int max ){
@@ -102,6 +108,5 @@ public class RandomStrategy implements Strategy {
 	public void setName(String name) {
 		this.name = name;
 	}
-
 
 }

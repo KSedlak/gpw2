@@ -20,4 +20,8 @@ import org.springframework.context.ApplicationListener;
 
 	void setEndDate(LocalDate endDate);
 
+	LocalDate getTodayDate();
+
+	LocalDate getEndDate();
+
 }

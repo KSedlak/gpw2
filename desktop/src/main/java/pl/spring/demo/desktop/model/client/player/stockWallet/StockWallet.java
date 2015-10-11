@@ -9,4 +9,5 @@ public interface StockWallet {
 	void addToWallet(StockDailyRecordTo c, Integer n);
 	void removeFromWallet(StockDailyRecordTo c, Integer number);
 	HashMap<StockDailyRecordTo, Integer> showWallet();
+	double getValueOfWallet();
 }

@@ -34,7 +34,7 @@ public class CalendarImpl implements Calendar {
 	@Override
 	public void setCurrentDay(LocalDate currentDay) {
 		this.currentDay = currentDay;
-		logger.info("Calendar is set ond day: "+currentDay);
+		logger.info("\nCalendar is set ond day: "+currentDay);
 		applicationContext.publishEvent(new DayChanged(currentDay));
 
 	}

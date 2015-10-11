@@ -91,7 +91,7 @@ public class Player extends Person
 			MarketTransaction response = brokerageOffice.makeTransaction(buy);
 
 			if (response.getChangeValueOFTransaction() > TRANSACTION_CHANGE_PERCENT_TOLLERANCE
-					&& !canAffordThatTransaction(availableMoney, response)) {
+					|| !canAffordThatTransaction(availableMoney, response)) {
 				response.setStatus(StatusOfTransaction.Rejected);
 				logger.info("Client reject brokerageOfficeOffer");
 			}
@@ -145,8 +145,10 @@ public class Player extends Person
 	}
 
 	private boolean canAffordThatTransaction(double currentMoney, MarketTransaction t) {
-		logger.info("Current terms of transaction make client cant afford that transaction");
-		return currentMoney > (t.getValueOfBrokerageOfficeOffer() + t.getBrokerageOfficeCommission());
+		double cost=DoubleRounder.roundToMoney((t.getValueOfBrokerageOfficeOffer() + t.getBrokerageOfficeCommission()));
+		boolean canI= currentMoney>cost;
+		logger.info("Client check wallet-> have: "+currentMoney+" cost: "+cost+" canMakeIt: "+canI);
+		return canI;
 	}
 
 	private void keepBalanceInWallet(Currency a, Currency b) {
@@ -181,6 +183,7 @@ public class Player extends Person
 	public double howMuchMoneyHave(Currency c) {
 		return wallet.getMoney(c);
 	}
+
 
 	public HashMap<StockDailyRecordTo, Integer> showStockWallet() {
 		return stockWallet.showWallet();

@@ -7,6 +7,8 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -19,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TableView;
 
 @Component
 public class FirstPageController {
@@ -55,6 +58,14 @@ public class FirstPageController {
 
 	@FXML CheckBox enableLogging;
 
+	@FXML Button startButton;
+
+	@FXML DatePicker picker1;
+
+	@FXML TableView historyTable;
+
+
+
 
 
 
@@ -64,9 +75,10 @@ public class FirstPageController {
 			lastNameValue.setText(player.getLastName());
 			euroValue.setText(player.howMuchMoneyHave(Currency.EURO)+"");
 			plnValue.setText(player.howMuchMoneyHave(Currency.PLN)+"");
+			picker.setValue(LocalDate.parse("2013-01-02"));
+			picker1.setValue(LocalDate.parse("2013-01-04"));
 			setupLogginView();
-			timeManager.setEndDate(LocalDate.parse("2013-01-04"));
-			timeManager.start(LocalDate.parse("2013-01-02"));
+
 
 
 	}
@@ -97,6 +109,14 @@ public class FirstPageController {
 		}
 		if(!enableLogging.isSelected())
 			Logger.getRootLogger().setLevel(Level.OFF);
+	}
+
+
+
+
+	@FXML public void startAction(ActionEvent event) {
+		timeManager.setEndDate(picker1.getValue());
+		timeManager.start(picker.getValue());
 	}
 
 

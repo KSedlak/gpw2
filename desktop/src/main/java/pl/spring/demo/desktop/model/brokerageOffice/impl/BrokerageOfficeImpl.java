@@ -1,7 +1,9 @@
 package pl.spring.demo.desktop.model.brokerageOffice.impl;
 
+
 import java.time.LocalDate;
 import java.util.List;
+import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,20 +12,21 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Service;
 
 import pl.spring.demo.desktop.model.brokerageOffice.BrokerageOffice;
-import pl.spring.demo.desktop.model.brokerageOffice.TransactionHandler.TransactionHandler;
 import pl.spring.demo.desktop.model.brokerageOffice.event.BrokerageOfficeStatusChanged;
+import pl.spring.demo.desktop.model.brokerageOffice.transactionHandler.TransactionHandler;
 import pl.spring.demo.desktop.model.client.player.event.IamDoneForToday;
 import pl.spring.demo.desktop.model.status.Status;
 import pl.spring.demo.desktop.model.stockMarket.StockMarketServiceClient;
 import pl.spring.demo.desktop.model.stockMarket.event.StockRatesChanged;
-import pl.spring.demo.desktop.model.transaction.Transaction;
+import pl.spring.demo.desktop.model.transaction.marketTransaction.MarketTransaction;
+import pl.spring.demo.desktop.model.utils.doubleRounder.DoubleRounder;
 import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 
 @Service
 public class BrokerageOfficeImpl implements BrokerageOffice{
 	private Status status;
 	private ApplicationContext applicationContext;
-
+	final static Logger logger=Logger.getLogger("BrokerageOffice");
 
 	@Autowired
 	StockMarketServiceClient gpw;
@@ -82,23 +85,25 @@ public class BrokerageOfficeImpl implements BrokerageOffice{
 
 
 	@Override
-	public Transaction makeTransaction(Transaction t) {
-			setCommission(t);
-		Transaction result=transactionHandler.handleTransaction(t);
+	public MarketTransaction makeTransaction(MarketTransaction t) {
+
+		MarketTransaction result=transactionHandler.handleTransaction(t);
+		setCommission(result);
 		return  result;
 	}
 
-	private double calculateCommisionFromTransaction(Transaction t){
+	private double calculateCommisionFromTransaction(MarketTransaction t){
 		double valueOfTransaction=t.getValueOfBrokerageOfficeOffer();
 		double percentCommission=(commissionPercent/100)*valueOfTransaction;
 		if(percentCommission<fixedCommission){
 			return fixedCommission;
 		}
-		return percentCommission;
+		return DoubleRounder.roundToMoney(percentCommission);
 
 	}
-	private void setCommission(Transaction t){
+	private void setCommission(MarketTransaction t){
 		double commission= calculateCommisionFromTransaction(t);
+		logger.info("brokerageOffice add commission: "+commission+" to transaction");
 		t.setBrokerageOfficeCommission(commission);
 	}
 
@@ -107,11 +112,13 @@ public class BrokerageOfficeImpl implements BrokerageOffice{
 
 		if(event instanceof StockRatesChanged){
 			status=Status.Open;
+			applicationContext.publishEvent(new BrokerageOfficeStatusChanged(status));
 		}
 		if(event instanceof IamDoneForToday){
 			status=Status.Closed;
+			applicationContext.publishEvent(new BrokerageOfficeStatusChanged(status));
 		}
-		applicationContext.publishEvent(new BrokerageOfficeStatusChanged(status));
+
 	}
 
 

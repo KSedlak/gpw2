@@ -1,6 +1,8 @@
 package pl.spring.demo.desktop.model.client.player.stockWallet.impl;
 
 import java.util.HashMap;
+
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import pl.spring.demo.desktop.model.client.player.stockWallet.StockWallet;
@@ -11,7 +13,7 @@ import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 public class StockWalletImpl implements StockWallet {
 
 private HashMap<StockDailyRecordTo, Integer> wallet;
-
+final static Logger logger=Logger.getLogger("StockWallet");
 
 public StockWalletImpl() {
 wallet=new HashMap<StockDailyRecordTo,Integer>();
@@ -21,6 +23,7 @@ wallet=new HashMap<StockDailyRecordTo,Integer>();
 
 @Override
 public void addToWallet(StockDailyRecordTo c, Integer n){
+	logger.info("Client put to Stockwallet currency: "+c.getCompany().getName()+" quantity: "+n);
 	if(!wallet.containsKey(c)){
 		wallet.put(c, 0);
 	}
@@ -41,6 +44,7 @@ public HashMap<StockDailyRecordTo, Integer> showWallet() {
 @Override
 public void removeFromWallet(StockDailyRecordTo c, Integer number) {
 		Integer currentNumber=wallet.get(c);
+		logger.info("Client want remove from Stockwallet currency: "+c.getCompany().getName()+" quantity: "+number);
 		if(currentNumber<number){//try remove more than have
 			try {
 				throw new Exception();
@@ -51,10 +55,12 @@ public void removeFromWallet(StockDailyRecordTo c, Integer number) {
 		}
 		if(number==currentNumber){//sell all stock from wallet
 			wallet.remove(c);
+			logger.info("Client sell all that stocks");
 		}
 
 		if(currentNumber>number){
 			wallet.replace(c, currentNumber-number);
+			logger.info("Client sell that stocks and left in wallet quantity: "+(currentNumber-number));
 		}
 
 }

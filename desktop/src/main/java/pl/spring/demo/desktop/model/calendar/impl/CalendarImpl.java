@@ -34,21 +34,11 @@ public class CalendarImpl implements Calendar {
 	@Override
 	public void setCurrentDay(LocalDate currentDay) {
 		this.currentDay = currentDay;
+		logger.info("Calendar is set ond day: "+currentDay);
+		applicationContext.publishEvent(new DayChanged(currentDay));
+
 	}
 
-	public boolean canGetNewDay() {
-
-		return true;
-	}
-	@Override
-	public void nextDay() {
-		if (canGetNewDay()) {
-			currentDay = currentDay.plusDays(1);
-			applicationContext.publishEvent(new DayChanged(currentDay));
-
-			logger.info("Calendar is set ond day: "+currentDay);
-		}
-	}
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {

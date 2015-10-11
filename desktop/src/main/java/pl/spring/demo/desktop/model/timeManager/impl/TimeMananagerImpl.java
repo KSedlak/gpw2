@@ -27,17 +27,21 @@ public class TimeMananagerImpl implements TimeManager {
 
     public TimeMananagerImpl() {
     	super();
-
+    	brokerageOfficeStatus=Status.Closed;
+    	cantorStatus=Status.Closed;
 	}
+    @Override
 	public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
+    @Override
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
     public void setCalendar(Calendar calendar) {
         this.calendar = calendar;
     }
+    @Override
     public LocalDate getStartDate() {
         return startDate;
     }
@@ -61,14 +65,16 @@ public class TimeMananagerImpl implements TimeManager {
 		this.brokerageOfficeStatus = brokerageOfficeStatus;
 	}
 	@Override
-	public void start() {
-	logger.info("Simulation start with date: "+startDate);
-
+	public void start(LocalDate start) {
+	logger.info("Simulation start with date: "+start);
+	this.startDate=start;
+	calendar.setCurrentDay(startDate);
 	}
 	@Override
 	public void makeOneDayStep() {
 		if(canMakeNewDay()){
-		calendar.nextDay();
+			LocalDate current=calendar.getCurrentDay();
+			calendar.setCurrentDay(current.plusDays(1));
 		}
 	}
 	@Override
@@ -87,12 +93,15 @@ public class TimeMananagerImpl implements TimeManager {
 			 BrokerageOfficeStatusChanged ev = (BrokerageOfficeStatusChanged) event;
 			brokerageOfficeStatus=ev.getBrokerageOfficeStatus();
 		}
+
+
 	}
 
 	private Boolean canMakeNewDay(){
 	LocalDate nextDay=calendar.getCurrentDay().plusDays(1);
 
 	if(nextDay.isAfter(endDate)){
+		logger.info("next day will be after endDate");
 		end();
 		return false;
 	}

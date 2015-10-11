@@ -2,19 +2,23 @@ package pl.spring.demo.desktop.controller;
 
 import java.time.LocalDate;
 import javax.annotation.Resource;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import pl.spring.demo.desktop.model.calendar.Calendar;
 import pl.spring.demo.desktop.model.client.player.Player;
 import pl.spring.demo.desktop.model.currency.Currency;
+import pl.spring.demo.desktop.model.timeManager.TimeManager;
 import pl.spring.demo.desktop.view.textAreaAppender.TextAreaAppender;
 import pl.spring.demo.service.StockMarketService;
 import javafx.scene.control.Label;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.CheckBox;
 
 @Component
 public class FirstPageController {
@@ -43,11 +47,13 @@ public class FirstPageController {
 	Player player;
 
 	@Resource
-	Calendar calendar;
+	TimeManager timeManager;
 
 	@FXML DatePicker picker;
 
 	@FXML TextArea loggingView;
+
+	@FXML CheckBox enableLogging;
 
 
 
@@ -58,9 +64,9 @@ public class FirstPageController {
 			lastNameValue.setText(player.getLastName());
 			euroValue.setText(player.howMuchMoneyHave(Currency.EURO)+"");
 			plnValue.setText(player.howMuchMoneyHave(Currency.PLN)+"");
-			calendar.setCurrentDay(LocalDate.parse("2013-01-01"));
-			picker.setValue(calendar.getCurrentDay());
 			setupLogginView();
+			timeManager.setEndDate(LocalDate.parse("2013-01-04"));
+			timeManager.start(LocalDate.parse("2013-01-02"));
 
 
 	}
@@ -68,25 +74,30 @@ public class FirstPageController {
 
 
 
-	@FXML public void nextDay(ActionEvent event) {
-
-
-		calendar.nextDay();
-		firstNameValue.setText(player.getFirstName());
-		lastNameValue.setText(player.getLastName());
-		euroValue.setText(player.howMuchMoneyHave(Currency.EURO)+"");
-		plnValue.setText(player.howMuchMoneyHave(Currency.PLN)+"");
-		picker.setValue(calendar.getCurrentDay());
-
+	@FXML
+	public void nextDay(ActionEvent event) {
+		timeManager.makeOneDayStep();
 	}
 
 
 	 private void setupLogginView() {
 		 TextAreaAppender.setTextArea(loggingView);
 	        loggingView.setWrapText(true);
-	        loggingView.appendText("Starting Logging");
+	        loggingView.appendText("Starting Logging\n");
 	        loggingView.setEditable(false);
 	    }
+
+
+
+
+	@FXML public void changeLoggingOption(ActionEvent event) {
+
+		if(enableLogging.isSelected()){
+			Logger.getRootLogger().setLevel(Level.INFO);
+		}
+		if(!enableLogging.isSelected())
+			Logger.getRootLogger().setLevel(Level.OFF);
+	}
 
 
 }

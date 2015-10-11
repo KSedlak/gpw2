@@ -4,6 +4,8 @@ package pl.spring.demo.desktop.model.nationalBank.impl;
 
 import java.util.HashMap;
 import java.util.Random;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -15,7 +17,7 @@ import pl.spring.demo.desktop.model.nationalBank.event.ExchangeRatesChanged;
 
 @Service("NationalBank")
 public class NationalBankmpl implements  NationalBank {
-
+	final static Logger logger=Logger.getLogger("NationalBank");
 	private HashMap<Currency, Double> currentExchangeRateMap;
 	private ApplicationContext applicationContext;
 
@@ -53,6 +55,7 @@ public class NationalBankmpl implements  NationalBank {
 	@Override
 	public void onApplicationEvent(DayChanged event) {
 		changeExchangeRate();
+		logger.info("National bank generate new currency exchanges rate");
 		applicationContext.publishEvent(new ExchangeRatesChanged(currentExchangeRateMap));
 	}
 

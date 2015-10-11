@@ -1,5 +1,6 @@
 package pl.spring.demo.desktop.model.stockMarket.impl;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -20,7 +21,7 @@ public class StockMarketServiceClientImpl implements StockMarketServiceClient {
 	StockMarketService service;
 
 	private ApplicationContext applicationContext;
-
+	final static Logger logger=Logger.getLogger("Stock Market");
 	private LocalDate today;
 
 	private StockMarketServiceClientImpl() {
@@ -29,11 +30,13 @@ public class StockMarketServiceClientImpl implements StockMarketServiceClient {
 
 	@Override
 	public void onApplicationEvent(DayChanged event) {
+		logger.info("Stock market check for new data");
 		today=event.getCurrentDate();
 		if(getTodayValues().size()==0){
-			System.out.println("brak notowan");
+			logger.info("No data for today because market is closed");
 		}
 		if(getTodayValues().size()>0){
+			logger.info("Data found and notify brokerageOffice");
 			applicationContext.publishEvent(new StockRatesChanged(true));
 		}
 

@@ -1,14 +1,14 @@
-package pl.spring.demo.desktop.model.transaction;
+package pl.spring.demo.desktop.model.transaction.marketTransaction;
 
 import org.springframework.stereotype.Component;
 
 import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 
 @Component
-public class SellTransaction extends Transaction {
+public class MarketSellTransaction extends MarketTransaction {
 
 
-	public SellTransaction(StockDailyRecordTo stock,
+	public MarketSellTransaction(StockDailyRecordTo stock,
 			int numberOfStockRequested,
 			Double upperBoundPriceRandomizer,
 			Double lowerBoundPriceRandomizer,
@@ -18,7 +18,7 @@ public class SellTransaction extends Transaction {
 				lowerBoundWarrantedNumberOfStock, upperBoundWarrantedNumberOfStock);
 	}
 
-	public SellTransaction() {
+	public MarketSellTransaction() {
 		super();
 	}
 

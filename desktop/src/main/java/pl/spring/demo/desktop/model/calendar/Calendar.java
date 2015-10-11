@@ -10,6 +10,5 @@ public interface Calendar extends ApplicationContextAware {
 
 	void setCurrentDay(LocalDate currentDay);
 
-	void nextDay();
 
 }

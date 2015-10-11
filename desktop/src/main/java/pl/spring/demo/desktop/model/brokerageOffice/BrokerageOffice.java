@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 
-import pl.spring.demo.desktop.model.transaction.Transaction;
+import pl.spring.demo.desktop.model.transaction.marketTransaction.MarketTransaction;
 import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 
 public interface BrokerageOffice extends ApplicationListener<ApplicationEvent>, ApplicationContextAware {
@@ -19,6 +19,6 @@ List<StockDailyRecordTo> getStocksByCompanyNameFromDateXDaysBefore(String name, 
 List<StockDailyRecordTo> getStocksByCompanyNameFromTodayXDaysBefore(String name, Integer X);
 List<StockDailyRecordTo> getStocksFromTodayXDaysBefore(Integer X);
 
-Transaction  makeTransaction(Transaction t);
+MarketTransaction  makeTransaction(MarketTransaction t);
 }
 

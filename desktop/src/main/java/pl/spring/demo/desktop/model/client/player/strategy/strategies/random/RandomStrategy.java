@@ -6,15 +6,16 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import pl.spring.demo.desktop.model.brokerageOffice.BrokerageOffice;
 import pl.spring.demo.desktop.model.client.player.strategy.Strategy;
-import pl.spring.demo.desktop.model.transaction.BuyTransaction;
-import pl.spring.demo.desktop.model.transaction.SellTransaction;
-import pl.spring.demo.desktop.model.transaction.transactionFactory.TransactionFactory;
+import pl.spring.demo.desktop.model.transaction.marketTransaction.MarketBuyTransaction;
+import pl.spring.demo.desktop.model.transaction.marketTransaction.MarketSellTransaction;
+import pl.spring.demo.desktop.model.transaction.marketTransaction.marketTransactionFactory.MarketTransactionFactory;
 import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 
 @Service
@@ -22,22 +23,22 @@ public class RandomStrategy implements Strategy {
 
 	@Value("${randomStrategy.maxTransactionsPerKind}")
 	int maximumNumberOfGeneratedTransactions;
-
+	final static Logger logger=Logger.getLogger("RandomStrategy");
 
 
 	@Autowired
 	BrokerageOffice brokerageOffice;
 
 	@Autowired
-	TransactionFactory factory;
+	MarketTransactionFactory factory;
 
 	@Override
-	public List<BuyTransaction> whatShouldClientBuy(double PLN) {
+	public List<MarketBuyTransaction> whatShouldClientBuy(double PLN) {
+
 	List<StockDailyRecordTo> today = brokerageOffice.getTodayStockValues();
-	List<BuyTransaction> result=new ArrayList<BuyTransaction>();
+	List<MarketBuyTransaction> result=new ArrayList<MarketBuyTransaction>();
 
 	int numberTransactions=ThreadLocalRandom.current().nextInt(0, maximumNumberOfGeneratedTransactions + 1);
-	System.out.println("today: "+(today.size()-1)+" "+numberTransactions);
 	Set<Integer> indexes=generateNoRepetitionIndexes(numberTransactions, today.size()-1);
 
 	StockDailyRecordTo choosenStock = null;
@@ -54,8 +55,9 @@ public class RandomStrategy implements Strategy {
 	}
 
 	@Override
-	public List<SellTransaction> whatShouldClientSell(HashMap<StockDailyRecordTo, Integer> stocks) {
-		List<SellTransaction> result=new ArrayList<SellTransaction>();
+	public List<MarketSellTransaction> whatShouldClientSell(HashMap<StockDailyRecordTo, Integer> stocks) {
+
+		List<MarketSellTransaction> result=new ArrayList<MarketSellTransaction>();
 
 		int numberTransactions=ThreadLocalRandom.current().nextInt(0, maximumNumberOfGeneratedTransactions + 1);
 		if(stocks.size()-1<=numberTransactions){
@@ -85,7 +87,6 @@ public class RandomStrategy implements Strategy {
 	}
 
 	private Integer getRandomInt(int min, int max ){
-		System.out.println(min+" "+max);
 		if(max==0){
 			return 0;
 		}

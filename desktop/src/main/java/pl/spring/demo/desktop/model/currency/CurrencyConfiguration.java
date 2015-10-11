@@ -1,46 +1,44 @@
 package pl.spring.demo.desktop.model.currency;
 
 import javax.annotation.PostConstruct;
-
-
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-@Configurable 
+@Component
 public class CurrencyConfiguration {
-	
-	
-	 
-	  @Value("${currency.default}") 
+
+
+
+	  @Value("${currency.default}")
 	  private String DEFAULT_CURRENCY;
-	  
-	  @Value("${currency.EURO.lower}") 
+
+	  @Value("${currency.EURO.lower}")
 	  private double euroLower;
-	  @Value("${currency.EURO.upper}") 
+	  @Value("${currency.EURO.upper}")
 	  private double euroUpper;
-	 
-	  @Value("${currency.USD.lower}") 
+
+	  @Value("${currency.USD.lower}")
 	  private double usdLower;
-	  @Value("${currency.USD.upper}") 
+	  @Value("${currency.USD.upper}")
 	  private double usdUpper;
-	  
-	  @PostConstruct 
-	  public void postConstruct() { 
-	    initializeCurrencyEnum(); 
-	  } 
-	 
-	  private void initializeCurrencyEnum() { 
-		  		  
-		  
+
+	  @PostConstruct
+	  public void postConstruct() {
+	    initializeCurrencyEnum();
+	  }
+
+	  private void initializeCurrencyEnum() {
+
+
 		  Currency.valueOf(DEFAULT_CURRENCY).setLower(1.0);
-		  Currency.valueOf(DEFAULT_CURRENCY).setLower(1.0);
-		  
+		  Currency.valueOf(DEFAULT_CURRENCY).setUpper(1.0);
+
 		  Currency.EURO.setLower(euroLower);
-		  Currency.EURO.setLower(euroUpper);
-		  
+		  Currency.EURO.setUpper(euroUpper);
+
 		  Currency.USD.setLower(usdLower);
-		  Currency.USD.setLower(usdUpper);
-	  } 
-	 
-	
+		  Currency.USD.setUpper(usdUpper);
+	  }
+
+
 }

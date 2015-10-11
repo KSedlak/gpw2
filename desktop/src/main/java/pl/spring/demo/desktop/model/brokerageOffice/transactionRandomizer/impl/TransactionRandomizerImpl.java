@@ -1,21 +1,22 @@
-package pl.spring.demo.desktop.model.brokerageOffice.TransactionsRandomizer.impl;
+package pl.spring.demo.desktop.model.brokerageOffice.transactionRandomizer.impl;
 
 
 
 import java.util.concurrent.ThreadLocalRandom;
-
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
-import pl.spring.demo.desktop.model.brokerageOffice.TransactionsRandomizer.TransactionRandomizer;
-import pl.spring.demo.desktop.model.transaction.Transaction;
+import pl.spring.demo.desktop.model.brokerageOffice.transactionRandomizer.TransactionRandomizer;
+import pl.spring.demo.desktop.model.transaction.marketTransaction.MarketTransaction;
+import pl.spring.demo.desktop.model.utils.doubleRounder.DoubleRounder;
 
 @Service
-@DependsOn("transactionFactory")
+@DependsOn("marketTransactionFactory")
 public class TransactionRandomizerImpl implements TransactionRandomizer {
-
+	final static Logger logger=Logger.getLogger("TransactionRandomizer");
 	@Override
-	public Transaction randomizePriceAndNumber(Transaction t) {
+	public MarketTransaction randomizePriceAndNumber(MarketTransaction t) {
 
 		int newNumberOfStock=getRandomNumberOfStockInTransaction(
 				t.getNumberOfStockRequested(),
@@ -47,7 +48,8 @@ public class TransactionRandomizerImpl implements TransactionRandomizer {
 	private double getRandomPriceInTransaction(double input, Double lowerBound, Double upperBound){
 		double min=(lowerBound*input)/100;
 		double max=(upperBound*input)/100;
-		return ThreadLocalRandom.current().nextDouble(min, max);
+		return DoubleRounder.roundToMoney(ThreadLocalRandom.current().nextDouble(min, max));
 	}
+
 
 }

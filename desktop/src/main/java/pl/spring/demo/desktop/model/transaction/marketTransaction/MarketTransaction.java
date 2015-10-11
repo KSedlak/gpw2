@@ -1,9 +1,9 @@
-package pl.spring.demo.desktop.model.transaction;
+package pl.spring.demo.desktop.model.transaction.marketTransaction;
 
 
 import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 
-public abstract class Transaction {
+public abstract class MarketTransaction {
 
 	private StockDailyRecordTo  stock;
 	private int numberOfStockRequested;
@@ -28,13 +28,13 @@ public abstract class Transaction {
 	}
 
 
-	public Transaction() {
+	public MarketTransaction() {
 		super();
 		this.status=StatusOfTransaction.Created;
 	}
 
 
-	public Transaction(StockDailyRecordTo stock, int numberOfStockRequested) {
+	public MarketTransaction(StockDailyRecordTo stock, int numberOfStockRequested) {
 		super();
 		this.stock = stock;
 		this.numberOfStockRequested = numberOfStockRequested;
@@ -42,7 +42,7 @@ public abstract class Transaction {
 	}
 
 
-	public Transaction(StockDailyRecordTo stock, int numberOfStockRequested, Double upperBoundPriceRandomizer,
+	public MarketTransaction(StockDailyRecordTo stock, int numberOfStockRequested, Double upperBoundPriceRandomizer,
 			Double lowerBoundPriceRandomizer, Double lowerBoundWarrantedNumberOfStock,
 			Double upperBoundWarrantedNumberOfStock) {
 			super();

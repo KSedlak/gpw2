@@ -1,25 +1,25 @@
-package pl.spring.demo.desktop.model.transaction;
+package pl.spring.demo.desktop.model.transaction.marketTransaction;
 
 
 import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 
 
-public class BuyTransaction  extends Transaction{
+public class MarketBuyTransaction  extends MarketTransaction{
 
 
 
-	public BuyTransaction() {
+	public MarketBuyTransaction() {
 		super();
 	}
 
 
 
-	public BuyTransaction(StockDailyRecordTo stock, int numberOfStockRequested) {
+	public MarketBuyTransaction(StockDailyRecordTo stock, int numberOfStockRequested) {
 		super(stock, numberOfStockRequested);
 	}
 
 
-	public BuyTransaction(StockDailyRecordTo stock, int numberOfStockRequested, Double upperBoundPriceRandomizer,
+	public MarketBuyTransaction(StockDailyRecordTo stock, int numberOfStockRequested, Double upperBoundPriceRandomizer,
 			Double lowerBoundPriceRandomizer, Double lowerBoundWarrantedNumberOfStock,
 			Double upperBoundWarrantedNumberOfStock) {
 		super(stock, numberOfStockRequested, upperBoundPriceRandomizer, lowerBoundPriceRandomizer,

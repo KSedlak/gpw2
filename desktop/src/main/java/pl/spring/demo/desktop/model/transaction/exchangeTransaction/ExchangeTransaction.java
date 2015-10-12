@@ -1,10 +1,11 @@
 package pl.spring.demo.desktop.model.transaction.exchangeTransaction;
 
 import pl.spring.demo.desktop.model.currency.Currency;
+import pl.spring.demo.desktop.model.transaction.typeOTransaction;
 
 public class ExchangeTransaction {
 
-	private typeOfExchangeTransaction type;
+	private typeOTransaction type;
 
 	private Currency currency;
 
@@ -12,7 +13,7 @@ public class ExchangeTransaction {
 
 	private double output;
 
-	public typeOfExchangeTransaction getType() {
+	public typeOTransaction getType() {
 		return type;
 	}
 
@@ -28,7 +29,7 @@ public class ExchangeTransaction {
 		return output;
 	}
 
-	public ExchangeTransaction(typeOfExchangeTransaction type, Currency currency, double input) {
+	public ExchangeTransaction(typeOTransaction type, Currency currency, double input) {
 		super();
 		this.type = type;
 		this.currency = currency;

@@ -27,10 +27,8 @@ import pl.spring.demo.desktop.model.client.player.wallet.Wallet;
 import pl.spring.demo.desktop.model.client.player.walletBallancer.WalletBalancer;
 import pl.spring.demo.desktop.model.currency.Currency;
 import pl.spring.demo.desktop.model.status.Status;
+import pl.spring.demo.desktop.model.transaction.typeOTransaction;
 import pl.spring.demo.desktop.model.transaction.exchangeTransaction.ExchangeTransaction;
-import pl.spring.demo.desktop.model.transaction.exchangeTransaction.typeOfExchangeTransaction;
-import pl.spring.demo.desktop.model.transaction.marketTransaction.MarketBuyTransaction;
-import pl.spring.demo.desktop.model.transaction.marketTransaction.MarketSellTransaction;
 import pl.spring.demo.desktop.model.transaction.marketTransaction.MarketTransaction;
 import pl.spring.demo.desktop.model.transaction.marketTransaction.StatusOfTransaction;
 import pl.spring.demo.desktop.model.utils.doubleRounder.DoubleRounder;
@@ -67,9 +65,12 @@ public class Player extends Person
 	@Autowired
 	WalletBalancer walletBallancer;
 
+	private List<MarketTransaction> todayWork;
+
 	@Autowired
 	public Player(@Value("${player.firstName}") String f, @Value("${player.lastName}") String l) {
 		super(f, l);
+		todayWork=new ArrayList<MarketTransaction>();
 	}
 
 	@Override
@@ -87,6 +88,7 @@ public class Player extends Person
 	}
 
 	private void makeTodayOperationsOnMarket() {
+		todayWork.clear();
 		List<StockDailyRecordTo> buyedToday = doTodayBuyTransactions();
 		doTodaySellTransactions(buyedToday);
 		logger.info("Client end all operations in brokerageOffice");
@@ -96,9 +98,9 @@ public class Player extends Person
 		logger.info("Client ask strategy for BUY transactions");
 		double availableMoney = wallet.getMoney(Currency.PLN);
 		List<StockDailyRecordTo> buyedToday = new ArrayList<StockDailyRecordTo>();
-		List<MarketBuyTransaction> todayBuy = currentStrategy.whatShouldClientBuy(availableMoney);
+		List<MarketTransaction> todayBuy = currentStrategy.whatShouldClientBuy(availableMoney);
 		logger.info("Client start ask brokerageOffice to make transactions");
-		for (MarketBuyTransaction buy : todayBuy) {
+		for (MarketTransaction buy : todayBuy) {
 			MarketTransaction response = brokerageOffice.makeTransaction(buy);
 
 			if (response.getChangeValueOFTransaction() > TRANSACTION_CHANGE_PERCENT_TOLLERANCE
@@ -113,6 +115,7 @@ public class Player extends Person
 				availableMoney = acceptBuyTransaction(availableMoney, response);
 				buyedToday.add(response.getStock());
 
+
 			}
 		}
 		return buyedToday;
@@ -121,9 +124,9 @@ public class Player extends Person
 	public void doTodaySellTransactions(List<StockDailyRecordTo> buyedToday) {
 		logger.info("Client ask strategy for SELL transactions");
 		HashMap<StockDailyRecordTo, Integer> showToStrategy = stockWallet.showWallet();
-		List<MarketSellTransaction> todaySell = currentStrategy.whatShouldClientSell(showToStrategy, buyedToday);
+		List<MarketTransaction> todaySell = currentStrategy.whatShouldClientSell(showToStrategy, buyedToday);
 		logger.info("Client start ask brokerageOffice to make transactions");
-		for (MarketSellTransaction sell : todaySell) {
+		for (MarketTransaction sell : todaySell) {
 
 			MarketTransaction response = brokerageOffice.makeTransaction(sell);
 
@@ -142,6 +145,7 @@ public class Player extends Person
 
 	private void acceptSellTransaction(MarketTransaction response) {
 		response.setStatus(StatusOfTransaction.Accepted);
+		todayWork.add(response);
 		stockWallet.removeFromWallet(response.getStock(), response.getBrokerageOfficeAcceptedNumber());
 		wallet.addToWallet(Currency.PLN,
 				response.getValueOfBrokerageOfficeOffer() - response.getBrokerageOfficeCommission());
@@ -150,6 +154,7 @@ public class Player extends Person
 
 	private double acceptBuyTransaction(double availableMoney, MarketTransaction response) {
 		response.setStatus(StatusOfTransaction.Accepted);
+		todayWork.add(response);
 		double transactionCost = DoubleRounder
 				.roundToMoney(response.getValueOfBrokerageOfficeOffer() + response.getBrokerageOfficeCommission());
 		availableMoney = availableMoney - transactionCost;
@@ -171,14 +176,14 @@ public class Player extends Person
 		ExchangeTransaction ex = walletBallancer.makeBallance(a, wallet.getMoney(a), b, wallet.getMoney(b));
 		if (!ex.getCurrency().equals(a)) {
 
-			if (ex.getType().equals(typeOfExchangeTransaction.Buy)) {
+			if (ex.getType().equals(typeOTransaction.Buy)) {
 				logger.info("Client have to buy currency " + b.getName());
 				double cost = cantor.sellCurrencyToClient(ex.getCurrency(), ex.getInput());
 				wallet.removeFromWallet(a, cost);
 				;
 				wallet.addToWallet(b, ex.getInput());
 			}
-			if (ex.getType().equals(typeOfExchangeTransaction.Sell)) {
+			if (ex.getType().equals(typeOTransaction.Sell)) {
 				logger.info("Client have to sell currency " + b.getName());
 				double result = cantor.buyCurrencyFromClient(ex.getCurrency(), ex.getInput());
 				wallet.removeFromWallet(b, ex.getInput());
@@ -215,6 +220,14 @@ public class Player extends Person
 		result = result + howMuchStockValueHave();
 		result = DoubleRounder.roundToMoney(result);
 		return result;
+	}
+
+	public List<MarketTransaction> getTodayWork() {
+		return todayWork;
+	}
+
+	public void setTodayWork(List<MarketTransaction> todayWork) {
+		this.todayWork = todayWork;
 	}
 
 	public void makeTaskForToday() {

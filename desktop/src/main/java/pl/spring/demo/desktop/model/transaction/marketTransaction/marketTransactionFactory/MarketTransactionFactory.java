@@ -4,8 +4,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import pl.spring.demo.desktop.model.transaction.marketTransaction.MarketBuyTransaction;
-import pl.spring.demo.desktop.model.transaction.marketTransaction.MarketSellTransaction;
+
+import pl.spring.demo.desktop.model.transaction.typeOTransaction;
+import pl.spring.demo.desktop.model.transaction.marketTransaction.MarketTransaction;
 import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 
 @Component
@@ -32,20 +33,20 @@ public class MarketTransactionFactory {
 
 	final static Logger logger = Logger.getLogger("MarketTransaction factory");
 
-	public MarketSellTransaction createSellTransaction(StockDailyRecordTo stock, int n) {
+	public MarketTransaction createSellTransaction(StockDailyRecordTo stock, int n) {
 
 		logger.info("Sell transaction created. Stock: " + stock.getCompany().getName() + " quantity: " + n);
 
-		return new MarketSellTransaction(stock, n, upperSellBoundPriceRandomizer, lowerSellBoundPriceRandomizer,
-				lowerBoundWarrantedNumberOfStock, upperBoundWarrantedNumberOfStock);
+		return new MarketTransaction(stock, n, upperSellBoundPriceRandomizer, lowerSellBoundPriceRandomizer,
+				lowerBoundWarrantedNumberOfStock, upperBoundWarrantedNumberOfStock, typeOTransaction.Sell);
 
 	}
 
-	public MarketBuyTransaction createBuyTransaction(StockDailyRecordTo stock, int n) {
+	public MarketTransaction createBuyTransaction(StockDailyRecordTo stock, int n) {
 
 		logger.info("Buy transaction created. Stock: " + stock.getCompany().getName() + " quantity: " + n);
 
-		return new MarketBuyTransaction(stock, n, upperBuyBoundPriceRandomizer, lowerBuyBoundPriceRandomizer,
-				lowerBoundWarrantedNumberOfStock, upperBoundWarrantedNumberOfStock);
+		return new MarketTransaction(stock, n, upperBuyBoundPriceRandomizer, lowerBuyBoundPriceRandomizer,
+				lowerBoundWarrantedNumberOfStock, upperBoundWarrantedNumberOfStock,typeOTransaction.Buy);
 	}
 }

@@ -116,7 +116,7 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </CheckBox>
-      <TableView fx:id="historyTable" layoutX="858.0" layoutY="14.0" prefHeight="461.0" prefWidth="381.0">
+      <TableView fx:id="historyTable" layoutX="858.0" layoutY="14.0" prefHeight="249.0" prefWidth="381.0">
         <columns>
           <TableColumn fx:id="dateColumn" prefWidth="74.0" text="Date" />
           <TableColumn fx:id="plnColumn" prefWidth="68.0" text="PLN" />
@@ -137,5 +137,6 @@
             <TableColumn fx:id="stockWalletValueStock" prefWidth="116.0" text="VALUE" />
         </columns>
       </TableView>
+      <ListView fx:id="transactions" layoutX="858.0" layoutY="271.0" prefHeight="200.0" prefWidth="381.0" />
    </children>
 </Pane>

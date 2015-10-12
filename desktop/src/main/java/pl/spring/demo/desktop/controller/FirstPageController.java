@@ -3,6 +3,7 @@ package pl.spring.demo.desktop.controller;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -27,6 +28,7 @@ import pl.spring.demo.desktop.model.client.player.strategy.strategies.random.Ran
 import pl.spring.demo.desktop.model.client.player.wallet.Wallet;
 import pl.spring.demo.desktop.model.currency.Currency;
 import pl.spring.demo.desktop.model.timeManager.TimeManager;
+import pl.spring.demo.desktop.model.transaction.marketTransaction.MarketTransaction;
 import pl.spring.demo.desktop.model.utils.doubleRounder.DoubleRounder;
 import pl.spring.demo.desktop.view.TableRow.HistoricTableRow;
 import pl.spring.demo.desktop.view.TableRow.StockWalletRow;
@@ -41,6 +43,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ListView;
 
 @Component
 public class FirstPageController implements ApplicationListener<NoMoreActionToday> {
@@ -149,6 +152,8 @@ public class FirstPageController implements ApplicationListener<NoMoreActionToda
 
 	private ObservableList<HistoricTableRow> historic = FXCollections.observableArrayList();
 	private ObservableList<StockWalletRow> stockWalletPresentation = FXCollections.observableArrayList();
+	private ObservableList<String> transactionsPresentation = FXCollections.observableArrayList();
+	@FXML ListView<String> transactions;
 
 	@FXML
 	private void initialize() {
@@ -174,6 +179,7 @@ public class FirstPageController implements ApplicationListener<NoMoreActionToda
 		stockWalletValueStock.setCellValueFactory(cellData -> cellData.getValue().getValue().asObject());
 
 		stockWalletTable.setItems(stockWalletPresentation);
+		transactions.setItems(transactionsPresentation);
 
 		combo.getItems().add(randomStrategy.getName());
 		combo.getItems().add(buyStrategy.getName());
@@ -211,6 +217,7 @@ public class FirstPageController implements ApplicationListener<NoMoreActionToda
 		historic.clear();
 		wallet.clear();
 		stockWallet.clear();
+		transactions.getItems().clear();
 
 		wallet.addToWallet(Currency.PLN, Double.parseDouble(plnTextField.getText()));
 		wallet.addToWallet(Currency.EURO, Double.parseDouble(euroTextField.getText()));
@@ -249,6 +256,15 @@ public class FirstPageController implements ApplicationListener<NoMoreActionToda
 					new SimpleIntegerProperty(wallet.get(s)),
 					new SimpleDoubleProperty(DoubleRounder.roundToMoney(wallet.get(s) * s.getValue()))));
 		}
+
+		List<MarketTransaction> doneTransactions=player.getTodayWork();
+		transactions.getItems().add(" NEW DAY:  "+timeManager.getTodayDate());
+		for(MarketTransaction m:doneTransactions){
+			transactions.getItems().add("Type: "+m.getType().toString()+"         name: "+
+		m.getStock().getCompany().getName()+"    quantity: "+m.getBrokerageOfficeAcceptedNumber()+"      rate: "+m.getBrokerageOfficeAcceptedRate());
+		}
+		transactions.getItems().add("");
+		player.getTodayWork().clear();
 	}
 
 }

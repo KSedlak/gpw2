@@ -1,8 +1,9 @@
 package pl.spring.demo.desktop.model.transaction.marketTransaction;
 
+import pl.spring.demo.desktop.model.transaction.typeOTransaction;
 import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 
-public abstract class MarketTransaction {
+public class MarketTransaction {
 
 	private StockDailyRecordTo stock;
 
@@ -23,6 +24,8 @@ public abstract class MarketTransaction {
 	private Double upperBoundWarrantedNumberOfStock;
 
 	private Double brokerageOfficeCommission;
+
+	private typeOTransaction type;
 
 	public Double getBrokerageOfficeCommission() {
 		return brokerageOfficeCommission;
@@ -46,7 +49,7 @@ public abstract class MarketTransaction {
 
 	public MarketTransaction(StockDailyRecordTo stock, int numberOfStockRequested, Double upperBoundPriceRandomizer,
 			Double lowerBoundPriceRandomizer, Double lowerBoundWarrantedNumberOfStock,
-			Double upperBoundWarrantedNumberOfStock) {
+			Double upperBoundWarrantedNumberOfStock, typeOTransaction type) {
 		super();
 		this.stock = stock;
 		this.numberOfStockRequested = numberOfStockRequested;
@@ -55,6 +58,7 @@ public abstract class MarketTransaction {
 		this.lowerBoundWarrantedNumberOfStock = lowerBoundWarrantedNumberOfStock;
 		this.upperBoundWarrantedNumberOfStock = upperBoundWarrantedNumberOfStock;
 		this.status = StatusOfTransaction.Created;
+		this.type=type;
 	}
 
 	public StatusOfTransaction getStatus() {
@@ -115,6 +119,14 @@ public abstract class MarketTransaction {
 
 	public double getValueOfBrokerageOfficeOffer() {
 		return brokerageOfficeAcceptedRate * brokerageOfficeAcceptedNumber;
+	}
+
+	public typeOTransaction getType() {
+		return type;
+	}
+
+	public void setType(typeOTransaction type) {
+		this.type = type;
 	}
 
 	public double getChangeValueOFTransaction() {

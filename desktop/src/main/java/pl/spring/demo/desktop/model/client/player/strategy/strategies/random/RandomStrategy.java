@@ -13,8 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.spring.demo.desktop.model.brokerageOffice.BrokerageOffice;
 import pl.spring.demo.desktop.model.client.player.strategy.Strategy;
-import pl.spring.demo.desktop.model.transaction.marketTransaction.MarketBuyTransaction;
-import pl.spring.demo.desktop.model.transaction.marketTransaction.MarketSellTransaction;
+import pl.spring.demo.desktop.model.transaction.marketTransaction.MarketTransaction;
 import pl.spring.demo.desktop.model.transaction.marketTransaction.marketTransactionFactory.MarketTransactionFactory;
 import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 
@@ -39,10 +38,10 @@ public class RandomStrategy implements Strategy {
 	private MarketTransactionFactory factory;
 
 	@Override
-	public List<MarketBuyTransaction> whatShouldClientBuy(double PLN) {
+	public List<MarketTransaction> whatShouldClientBuy(double PLN) {
 
 		List<StockDailyRecordTo> today = brokerageOffice.getTodayStockValues();
-		List<MarketBuyTransaction> result = new ArrayList<MarketBuyTransaction>();
+		List<MarketTransaction> result = new ArrayList<MarketTransaction>();
 		int numberTransactions = ThreadLocalRandom.current().nextInt(0, maximumNumberOfGeneratedTransactions + 1);
 		Set<Integer> indexes = generateNoRepetitionIndexes(numberTransactions, today.size() - 1);
 
@@ -60,10 +59,10 @@ public class RandomStrategy implements Strategy {
 	}
 
 	@Override
-	public List<MarketSellTransaction> whatShouldClientSell(HashMap<StockDailyRecordTo, Integer> stocks,
+	public List<MarketTransaction> whatShouldClientSell(HashMap<StockDailyRecordTo, Integer> stocks,
 			List<StockDailyRecordTo> buyedToday) {
 
-		List<MarketSellTransaction> result = new ArrayList<MarketSellTransaction>();
+		List<MarketTransaction> result = new ArrayList<MarketTransaction>();
 
 		int numberTransactions = ThreadLocalRandom.current().nextInt(0, maximumNumberOfGeneratedTransactions + 1);
 		if (stocks.size() - 1 <= numberTransactions) {

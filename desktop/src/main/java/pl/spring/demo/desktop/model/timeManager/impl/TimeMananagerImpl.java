@@ -41,8 +41,8 @@ public class TimeMananagerImpl implements TimeManager {
 
 	public TimeMananagerImpl() {
 		super();
-		brokerageOfficeStatus = Status.Closed;
-		cantorStatus = Status.Closed;
+		brokerageOfficeStatus = Status.CLOSED;
+		cantorStatus = Status.CLOSED;
 	}
 
 	@Override
@@ -151,7 +151,7 @@ public class TimeMananagerImpl implements TimeManager {
 			return false;
 		}
 
-		return (brokerageOfficeStatus.equals(Status.Closed) && cantorStatus.equals(Status.Closed));
+		return (brokerageOfficeStatus.equals(Status.CLOSED) && cantorStatus.equals(Status.CLOSED));
 	}
 
 }

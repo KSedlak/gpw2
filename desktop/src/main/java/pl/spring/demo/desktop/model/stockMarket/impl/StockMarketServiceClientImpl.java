@@ -38,7 +38,7 @@ public class StockMarketServiceClientImpl implements StockMarketServiceClient {
 		today = event.getCurrentDate();
 		if (getTodayValues().size() == 0) {
 			logger.info("No data for today because market is closed");
-			applicationContext.publishEvent(new NoMoreActionToday(Status.Closed));
+			applicationContext.publishEvent(new NoMoreActionToday(Status.CLOSED));
 		}
 		if (getTodayValues().size() > 0) {
 			logger.info("Data found and notify brokerageOffice");

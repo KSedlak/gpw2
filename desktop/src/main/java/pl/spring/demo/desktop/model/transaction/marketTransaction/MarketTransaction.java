@@ -37,14 +37,14 @@ public class MarketTransaction {
 
 	public MarketTransaction() {
 		super();
-		this.status = StatusOfTransaction.Created;
+		this.status = StatusOfTransaction.CREATED;
 	}
 
 	public MarketTransaction(StockDailyRecordTo stock, int numberOfStockRequested) {
 		super();
 		this.stock = stock;
 		this.numberOfStockRequested = numberOfStockRequested;
-		this.status = StatusOfTransaction.Created;
+		this.status = StatusOfTransaction.CREATED;
 	}
 
 	public MarketTransaction(StockDailyRecordTo stock, int numberOfStockRequested, Double upperBoundPriceRandomizer,
@@ -57,7 +57,7 @@ public class MarketTransaction {
 		this.lowerBoundPriceRandomizer = lowerBoundPriceRandomizer;
 		this.lowerBoundWarrantedNumberOfStock = lowerBoundWarrantedNumberOfStock;
 		this.upperBoundWarrantedNumberOfStock = upperBoundWarrantedNumberOfStock;
-		this.status = StatusOfTransaction.Created;
+		this.status = StatusOfTransaction.CREATED;
 		this.type=type;
 	}
 

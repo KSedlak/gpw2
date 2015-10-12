@@ -14,7 +14,9 @@ import pl.spring.demo.desktop.model.calendar.event.DayChanged;
 public class CalendarImpl implements Calendar {
 
 	private LocalDate currentDay;
+
 	private ApplicationContext applicationContext;
+
 	final static Logger logger = Logger.getLogger("Calendar");
 
 	public CalendarImpl() {

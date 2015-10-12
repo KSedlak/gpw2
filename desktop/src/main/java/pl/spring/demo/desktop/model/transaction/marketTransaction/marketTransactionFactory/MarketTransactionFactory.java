@@ -38,7 +38,7 @@ public class MarketTransactionFactory {
 		logger.info("Sell transaction created. Stock: " + stock.getCompany().getName() + " quantity: " + n);
 
 		return new MarketTransaction(stock, n, upperSellBoundPriceRandomizer, lowerSellBoundPriceRandomizer,
-				lowerBoundWarrantedNumberOfStock, upperBoundWarrantedNumberOfStock, typeOTransaction.Sell);
+				lowerBoundWarrantedNumberOfStock, upperBoundWarrantedNumberOfStock, typeOTransaction.SELL);
 
 	}
 
@@ -47,6 +47,6 @@ public class MarketTransactionFactory {
 		logger.info("Buy transaction created. Stock: " + stock.getCompany().getName() + " quantity: " + n);
 
 		return new MarketTransaction(stock, n, upperBuyBoundPriceRandomizer, lowerBuyBoundPriceRandomizer,
-				lowerBoundWarrantedNumberOfStock, upperBoundWarrantedNumberOfStock,typeOTransaction.Buy);
+				lowerBoundWarrantedNumberOfStock, upperBoundWarrantedNumberOfStock,typeOTransaction.BUY);
 	}
 }

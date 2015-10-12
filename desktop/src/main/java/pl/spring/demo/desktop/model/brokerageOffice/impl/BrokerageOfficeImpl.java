@@ -24,7 +24,9 @@ import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 @Service
 public class BrokerageOfficeImpl implements BrokerageOffice {
 	private Status status;
+
 	private ApplicationContext applicationContext;
+
 	final static Logger logger = Logger.getLogger("BrokerageOffice");
 
 	@Autowired
@@ -32,8 +34,10 @@ public class BrokerageOfficeImpl implements BrokerageOffice {
 
 	@Autowired
 	TransactionHandler transactionHandler;
+
 	@Value("${brokerageOffice.commissionPercent}")
 	Double commissionPercent;
+
 	@Value("${brokerageOffice.commissionFixed}")
 	Double fixedCommission;
 
@@ -109,11 +113,11 @@ public class BrokerageOfficeImpl implements BrokerageOffice {
 	public void onApplicationEvent(ApplicationEvent event) {
 
 		if (event instanceof StockRatesChanged) {
-			status = Status.Open;
+			status = Status.OPEN;
 			applicationContext.publishEvent(new BrokerageOfficeStatusChanged(status));
 		}
 		if (event instanceof NoMoreActionToday) {
-			status = Status.Closed;
+			status = Status.CLOSED;
 			applicationContext.publishEvent(new BrokerageOfficeStatusChanged(status));
 		}
 

@@ -46,10 +46,9 @@ public class StockWalletImpl implements StockWallet {
 			logger.info("Client sell all that stocks");
 		}
 
-		if (currentNumber > number) {
 			wallet.replace(c, currentNumber - number);
 			logger.info("Client sell that stocks and left in wallet quantity: " + (currentNumber - number));
-		}
+
 
 	}
 

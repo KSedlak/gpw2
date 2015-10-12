@@ -70,13 +70,13 @@ public class Player extends Person
 	@Autowired
 	public Player(@Value("${player.firstName}") String f, @Value("${player.lastName}") String l) {
 		super(f, l);
-		todayWork=new ArrayList<MarketTransaction>();
+		todayWork = new ArrayList<MarketTransaction>();
 	}
 
 	@Override
 	public void onApplicationEvent(BrokerageOfficeStatusChanged event) {
 
-		if (event.getBrokerageOfficeStatus().equals(Status.Open)) {
+		if (event.getBrokerageOfficeStatus().equals(Status.OPEN)) {
 			logger.info("Client get notification about open BrokerageOffic and start job");
 			makeTaskForToday();
 		}
@@ -105,7 +105,7 @@ public class Player extends Person
 
 			if (response.getChangeValueOFTransaction() > TRANSACTION_CHANGE_PERCENT_TOLLERANCE
 					|| !canAffordThatTransaction(availableMoney, response)) {
-				response.setStatus(StatusOfTransaction.Rejected);
+				response.setStatus(StatusOfTransaction.REJECTED);
 				logger.info("Client reject brokerageOfficeOffer");
 			}
 
@@ -114,7 +114,6 @@ public class Player extends Person
 				logger.info("Client accept conditions and make that deal");
 				availableMoney = acceptBuyTransaction(availableMoney, response);
 				buyedToday.add(response.getStock());
-
 
 			}
 		}
@@ -131,7 +130,7 @@ public class Player extends Person
 			MarketTransaction response = brokerageOffice.makeTransaction(sell);
 
 			if (response.getChangeValueOFTransaction() > TRANSACTION_CHANGE_PERCENT_TOLLERANCE) {
-				response.setStatus(StatusOfTransaction.Rejected);
+				response.setStatus(StatusOfTransaction.REJECTED);
 				logger.info("Client reject brokerageOfficeOffer");
 			}
 
@@ -144,7 +143,7 @@ public class Player extends Person
 	}
 
 	private void acceptSellTransaction(MarketTransaction response) {
-		response.setStatus(StatusOfTransaction.Accepted);
+		response.setStatus(StatusOfTransaction.ACCEPTED);
 		todayWork.add(response);
 		stockWallet.removeFromWallet(response.getStock(), response.getBrokerageOfficeAcceptedNumber());
 		wallet.addToWallet(Currency.PLN,
@@ -153,7 +152,7 @@ public class Player extends Person
 	}
 
 	private double acceptBuyTransaction(double availableMoney, MarketTransaction response) {
-		response.setStatus(StatusOfTransaction.Accepted);
+		response.setStatus(StatusOfTransaction.ACCEPTED);
 		todayWork.add(response);
 		double transactionCost = DoubleRounder
 				.roundToMoney(response.getValueOfBrokerageOfficeOffer() + response.getBrokerageOfficeCommission());
@@ -176,14 +175,14 @@ public class Player extends Person
 		ExchangeTransaction ex = walletBallancer.makeBallance(a, wallet.getMoney(a), b, wallet.getMoney(b));
 		if (!ex.getCurrency().equals(a)) {
 
-			if (ex.getType().equals(typeOTransaction.Buy)) {
+			if (ex.getType().equals(typeOTransaction.BUY)) {
 				logger.info("Client have to buy currency " + b.getName());
 				double cost = cantor.sellCurrencyToClient(ex.getCurrency(), ex.getInput());
 				wallet.removeFromWallet(a, cost);
 				;
 				wallet.addToWallet(b, ex.getInput());
 			}
-			if (ex.getType().equals(typeOTransaction.Sell)) {
+			if (ex.getType().equals(typeOTransaction.SELL)) {
 				logger.info("Client have to sell currency " + b.getName());
 				double result = cantor.buyCurrencyFromClient(ex.getCurrency(), ex.getInput());
 				wallet.removeFromWallet(b, ex.getInput());
@@ -238,7 +237,7 @@ public class Player extends Person
 
 				makeTodayOperationsOnMarket();
 				keepBalanceInWallet(Currency.PLN, Currency.EURO);
-				return Status.Closed;
+				return Status.CLOSED;
 			}
 		};
 
@@ -252,7 +251,7 @@ public class Player extends Person
 
 			public void succes() {
 				logger.info("Task for Today ends");
-				applicationContext.publishEvent(new NoMoreActionToday(Status.Closed));
+				applicationContext.publishEvent(new NoMoreActionToday(Status.CLOSED));
 			}
 
 		});

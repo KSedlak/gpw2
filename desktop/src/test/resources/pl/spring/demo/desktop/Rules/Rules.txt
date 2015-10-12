@@ -1,0 +1,33 @@
+Zasady:                                                                                                                   
+1.            Sprzedaz i kupowanie akcji odbywa sie w biurze maklerskim, pobierajacym prowizje w wysokosci 0.5% od kazdej transakcji, 
+nie mniej niz 5 PLN.
+
+2.            Kursy akcji raz dziennie aktualizuje Gielda, dostep do niej ma tylko BM
+
+
+3.            Po zmianie kursów Gracz moze kupic i sprzedac dowolna ilosc akcji, jezeli posiada odpowiednia zasoby
+               
+
+ 3.1 sprzedaz nie jest gwarantowana (wystawia oferte) - BM losowo oferuje odkupienie (80 do 100% akcji, 98 do 100% ceny)
+                
+
+3.2 to samo z zakupe tylko cena w 2ga strone (100 do 102%)         
+
+
+
+4.            Gracz zaczyna z pustym portfelem akcji (kto przechowuje akcje?), 5000 PLN i 1250 EUR w portfelu z pieniedzmi
+ (kurs losowy 3.9 do 4.1, zakup +2%, sprzedaz -2%)
+                4.1 na koniec dnia mniej wiecej polowa srodkow pienieznych w EUR
+
+
+
+5.            Aplikacja ma umozliwiac przetestowanie róznych strategii kupna/sprzedazy
+                                                                  
+                                                                                                                          
+Dane zostana dostarczone w formacie tekstowym, np:                                                                        
+INTEL,20011024,105.3                                                                                                    
+MICROSOFT,20011024,15.1                                                                                                 
+INTEL,20011025,105.4                                                                                                    
+MICROSOFT,20011025,16.2                                                                                                 
+MICROSOFT,20011026,15.0                                                                                                  
+INTEL,20011026,101.3

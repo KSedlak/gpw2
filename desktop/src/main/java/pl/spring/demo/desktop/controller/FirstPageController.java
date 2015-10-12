@@ -153,19 +153,26 @@ public class FirstPageController implements ApplicationListener<NoMoreActionToda
 	private ObservableList<HistoricTableRow> historic = FXCollections.observableArrayList();
 	private ObservableList<StockWalletRow> stockWalletPresentation = FXCollections.observableArrayList();
 	private ObservableList<String> transactionsPresentation = FXCollections.observableArrayList();
-	@FXML ListView<String> transactions;
+	@FXML
+	ListView<String> transactions;
 
 	@FXML
 	private void initialize() {
 		firstNameValue.setText(player.getFirstName());
 		lastNameValue.setText(player.getLastName());
+
 		euroValue.setText(player.howMuchMoneyHave(Currency.EURO) + "");
 		plnValue.setText(player.howMuchMoneyHave(Currency.PLN) + "");
+		stockWalletValue.setText(0 + "");
+
 		picker.setValue(LocalDate.parse("2013-01-02"));
 		picker1.setValue(LocalDate.parse("2013-01-10"));
+
 		setupLogginView();
+
 		plnTextField.setText(player.howMuchMoneyHave(Currency.PLN) + "");
 		euroTextField.setText(player.howMuchMoneyHave(Currency.EURO) + "");
+
 		dateColumn.setCellValueFactory(cellData -> cellData.getValue().getDateString());
 		plnColumn.setCellValueFactory(cellData -> cellData.getValue().getPlProperty().asObject());
 		euroColumn.setCellValueFactory(cellData -> cellData.getValue().getEuroProperty().asObject());
@@ -242,8 +249,8 @@ public class FirstPageController implements ApplicationListener<NoMoreActionToda
 		Double stock = player.howMuchStockValueHave();
 		Double all = player.getValueOfAllResources();
 
-		euroValue.setText(euro + "");
 		plnValue.setText(pln + "");
+		euroValue.setText(euro + "");
 		stockWalletValue.setText(stock + "");
 
 		String date = timeManager.getTodayDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
@@ -257,11 +264,13 @@ public class FirstPageController implements ApplicationListener<NoMoreActionToda
 					new SimpleDoubleProperty(DoubleRounder.roundToMoney(wallet.get(s) * s.getValue()))));
 		}
 
-		List<MarketTransaction> doneTransactions=player.getTodayWork();
-		transactions.getItems().add(" NEW DAY:  "+timeManager.getTodayDate());
-		for(MarketTransaction m:doneTransactions){
-			transactions.getItems().add("Type: "+m.getType().toString()+"         name: "+
-		m.getStock().getCompany().getName()+"    quantity: "+m.getBrokerageOfficeAcceptedNumber()+"      rate: "+m.getBrokerageOfficeAcceptedRate());
+		List<MarketTransaction> doneTransactions = player.getTodayWork();
+		transactions.getItems().add(" NEW DAY:  " + timeManager.getTodayDate());
+		for (MarketTransaction m : doneTransactions) {
+			transactions.getItems()
+					.add("Type: " + m.getType().toString() + "         name: " + m.getStock().getCompany().getName()
+							+ "    quantity: " + m.getBrokerageOfficeAcceptedNumber() + "      rate: "
+							+ m.getBrokerageOfficeAcceptedRate());
 		}
 		transactions.getItems().add("");
 		player.getTodayWork().clear();

@@ -16,17 +16,18 @@ public class TransactionHandlerImpl implements TransactionHandler {
 
 	@Autowired
 	TransactionRandomizer randomizer;
+
 	final static Logger logger = Logger.getLogger("TransactionHandeler");
 
 	@Override
 	public MarketTransaction handleTransaction(MarketTransaction t) {
 		logger.info("handle transaction");
-		if (t.getStatus().equals(StatusOfTransaction.Created)) {
+		if (t.getStatus().equals(StatusOfTransaction.CREATED)) {
 			logger.info("Transaction requested parameter[ value: " + t.getStock().getValue() + " quantity: "
 					+ t.getNumberOfStockRequested() + " company: " + t.getStock().getCompany().getName() + "]");
 
 			MarketTransaction randomized = randomizer.randomizePriceAndNumber(t);
-			randomized.setStatus(StatusOfTransaction.Negotiated);
+			randomized.setStatus(StatusOfTransaction.NEGOTIATED);
 
 			logger.info("Transaction output parameter[ value: " + t.getBrokerageOfficeAcceptedRate() + " quantity: "
 					+ t.getBrokerageOfficeAcceptedNumber() + " company: " + t.getStock().getCompany().getName() + "]");
@@ -34,7 +35,7 @@ public class TransactionHandlerImpl implements TransactionHandler {
 			return randomized;
 		}
 
-		if (t.getStatus().equals(StatusOfTransaction.Accepted)) {
+		if (t.getStatus().equals(StatusOfTransaction.ACCEPTED)) {
 
 		}
 

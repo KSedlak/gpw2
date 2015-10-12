@@ -8,7 +8,9 @@ import pl.spring.demo.desktop.model.status.Status;
 public class BrokerageOfficeStatusChanged extends ApplicationEvent {
 
 	private static final long serialVersionUID = 1L;
+
 	final static Logger logger = Logger.getLogger("BrokerageOfficeStatusChangeEvent");
+
 	private Status brokerageOfficeStatus;
 
 	public BrokerageOfficeStatusChanged(Status source) {

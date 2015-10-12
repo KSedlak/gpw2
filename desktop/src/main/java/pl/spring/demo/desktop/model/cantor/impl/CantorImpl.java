@@ -26,11 +26,16 @@ public class CantorImpl implements Cantor {
 
 	@Value("${cantor.exchangeRate.sellPercentage}")
 	private double sellPercentage;
+
 	@Value("${cantor.exchangeRate.buyPercentage}")
 	private double buyPercentage;
+
 	private Status cantorStatus;
+
 	private ApplicationContext applicationContext;
+
 	private HashMap<Currency, Double> currentExchangeRateMap;
+
 	final static Logger logger = Logger.getLogger("Cantor");
 
 	public CantorImpl() {
@@ -91,12 +96,12 @@ public class CantorImpl implements Cantor {
 	@Override
 	public void onApplicationEvent(ApplicationEvent event) {
 		if (event instanceof ExchangeRatesChanged) {
-			cantorStatus = Status.Open;
+			cantorStatus = Status.OPEN;
 			this.currentExchangeRateMap = ((ExchangeRatesChanged) event).getCurrentExchangeRateMap();
 			applicationContext.publishEvent(new CantorStatusChanged(cantorStatus));
 		}
 		if (event instanceof NoMoreActionToday) {
-			cantorStatus = Status.Closed;
+			cantorStatus = Status.CLOSED;
 			applicationContext.publishEvent(new CantorStatusChanged(cantorStatus));
 		}
 

@@ -44,7 +44,7 @@ public class WalletBallancerImpl implements WalletBalancer {
 			logger.info("decision: do nothing");
 
 		}
-		return new ExchangeTransaction(typeOTransaction.Sell, primary, 1);
+		return new ExchangeTransaction(typeOTransaction.SELL, primary, 1);
 	}
 
 	public double getBallance(Currency primary, double quantA, Currency foregin, double quantB) {
@@ -67,7 +67,7 @@ public class WalletBallancerImpl implements WalletBalancer {
 		double valueOfWallet = getaValueOfWalletInPrimaryCurrency(quantA, foreign, quantB);
 		double ballanced = getDesiredValueOfPrimary(valueOfWallet);
 		double toBuy = (quantA - ballanced) / cantor.getSellRate(foreign);
-		return new ExchangeTransaction(typeOTransaction.Buy, foreign, DoubleRounder.roundToMoney(toBuy));
+		return new ExchangeTransaction(typeOTransaction.BUY, foreign, DoubleRounder.roundToMoney(toBuy));
 	}
 
 	private ExchangeTransaction createSellForeginCurrencyToBackBallanced(double quantA, Currency foreign,
@@ -75,7 +75,7 @@ public class WalletBallancerImpl implements WalletBalancer {
 		double valueOfWallet = getaValueOfWalletInPrimaryCurrency(quantA, foreign, quantB);
 		double ballanced = getDesiredValueOfPrimary(valueOfWallet);
 		double toSell = (ballanced - quantA) / cantor.getBuyRate(foreign);
-		return new ExchangeTransaction(typeOTransaction.Sell, foreign, DoubleRounder.roundToMoney(toSell));
+		return new ExchangeTransaction(typeOTransaction.SELL, foreign, DoubleRounder.roundToMoney(toSell));
 	}
 
 	private double getaValueOfWalletInPrimaryCurrency(double quantA, Currency foregin, double quantB) {

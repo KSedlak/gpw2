@@ -49,11 +49,10 @@ public class WalletImpl implements Wallet {
 			logger.info("Client remove all money in that currency");
 		}
 
-		if (currentNumber > number) {
 			double fromWallet = currentNumber - number;
 			wallet.replace(c, DoubleRounder.roundToMoney(fromWallet));
 			logger.info("Client remove money and left in wallet: " + (currentNumber - number));
-		}
+
 
 	}
 

@@ -11,16 +11,23 @@ import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 
 public interface BrokerageOffice extends ApplicationListener<ApplicationEvent>, ApplicationContextAware {
 
-List<StockDailyRecordTo> getTodayStockValues();
-List<StockDailyRecordTo> getStocksByCompanyName(String name);
-StockDailyRecordTo getStocksByCompanyNameAndDate(String name, LocalDate d);
-StockDailyRecordTo getStocksByCompanyNameFromToday(String name);
-List<StockDailyRecordTo> getStocksByCompanyNameFromDateToDate(String name, LocalDate A, LocalDate B);
-List<StockDailyRecordTo> getStocksByCompanyNameFromDateXDaysBefore(String name, LocalDate A, Integer X);
-List<StockDailyRecordTo> getStocksByCompanyNameFromTodayXDaysBefore(String name, Integer X);
-List<StockDailyRecordTo> getStocksFromTodayXDaysBefore(Integer X);
-List<StockDailyRecordTo> getCheapesStocksFromToday(Integer X);
+	List<StockDailyRecordTo> getTodayStockValues();
 
-MarketTransaction  makeTransaction(MarketTransaction t);
+	List<StockDailyRecordTo> getStocksByCompanyName(String name);
+
+	StockDailyRecordTo getStocksByCompanyNameAndDate(String name, LocalDate d);
+
+	StockDailyRecordTo getStocksByCompanyNameFromToday(String name);
+
+	List<StockDailyRecordTo> getStocksByCompanyNameFromDateToDate(String name, LocalDate A, LocalDate B);
+
+	List<StockDailyRecordTo> getStocksByCompanyNameFromDateXDaysBefore(String name, LocalDate A, Integer X);
+
+	List<StockDailyRecordTo> getStocksByCompanyNameFromTodayXDaysBefore(String name, Integer X);
+
+	List<StockDailyRecordTo> getStocksFromTodayXDaysBefore(Integer X);
+
+	List<StockDailyRecordTo> getCheapesStocksFromToday(Integer X);
+
+	MarketTransaction makeTransaction(MarketTransaction t);
 }
-

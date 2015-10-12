@@ -30,18 +30,22 @@ public class MarketTransactionFactory {
 	@Value("${transaction.buy.upperBoundPriceRandomizer}")
 	private Double upperBuyBoundPriceRandomizer;
 
-	final static Logger logger=Logger.getLogger("MarketTransaction factory");
+	final static Logger logger = Logger.getLogger("MarketTransaction factory");
 
-	public MarketSellTransaction createSellTransaction(StockDailyRecordTo stock, int n){
-		logger.info("Sell transaction created. Stock: "+stock.getCompany().getName()+" quantity: "+n);
-		return new MarketSellTransaction(stock,n,upperSellBoundPriceRandomizer,lowerSellBoundPriceRandomizer,
-				lowerBoundWarrantedNumberOfStock,upperBoundWarrantedNumberOfStock);
+	public MarketSellTransaction createSellTransaction(StockDailyRecordTo stock, int n) {
+
+		logger.info("Sell transaction created. Stock: " + stock.getCompany().getName() + " quantity: " + n);
+
+		return new MarketSellTransaction(stock, n, upperSellBoundPriceRandomizer, lowerSellBoundPriceRandomizer,
+				lowerBoundWarrantedNumberOfStock, upperBoundWarrantedNumberOfStock);
 
 	}
 
-	public MarketBuyTransaction createBuyTransaction(StockDailyRecordTo stock, int n){
-		logger.info("Buy transaction created. Stock: "+stock.getCompany().getName()+" quantity: "+n);
-		return new  MarketBuyTransaction(stock,n,upperBuyBoundPriceRandomizer,lowerBuyBoundPriceRandomizer,
-				lowerBoundWarrantedNumberOfStock,upperBoundWarrantedNumberOfStock);
+	public MarketBuyTransaction createBuyTransaction(StockDailyRecordTo stock, int n) {
+
+		logger.info("Buy transaction created. Stock: " + stock.getCompany().getName() + " quantity: " + n);
+
+		return new MarketBuyTransaction(stock, n, upperBuyBoundPriceRandomizer, lowerBuyBoundPriceRandomizer,
+				lowerBoundWarrantedNumberOfStock, upperBoundWarrantedNumberOfStock);
 	}
 }

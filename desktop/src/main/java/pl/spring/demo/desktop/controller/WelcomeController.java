@@ -22,17 +22,14 @@ public class WelcomeController {
 	@FXML
 	Button enterButton;
 
-
 	@Resource
 	Player p;
 
-	@FXML Label label;
+	@FXML
+	Label label;
 
-
-	@FXML ImageView image;
-
-
-
+	@FXML
+	ImageView image;
 
 	@FXML
 	public void enterButtonAction(ActionEvent event) throws IOException {
@@ -43,15 +40,13 @@ public class WelcomeController {
 
 	@FXML
 	private void initialize() {
-			label.setText("Witaj, "+p.getFirstName()+" "+p.getLastName());
-			try {
-				image.setImage(new Image(App.class.getResource("images/startup.jpg").openStream())
-);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		label.setText("Witaj, " + p.getFirstName() + " " + p.getLastName());
+		try {
+			image.setImage(new Image(App.class.getResource("images/startup.jpg").openStream()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
-

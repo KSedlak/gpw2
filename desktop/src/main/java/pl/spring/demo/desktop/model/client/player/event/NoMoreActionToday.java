@@ -1,14 +1,12 @@
 package pl.spring.demo.desktop.model.client.player.event;
 
-
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationEvent;
 
 import pl.spring.demo.desktop.model.status.Status;
 
-
 public class NoMoreActionToday extends ApplicationEvent {
-	final static Logger logger=Logger.getLogger("IamDoneEvent");
+	final static Logger logger = Logger.getLogger("NoMoreActionTodayEvent");
 	private static final long serialVersionUID = 1L;
 
 	private Status dayEnded;
@@ -16,7 +14,7 @@ public class NoMoreActionToday extends ApplicationEvent {
 	public NoMoreActionToday(Status source) {
 		super(source);
 		this.dayEnded = source;
-logger.info("IamDone event fired");
+		logger.info("NoMoreActionToday event fired");
 	}
 
 	public static long getSerialversionuid() {
@@ -26,13 +24,5 @@ logger.info("IamDone event fired");
 	public Status getDayEnded() {
 		return dayEnded;
 	}
-
-
-
-
-
-
-
-
 
 }

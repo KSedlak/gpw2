@@ -19,7 +19,6 @@ import pl.spring.demo.desktop.model.nationalBank.event.ExchangeRatesChanged;
 import pl.spring.demo.desktop.model.status.Status;
 import pl.spring.demo.desktop.model.utils.doubleRounder.DoubleRounder;
 
-
 @Component
 @DependsOn("NationalBank")
 @Qualifier("cantor")
@@ -32,7 +31,8 @@ public class CantorImpl implements Cantor {
 	private Status cantorStatus;
 	private ApplicationContext applicationContext;
 	private HashMap<Currency, Double> currentExchangeRateMap;
-	final static Logger logger=Logger.getLogger("Cantor");
+	final static Logger logger = Logger.getLogger("Cantor");
+
 	public CantorImpl() {
 		super();
 		currentExchangeRateMap = new HashMap<Currency, Double>();
@@ -40,7 +40,7 @@ public class CantorImpl implements Cantor {
 
 	@Override
 	public double getSellRate(Currency c) {
-		if(currentExchangeRateMap.isEmpty()){
+		if (currentExchangeRateMap.isEmpty()) {
 			return 0;
 		}
 		return currentExchangeRateMap.get(c) * (100 + sellPercentage) / 100;
@@ -48,7 +48,7 @@ public class CantorImpl implements Cantor {
 
 	@Override
 	public double getBuyRate(Currency c) {
-		if(currentExchangeRateMap.isEmpty()){
+		if (currentExchangeRateMap.isEmpty()) {
 			return 0;
 		}
 		return currentExchangeRateMap.get(c) * (100 - buyPercentage) / 100;
@@ -56,7 +56,7 @@ public class CantorImpl implements Cantor {
 
 	@Override
 	public double getNbpRate(Currency c) {
-		if(currentExchangeRateMap.isEmpty()){
+		if (currentExchangeRateMap.isEmpty()) {
 			return 0;
 		}
 		return currentExchangeRateMap.get(c);
@@ -74,16 +74,17 @@ public class CantorImpl implements Cantor {
 	public double sellCurrencyToClient(Currency output, double requested) {
 
 		double rate = getSellRate(output);
-		double cost=DoubleRounder.roundToMoney(rate*requested);
-		logger.info("Client get from cantor: "+rate+" "+output.getName()+" exRate: "+getSellRate(output));
+		double cost = DoubleRounder.roundToMoney(rate * requested);
+		logger.info("Client get from cantor: " + rate + " " + output.getName() + " exRate: " + getSellRate(output));
 		return cost;
 	}
 
 	@Override
 	public double buyCurrencyFromClient(Currency input, double currencyNumber) {
 		double rate = getBuyRate(input);
-		double returned=rate=DoubleRounder.roundToMoney(rate*currencyNumber);
-		logger.info("Client get from cantor: "+rate+" PLN and pay for it: "+currencyNumber+" "+input.getName()+" exRate: "+getBuyRate(input));
+		double returned = rate = DoubleRounder.roundToMoney(rate * currencyNumber);
+		logger.info("Client get from cantor: " + rate + " PLN and pay for it: " + currencyNumber + " " + input.getName()
+				+ " exRate: " + getBuyRate(input));
 		return returned;
 	}
 
@@ -105,7 +106,5 @@ public class CantorImpl implements Cantor {
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		this.applicationContext = applicationContext;
 	}
-
-
 
 }

@@ -4,9 +4,7 @@ import java.time.LocalDate;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 
-
-
-	public interface TimeManager extends ApplicationListener<ApplicationEvent>{
+public interface TimeManager extends ApplicationListener<ApplicationEvent> {
 
 	void start(LocalDate startDate);
 

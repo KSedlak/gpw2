@@ -51,13 +51,19 @@ public class Player extends Person
 
 	@Value("${player.lastName}")
 	private String lastName;
+
 	private Strategy currentStrategy;
+
 	@Value("${transaction.changePercentToAccept}")
 	private Double TRANSACTION_CHANGE_PERCENT_TOLLERANCE;
+
 	private ApplicationContext applicationContext;
+
 	final static Logger logger = Logger.getLogger("Player");
+
 	@Autowired
 	BrokerageOffice brokerageOffice;
+
 	@Autowired
 	WalletBalancer walletBallancer;
 
@@ -76,21 +82,20 @@ public class Player extends Person
 
 	}
 
-
 	public void setCurrentStrategy(Strategy currentStrategy) {
 		this.currentStrategy = currentStrategy;
 	}
 
 	private void makeTodayOperationsOnMarket() {
-		List <StockDailyRecordTo> buyedToday=doTodayBuyTransactions();
+		List<StockDailyRecordTo> buyedToday = doTodayBuyTransactions();
 		doTodaySellTransactions(buyedToday);
 		logger.info("Client end all operations in brokerageOffice");
 	}
 
-	private List <StockDailyRecordTo> doTodayBuyTransactions() {
+	private List<StockDailyRecordTo> doTodayBuyTransactions() {
 		logger.info("Client ask strategy for BUY transactions");
 		double availableMoney = wallet.getMoney(Currency.PLN);
-		List <StockDailyRecordTo> buyedToday =new ArrayList<StockDailyRecordTo>();
+		List<StockDailyRecordTo> buyedToday = new ArrayList<StockDailyRecordTo>();
 		List<MarketBuyTransaction> todayBuy = currentStrategy.whatShouldClientBuy(availableMoney);
 		logger.info("Client start ask brokerageOffice to make transactions");
 		for (MarketBuyTransaction buy : todayBuy) {
@@ -102,7 +107,8 @@ public class Player extends Person
 				logger.info("Client reject brokerageOfficeOffer");
 			}
 
-			if (response.getChangeValueOFTransaction() <= TRANSACTION_CHANGE_PERCENT_TOLLERANCE && canAffordThatTransaction(availableMoney, response)) {
+			if (response.getChangeValueOFTransaction() <= TRANSACTION_CHANGE_PERCENT_TOLLERANCE
+					&& canAffordThatTransaction(availableMoney, response)) {
 				logger.info("Client accept conditions and make that deal");
 				availableMoney = acceptBuyTransaction(availableMoney, response);
 				buyedToday.add(response.getStock());
@@ -112,10 +118,10 @@ public class Player extends Person
 		return buyedToday;
 	}
 
-	public void doTodaySellTransactions(List <StockDailyRecordTo> buyedToday) {
+	public void doTodaySellTransactions(List<StockDailyRecordTo> buyedToday) {
 		logger.info("Client ask strategy for SELL transactions");
 		HashMap<StockDailyRecordTo, Integer> showToStrategy = stockWallet.showWallet();
-		List<MarketSellTransaction> todaySell = currentStrategy.whatShouldClientSell(showToStrategy,buyedToday);
+		List<MarketSellTransaction> todaySell = currentStrategy.whatShouldClientSell(showToStrategy, buyedToday);
 		logger.info("Client start ask brokerageOffice to make transactions");
 		for (MarketSellTransaction sell : todaySell) {
 
@@ -153,9 +159,10 @@ public class Player extends Person
 	}
 
 	private boolean canAffordThatTransaction(double currentMoney, MarketTransaction t) {
-		double cost=DoubleRounder.roundToMoney((t.getValueOfBrokerageOfficeOffer() + t.getBrokerageOfficeCommission()));
-		boolean canI= currentMoney>cost;
-		logger.info("Client check wallet-> have: "+currentMoney+" cost: "+cost+" canMakeIt: "+canI);
+		double cost = DoubleRounder
+				.roundToMoney((t.getValueOfBrokerageOfficeOffer() + t.getBrokerageOfficeCommission()));
+		boolean canI = currentMoney > cost;
+		logger.info("Client check wallet-> have: " + currentMoney + " cost: " + cost + " canMakeIt: " + canI);
 		return canI;
 	}
 
@@ -188,27 +195,25 @@ public class Player extends Person
 		this.applicationContext = applicationContext;
 	}
 
-
-
 	public double howMuchMoneyHave(Currency c) {
 
 		return wallet.getMoney(c);
 	}
 
-	public double howMuchStockValueHave(){
-		return stockWallet.getValueOfWallet();
+	public double howMuchStockValueHave() {
+		return DoubleRounder.roundToMoney(stockWallet.getValueOfWallet());
 	}
+
 	public HashMap<StockDailyRecordTo, Integer> showStockWallet() {
 		return stockWallet.showWallet();
 	}
 
-
-	public double getValueOfAllResources(){
-		double result=0;
-		result=result+howMuchMoneyHave(Currency.PLN);
-		result=result+howMuchMoneyHave(Currency.EURO)*cantor.getBuyRate(Currency.EURO);
-		result=result+howMuchStockValueHave();
-
+	public double getValueOfAllResources() {
+		double result = 0;
+		result = result + howMuchMoneyHave(Currency.PLN);
+		result = result + howMuchMoneyHave(Currency.EURO) * cantor.getBuyRate(Currency.EURO);
+		result = result + howMuchStockValueHave();
+		result = DoubleRounder.roundToMoney(result);
 		return result;
 	}
 

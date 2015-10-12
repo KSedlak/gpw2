@@ -6,8 +6,8 @@ import java.math.RoundingMode;
 public class DoubleRounder {
 	public static double roundToMoney(double value) {
 
-	    BigDecimal bd = new BigDecimal(value);
-	    bd = bd.setScale(2, RoundingMode.HALF_UP);
-	    return bd.doubleValue();
+		BigDecimal bd = new BigDecimal(value);
+		bd = bd.setScale(2, RoundingMode.HALF_UP);
+		return bd.doubleValue();
 	}
 }

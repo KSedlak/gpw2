@@ -13,6 +13,7 @@ public class SceneMaker {
 
 	private static final ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
 			"file:src/main/resources/pl/spring/demo/desktop/spring/spring-config.xml");
+
 	public static ApplicationContext getApplicationContext() {
 		return applicationContext;
 	}

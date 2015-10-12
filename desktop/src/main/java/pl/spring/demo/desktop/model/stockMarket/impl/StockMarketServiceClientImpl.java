@@ -23,7 +23,9 @@ public class StockMarketServiceClientImpl implements StockMarketServiceClient {
 	StockMarketService service;
 
 	private ApplicationContext applicationContext;
-	final static Logger logger=Logger.getLogger("Stock Market");
+
+	final static Logger logger = Logger.getLogger("Stock Market");
+
 	private LocalDate today;
 
 	private StockMarketServiceClientImpl() {
@@ -33,16 +35,15 @@ public class StockMarketServiceClientImpl implements StockMarketServiceClient {
 	@Override
 	public void onApplicationEvent(DayChanged event) {
 		logger.info("Stock market check for new data");
-		today=event.getCurrentDate();
-		if(getTodayValues().size()==0){
+		today = event.getCurrentDate();
+		if (getTodayValues().size() == 0) {
 			logger.info("No data for today because market is closed");
 			applicationContext.publishEvent(new NoMoreActionToday(Status.Closed));
 		}
-		if(getTodayValues().size()>0){
+		if (getTodayValues().size() > 0) {
 			logger.info("Data found and notify brokerageOffice");
 			applicationContext.publishEvent(new StockRatesChanged(true));
 		}
-
 
 	}
 
@@ -83,23 +84,18 @@ public class StockMarketServiceClientImpl implements StockMarketServiceClient {
 
 	@Override
 	public List<StockDailyRecordTo> getStocksFromTodayXDaysBefore(Integer X) {
-	return getStockDailyRecordsFromDateAToB(today.minusDays(X), today);
+		return getStockDailyRecordsFromDateAToB(today.minusDays(X), today);
 	}
 
 	@Override
 	public List<StockDailyRecordTo> getChepestStockFromToday(int limit) {
 
-	return service.findCheapestFromDay(today, limit);
+		return service.findCheapestFromDay(today, limit);
 	}
 
 	@Override
 	public StockDailyRecordTo getStocksByCompanyNameFromToday(String name) {
-	return getStocksByCompanyNameAndDate(name, today);
+		return getStocksByCompanyNameAndDate(name, today);
 	}
-
-
-
-
-
 
 }

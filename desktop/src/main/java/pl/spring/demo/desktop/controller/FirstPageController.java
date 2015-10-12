@@ -2,6 +2,7 @@ package pl.spring.demo.desktop.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 
 import javax.annotation.Resource;
 
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,8 +27,11 @@ import pl.spring.demo.desktop.model.client.player.strategy.strategies.random.Ran
 import pl.spring.demo.desktop.model.client.player.wallet.Wallet;
 import pl.spring.demo.desktop.model.currency.Currency;
 import pl.spring.demo.desktop.model.timeManager.TimeManager;
+import pl.spring.demo.desktop.model.utils.doubleRounder.DoubleRounder;
 import pl.spring.demo.desktop.view.TableRow.HistoricTableRow;
+import pl.spring.demo.desktop.view.TableRow.StockWalletRow;
 import pl.spring.demo.desktop.view.textAreaAppender.TextAreaAppender;
+import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 import pl.spring.demo.service.StockMarketService;
 import javafx.scene.control.Label;
 import javafx.scene.control.DatePicker;
@@ -118,15 +123,32 @@ public class FirstPageController implements ApplicationListener<NoMoreActionToda
 	@FXML
 	TableColumn<HistoricTableRow, Double> allColumn;
 
+	@FXML
+	ComboBox<String> combo;
+
+	@FXML
+	TextField euroTextField;
+
+	@FXML
+	TextField plnTextField;
+
+	@FXML
+	Label timeSimulation;
+
+	@FXML
+	TableColumn<StockWalletRow, String> stockWallletStockColumn;
+
+	@FXML
+	TableColumn<StockWalletRow, Integer> stockWalletQuantity;
+
+	@FXML
+	TableColumn<StockWalletRow, Double> stockWalletValueStock;
+
+	@FXML
+	TableView<StockWalletRow> stockWalletTable;
+
 	private ObservableList<HistoricTableRow> historic = FXCollections.observableArrayList();
-
-	@FXML ComboBox<String> combo;
-
-	@FXML TextField euroTextField;
-
-	@FXML TextField plnTextField;
-
-	@FXML Label timeSimulation;
+	private ObservableList<StockWalletRow> stockWalletPresentation = FXCollections.observableArrayList();
 
 	@FXML
 	private void initialize() {
@@ -137,23 +159,30 @@ public class FirstPageController implements ApplicationListener<NoMoreActionToda
 		picker.setValue(LocalDate.parse("2013-01-02"));
 		picker1.setValue(LocalDate.parse("2013-01-10"));
 		setupLogginView();
-		plnTextField.setText(player.howMuchMoneyHave(Currency.PLN)+"");
-		euroTextField.setText(player.howMuchMoneyHave(Currency.EURO)+"");
+		plnTextField.setText(player.howMuchMoneyHave(Currency.PLN) + "");
+		euroTextField.setText(player.howMuchMoneyHave(Currency.EURO) + "");
 		dateColumn.setCellValueFactory(cellData -> cellData.getValue().getDateString());
 		plnColumn.setCellValueFactory(cellData -> cellData.getValue().getPlProperty().asObject());
 		euroColumn.setCellValueFactory(cellData -> cellData.getValue().getEuroProperty().asObject());
 		stockColumn.setCellValueFactory(cellData -> cellData.getValue().getStockProperty().asObject());
 		allColumn.setCellValueFactory(cellData -> cellData.getValue().getAllProperty().asObject());
+
 		historyTable.setItems(historic);
+
+		stockWallletStockColumn.setCellValueFactory(cellData -> cellData.getValue().getName());
+		stockWalletQuantity.setCellValueFactory(cellData -> cellData.getValue().getQuantity().asObject());
+		stockWalletValueStock.setCellValueFactory(cellData -> cellData.getValue().getValue().asObject());
+
+		stockWalletTable.setItems(stockWalletPresentation);
 
 		combo.getItems().add(randomStrategy.getName());
 		combo.getItems().add(buyStrategy.getName());
-		combo.getSelectionModel().select(1);
+		combo.getSelectionModel().select(0);
 	}
 
 	@FXML
 	public void nextDay(ActionEvent event) {
-		LocalDate current=timeManager.getEndDate();
+		LocalDate current = timeManager.getEndDate();
 		timeManager.setEndDate(current.plusDays(1));
 		picker1.setValue(timeManager.getEndDate());
 		timeManager.makeOneDayStep();
@@ -183,17 +212,14 @@ public class FirstPageController implements ApplicationListener<NoMoreActionToda
 		wallet.clear();
 		stockWallet.clear();
 
-
-
-		wallet.addToWallet(Currency.PLN,Double.parseDouble(plnTextField.getText()));
+		wallet.addToWallet(Currency.PLN, Double.parseDouble(plnTextField.getText()));
 		wallet.addToWallet(Currency.EURO, Double.parseDouble(euroTextField.getText()));
 
-
-		if(((String)combo.getSelectionModel().getSelectedItem()).equals(randomStrategy.getName())){
+		if (((String) combo.getSelectionModel().getSelectedItem()).equals(randomStrategy.getName())) {
 			player.setCurrentStrategy(randomStrategy);
 		}
 
-		if(((String)combo.getSelectionModel().getSelectedItem()).equals(buyStrategy.getName())){
+		if (((String) combo.getSelectionModel().getSelectedItem()).equals(buyStrategy.getName())) {
 			player.setCurrentStrategy(buyStrategy);
 		}
 		timeManager.setEndDate(picker1.getValue());
@@ -203,23 +229,26 @@ public class FirstPageController implements ApplicationListener<NoMoreActionToda
 
 	@Override
 	public void onApplicationEvent(NoMoreActionToday event) {
-		Double euro =player.howMuchMoneyHave(Currency.EURO);
-		Double pln=player.howMuchMoneyHave(Currency.PLN);
-		Double stock=player.howMuchStockValueHave();
-		Double all= player.getValueOfAllResources();
+		stockWalletPresentation.clear();
+		Double euro = player.howMuchMoneyHave(Currency.EURO);
+		Double pln = player.howMuchMoneyHave(Currency.PLN);
+		Double stock = player.howMuchStockValueHave();
+		Double all = player.getValueOfAllResources();
 
 		euroValue.setText(euro + "");
 		plnValue.setText(pln + "");
-		stockWalletValue.setText( stock+ "");
+		stockWalletValue.setText(stock + "");
 
-		String date=timeManager.getTodayDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
-		historic.add(new HistoricTableRow(
-				new SimpleStringProperty(date),
-				new SimpleDoubleProperty(pln),
-				new SimpleDoubleProperty(euro),
-				new SimpleDoubleProperty(stock),
-				new SimpleDoubleProperty(all)));
+		String date = timeManager.getTodayDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
+		historic.add(new HistoricTableRow(new SimpleStringProperty(date), new SimpleDoubleProperty(pln),
+				new SimpleDoubleProperty(euro), new SimpleDoubleProperty(stock), new SimpleDoubleProperty(all)));
 
+		HashMap<StockDailyRecordTo, Integer> wallet = stockWallet.showWallet();
+		for (StockDailyRecordTo s : wallet.keySet()) {
+			stockWalletPresentation.add(new StockWalletRow(new SimpleStringProperty(s.getCompany().getName()),
+					new SimpleIntegerProperty(wallet.get(s)),
+					new SimpleDoubleProperty(DoubleRounder.roundToMoney(wallet.get(s) * s.getValue()))));
+		}
 	}
 
 }

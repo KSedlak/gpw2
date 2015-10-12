@@ -1,60 +1,61 @@
 package pl.spring.demo.desktop.model.transaction.marketTransaction;
 
-
 import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 
 public abstract class MarketTransaction {
 
-	private StockDailyRecordTo  stock;
+	private StockDailyRecordTo stock;
+
 	private int numberOfStockRequested;
+
 	private double brokerageOfficeAcceptedRate;
+
 	private int brokerageOfficeAcceptedNumber;
+
 	private StatusOfTransaction status;
+
 	private Double upperBoundPriceRandomizer;
+
 	private Double lowerBoundPriceRandomizer;
+
 	private Double lowerBoundWarrantedNumberOfStock;
+
 	private Double upperBoundWarrantedNumberOfStock;
+
 	private Double brokerageOfficeCommission;
-
-
 
 	public Double getBrokerageOfficeCommission() {
 		return brokerageOfficeCommission;
 	}
 
-
 	public void setBrokerageOfficeCommission(Double brokerageOfficeCommission) {
 		this.brokerageOfficeCommission = brokerageOfficeCommission;
 	}
 
-
 	public MarketTransaction() {
 		super();
-		this.status=StatusOfTransaction.Created;
+		this.status = StatusOfTransaction.Created;
 	}
-
 
 	public MarketTransaction(StockDailyRecordTo stock, int numberOfStockRequested) {
 		super();
 		this.stock = stock;
 		this.numberOfStockRequested = numberOfStockRequested;
-		this.status=StatusOfTransaction.Created;
+		this.status = StatusOfTransaction.Created;
 	}
-
 
 	public MarketTransaction(StockDailyRecordTo stock, int numberOfStockRequested, Double upperBoundPriceRandomizer,
 			Double lowerBoundPriceRandomizer, Double lowerBoundWarrantedNumberOfStock,
 			Double upperBoundWarrantedNumberOfStock) {
-			super();
-			this.stock = stock;
-			this.numberOfStockRequested = numberOfStockRequested;
-			this.upperBoundPriceRandomizer = upperBoundPriceRandomizer;
-			this.lowerBoundPriceRandomizer = lowerBoundPriceRandomizer;
-			this.lowerBoundWarrantedNumberOfStock = lowerBoundWarrantedNumberOfStock;
-			this.upperBoundWarrantedNumberOfStock = upperBoundWarrantedNumberOfStock;
-			this.status=StatusOfTransaction.Created;
-		}
-
+		super();
+		this.stock = stock;
+		this.numberOfStockRequested = numberOfStockRequested;
+		this.upperBoundPriceRandomizer = upperBoundPriceRandomizer;
+		this.lowerBoundPriceRandomizer = lowerBoundPriceRandomizer;
+		this.lowerBoundWarrantedNumberOfStock = lowerBoundWarrantedNumberOfStock;
+		this.upperBoundWarrantedNumberOfStock = upperBoundWarrantedNumberOfStock;
+		this.status = StatusOfTransaction.Created;
+	}
 
 	public StatusOfTransaction getStatus() {
 		return status;
@@ -83,36 +84,44 @@ public abstract class MarketTransaction {
 	public StockDailyRecordTo getStock() {
 		return stock;
 	}
+
 	public void setStock(StockDailyRecordTo stock) {
 		this.stock = stock;
 	}
+
 	public int getNumberOfStockRequested() {
 		return numberOfStockRequested;
 	}
+
 	public void setNumberOfStockRequested(int numberOfStockRequested) {
 		this.numberOfStockRequested = numberOfStockRequested;
 	}
+
 	public double getBrokerageOfficeAcceptedRate() {
 		return brokerageOfficeAcceptedRate;
 	}
+
 	public void setBrokerageOfficeAcceptedRate(double brokerageOfficeAcceptedRate) {
 		this.brokerageOfficeAcceptedRate = brokerageOfficeAcceptedRate;
 	}
+
 	public int getBrokerageOfficeAcceptedNumber() {
 		return brokerageOfficeAcceptedNumber;
 	}
+
 	public void setBrokerageOfficeAcceptedNumber(int brokerageOfficeAcceptedNumber) {
 		this.brokerageOfficeAcceptedNumber = brokerageOfficeAcceptedNumber;
 	}
 
 	public double getValueOfBrokerageOfficeOffer() {
-		return brokerageOfficeAcceptedRate*brokerageOfficeAcceptedNumber;
+		return brokerageOfficeAcceptedRate * brokerageOfficeAcceptedNumber;
 	}
+
 	public double getChangeValueOFTransaction() {
 		double clientPropValue = getStock().getValue() * getNumberOfStockRequested();
 		double brokerPropValue = getValueOfBrokerageOfficeOffer();
 
-		double change=Math.abs(clientPropValue-brokerPropValue);
-		return (change/clientPropValue)*100;
+		double change = Math.abs(clientPropValue - brokerPropValue);
+		return (change / clientPropValue) * 100;
 	}
 }

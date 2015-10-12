@@ -64,7 +64,7 @@ public class StockWalletImpl implements StockWallet {
 
 	@Override
 	public void clear() {
-	wallet.clear();
+		wallet.clear();
 
 	}
 }

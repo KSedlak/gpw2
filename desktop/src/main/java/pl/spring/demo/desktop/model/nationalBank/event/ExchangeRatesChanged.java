@@ -11,7 +11,9 @@ public class ExchangeRatesChanged extends ApplicationEvent {
 	private static final long serialVersionUID = 1L;
 
 	private HashMap<Currency, Double> currentExchangeRateMap;
-	final static Logger logger=Logger.getLogger("ExchangesRateChangedEvent");
+
+	final static Logger logger = Logger.getLogger("ExchangesRateChangedEvent");
+
 	public ExchangeRatesChanged(HashMap<Currency, Double> source) {
 		super(source);
 		this.currentExchangeRateMap = source;
@@ -21,9 +23,5 @@ public class ExchangeRatesChanged extends ApplicationEvent {
 	public HashMap<Currency, Double> getCurrentExchangeRateMap() {
 		return currentExchangeRateMap;
 	}
-
-
-
-
 
 }

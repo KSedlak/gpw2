@@ -1,6 +1,5 @@
 package pl.spring.demo.desktop.model.client.person;
 
-
 public class Person {
 	private String firstName;
 	private String lastName;

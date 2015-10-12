@@ -1,6 +1,5 @@
 package pl.spring.demo.desktop.model.brokerageOffice.impl;
 
-
 import java.time.LocalDate;
 import java.util.List;
 import org.apache.log4j.Logger;
@@ -23,10 +22,10 @@ import pl.spring.demo.desktop.model.utils.doubleRounder.DoubleRounder;
 import pl.spring.demo.model.stockDailyRecord.StockDailyRecordTo;
 
 @Service
-public class BrokerageOfficeImpl implements BrokerageOffice{
+public class BrokerageOfficeImpl implements BrokerageOffice {
 	private Status status;
 	private ApplicationContext applicationContext;
-	final static Logger logger=Logger.getLogger("BrokerageOffice");
+	final static Logger logger = Logger.getLogger("BrokerageOffice");
 
 	@Autowired
 	StockMarketServiceClient gpw;
@@ -41,7 +40,6 @@ public class BrokerageOfficeImpl implements BrokerageOffice{
 	public BrokerageOfficeImpl() {
 		super();
 	}
-
 
 	@Override
 	public List<StockDailyRecordTo> getTodayStockValues() {
@@ -83,67 +81,60 @@ public class BrokerageOfficeImpl implements BrokerageOffice{
 		this.applicationContext = applicationContext;
 	}
 
-
 	@Override
 	public MarketTransaction makeTransaction(MarketTransaction t) {
 
-		MarketTransaction result=transactionHandler.handleTransaction(t);
+		MarketTransaction result = transactionHandler.handleTransaction(t);
 		setCommission(result);
-		return  result;
+		return result;
 	}
 
-	private double calculateCommisionFromTransaction(MarketTransaction t){
-		double valueOfTransaction=t.getValueOfBrokerageOfficeOffer();
-		double percentCommission=(commissionPercent/100)*valueOfTransaction;
-		if(percentCommission<fixedCommission){
+	private double calculateCommisionFromTransaction(MarketTransaction t) {
+		double valueOfTransaction = t.getValueOfBrokerageOfficeOffer();
+		double percentCommission = (commissionPercent / 100) * valueOfTransaction;
+		if (percentCommission < fixedCommission) {
 			return fixedCommission;
 		}
 		return DoubleRounder.roundToMoney(percentCommission);
 
 	}
-	private void setCommission(MarketTransaction t){
-		double commission= calculateCommisionFromTransaction(t);
-		logger.info("brokerageOffice add commission: "+commission+" to transaction");
+
+	private void setCommission(MarketTransaction t) {
+		double commission = calculateCommisionFromTransaction(t);
+		logger.info("brokerageOffice add commission: " + commission + " to transaction");
 		t.setBrokerageOfficeCommission(commission);
 	}
 
 	@Override
 	public void onApplicationEvent(ApplicationEvent event) {
 
-		if(event instanceof StockRatesChanged){
-			status=Status.Open;
+		if (event instanceof StockRatesChanged) {
+			status = Status.Open;
 			applicationContext.publishEvent(new BrokerageOfficeStatusChanged(status));
 		}
-		if(event instanceof NoMoreActionToday){
-			status=Status.Closed;
+		if (event instanceof NoMoreActionToday) {
+			status = Status.Closed;
 			applicationContext.publishEvent(new BrokerageOfficeStatusChanged(status));
 		}
 
 	}
-
 
 	public Status getStatus() {
 		return status;
 	}
 
-
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-
 
 	@Override
 	public List<StockDailyRecordTo> getCheapesStocksFromToday(Integer X) {
 		return gpw.getChepestStockFromToday(X);
 	}
 
-
 	@Override
 	public StockDailyRecordTo getStocksByCompanyNameFromToday(String name) {
-	return gpw.getStocksByCompanyNameFromToday(name);
+		return gpw.getStocksByCompanyNameFromToday(name);
 	}
 
 }
-
-
-

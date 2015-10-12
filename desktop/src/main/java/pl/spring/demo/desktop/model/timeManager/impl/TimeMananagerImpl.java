@@ -9,7 +9,6 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Component;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
@@ -23,16 +22,22 @@ import pl.spring.demo.desktop.model.timeManager.TimeManager;
 public class TimeMananagerImpl implements TimeManager {
 
 	private LocalDate startDate;
+
 	private LocalDate endDate;
+
 	@Value("${timer.tick}")
 	private int tickTime;
+
 	@Autowired
 	private Calendar calendar;
-	Task<Void> backgroundTask;
+
 	private Status cantorStatus;
+
 	private Status brokerageOfficeStatus;
+
 	final static Logger logger = Logger.getLogger("TimeManager");
-	Timeline simulator;
+
+	private Timeline simulator;
 
 	public TimeMananagerImpl() {
 		super();
@@ -58,6 +63,7 @@ public class TimeMananagerImpl implements TimeManager {
 	public LocalDate getStartDate() {
 		return startDate;
 	}
+
 	@Override
 	public LocalDate getEndDate() {
 		return endDate;
@@ -82,8 +88,9 @@ public class TimeMananagerImpl implements TimeManager {
 	public void setBrokerageOfficeStatus(Status brokerageOfficeStatus) {
 		this.brokerageOfficeStatus = brokerageOfficeStatus;
 	}
+
 	@Override
-	public LocalDate getTodayDate(){
+	public LocalDate getTodayDate() {
 		return calendar.getCurrentDay();
 	}
 

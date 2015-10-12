@@ -4,6 +4,6 @@ import pl.spring.demo.desktop.model.transaction.marketTransaction.MarketTransact
 
 public interface TransactionRandomizer {
 
-MarketTransaction randomizePriceAndNumber(MarketTransaction t);
+	MarketTransaction randomizePriceAndNumber(MarketTransaction t);
 
 }

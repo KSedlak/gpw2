@@ -19,8 +19,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import pl.spring.demo.desktop.model.client.player.Player;
 import pl.spring.demo.desktop.model.client.player.event.NoMoreActionToday;
+import pl.spring.demo.desktop.model.client.player.stockWallet.StockWallet;
 import pl.spring.demo.desktop.model.client.player.strategy.strategies.buyCheapSellDrop.BuyCheapSellDrop;
 import pl.spring.demo.desktop.model.client.player.strategy.strategies.random.RandomStrategy;
+import pl.spring.demo.desktop.model.client.player.wallet.Wallet;
 import pl.spring.demo.desktop.model.currency.Currency;
 import pl.spring.demo.desktop.model.timeManager.TimeManager;
 import pl.spring.demo.desktop.view.TableRow.HistoricTableRow;
@@ -33,6 +35,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 
 @Component
 public class FirstPageController implements ApplicationListener<NoMoreActionToday> {
@@ -72,6 +75,12 @@ public class FirstPageController implements ApplicationListener<NoMoreActionToda
 
 	@Resource
 	RandomStrategy randomStrategy;
+
+	@Resource
+	Wallet wallet;
+
+	@Resource
+	StockWallet stockWallet;
 
 	@FXML
 	DatePicker picker;
@@ -113,6 +122,12 @@ public class FirstPageController implements ApplicationListener<NoMoreActionToda
 
 	@FXML ComboBox<String> combo;
 
+	@FXML TextField euroTextField;
+
+	@FXML TextField plnTextField;
+
+	@FXML Label timeSimulation;
+
 	@FXML
 	private void initialize() {
 		firstNameValue.setText(player.getFirstName());
@@ -122,17 +137,18 @@ public class FirstPageController implements ApplicationListener<NoMoreActionToda
 		picker.setValue(LocalDate.parse("2013-01-02"));
 		picker1.setValue(LocalDate.parse("2013-01-10"));
 		setupLogginView();
-
+		plnTextField.setText(player.howMuchMoneyHave(Currency.PLN)+"");
+		euroTextField.setText(player.howMuchMoneyHave(Currency.EURO)+"");
 		dateColumn.setCellValueFactory(cellData -> cellData.getValue().getDateString());
 		plnColumn.setCellValueFactory(cellData -> cellData.getValue().getPlProperty().asObject());
 		euroColumn.setCellValueFactory(cellData -> cellData.getValue().getEuroProperty().asObject());
 		stockColumn.setCellValueFactory(cellData -> cellData.getValue().getStockProperty().asObject());
 		allColumn.setCellValueFactory(cellData -> cellData.getValue().getAllProperty().asObject());
-
 		historyTable.setItems(historic);
 
 		combo.getItems().add(randomStrategy.getName());
 		combo.getItems().add(buyStrategy.getName());
+		combo.getSelectionModel().select(1);
 	}
 
 	@FXML
@@ -163,6 +179,14 @@ public class FirstPageController implements ApplicationListener<NoMoreActionToda
 	@FXML
 	public void startAction(ActionEvent event) {
 		historic.clear();
+		wallet.clear();
+		stockWallet.clear();
+
+
+
+		wallet.addToWallet(Currency.PLN,Double.parseDouble(plnTextField.getText()));
+		wallet.addToWallet(Currency.EURO, Double.parseDouble(euroTextField.getText()));
+
 
 		if(((String)combo.getSelectionModel().getSelectedItem()).equals(randomStrategy.getName())){
 			player.setCurrentStrategy(randomStrategy);

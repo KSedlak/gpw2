@@ -10,4 +10,5 @@ public interface StockWallet {
 	void removeFromWallet(StockDailyRecordTo c, Integer number);
 	HashMap<StockDailyRecordTo, Integer> showWallet();
 	double getValueOfWallet();
+	void clear();
 }

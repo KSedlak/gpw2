@@ -33,12 +33,12 @@ public class RandomStrategy implements Strategy {
 	@Autowired
 	MarketTransactionFactory factory;
 
+
 	@Override
 	public List<MarketBuyTransaction> whatShouldClientBuy(double PLN) {
 
 	List<StockDailyRecordTo> today = brokerageOffice.getTodayStockValues();
 	List<MarketBuyTransaction> result=new ArrayList<MarketBuyTransaction>();
-
 	int numberTransactions=ThreadLocalRandom.current().nextInt(0, maximumNumberOfGeneratedTransactions + 1);
 	Set<Integer> indexes=generateNoRepetitionIndexes(numberTransactions, today.size()-1);
 
@@ -56,7 +56,7 @@ public class RandomStrategy implements Strategy {
 	}
 
 	@Override
-	public List<MarketSellTransaction> whatShouldClientSell(HashMap<StockDailyRecordTo, Integer> stocks) {
+	public List<MarketSellTransaction> whatShouldClientSell(HashMap<StockDailyRecordTo, Integer> stocks, List <StockDailyRecordTo> buyedToday) {
 
 		List<MarketSellTransaction> result=new ArrayList<MarketSellTransaction>();
 
@@ -64,15 +64,17 @@ public class RandomStrategy implements Strategy {
 		if(stocks.size()-1<=numberTransactions){
 			numberTransactions=stocks.size()-1;
 		}
-
+		logger.info("Genearte "+numberTransactions+" random sell transactions");
 		Set<Integer> indexes=generateNoRepetitionIndexes(numberTransactions, stocks.size()-1);
 		List<StockDailyRecordTo> stocksWhichClientHave= new ArrayList<>(stocks.keySet());
 		StockDailyRecordTo choosenStock = null;
 
 		for(Integer i:indexes){
 			choosenStock=stocksWhichClientHave.get(i);
+			if(!buyedToday.contains(choosenStock)){
 				int numberOfStockToSell=getRandomInt(1,stocks.get(choosenStock));
 					result.add(factory.createSellTransaction(choosenStock, numberOfStockToSell));
+			}
 		}
 
 		return result;
@@ -81,8 +83,8 @@ public class RandomStrategy implements Strategy {
 
 	private Set<Integer> generateNoRepetitionIndexes(int number, int maxIndex){
 		Set<Integer> noRepetitionIdx=new LinkedHashSet<Integer>();
-		for(int i=0;i<number;i++){
-			noRepetitionIdx.add(getRandomInt(number, maxIndex));
+			while(noRepetitionIdx.size()<number){
+			noRepetitionIdx.add(getRandomInt(0, maxIndex));
 		}
 		return noRepetitionIdx;
 	}

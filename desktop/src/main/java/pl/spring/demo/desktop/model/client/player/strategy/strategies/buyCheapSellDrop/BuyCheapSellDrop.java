@@ -32,6 +32,7 @@ public class BuyCheapSellDrop implements Strategy {
 	@Autowired
 	MarketTransactionFactory factory;
 
+
 	@Override
 	public List<MarketBuyTransaction> whatShouldClientBuy(double PLN) {
 
@@ -47,12 +48,13 @@ public class BuyCheapSellDrop implements Strategy {
 					int numberOfStockToBuy=getRandomInt(1,maxWhichClientCanBuy);
 					result.add(factory.createBuyTransaction(choosenStock, numberOfStockToBuy));
 			}
+
 		return result;
 
 	}
 
 	@Override
-	public List<MarketSellTransaction> whatShouldClientSell(HashMap<StockDailyRecordTo, Integer> stocks) {
+	public List<MarketSellTransaction> whatShouldClientSell(HashMap<StockDailyRecordTo, Integer> stocks, List <StockDailyRecordTo> buyedToday) {
 
 		List<MarketSellTransaction> result=new ArrayList<MarketSellTransaction>();
 
@@ -60,8 +62,10 @@ public class BuyCheapSellDrop implements Strategy {
 		List<StockDailyRecordTo> toSell=getWhatDropsAllTheTime(stocksWhichClientHave);
 		if(toSell.size()>0){
 		for(StockDailyRecordTo s:toSell){
+			if(!buyedToday.contains(s)){
 				int numberOfStockToSell=getRandomInt(1,stocks.get(s));
 					result.add(factory.createSellTransaction(s, numberOfStockToSell));
+			}
 		}}
 
 		return result;

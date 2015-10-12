@@ -72,6 +72,14 @@ public double getMoney(Currency c) {
 
 
 
+@Override
+public void clear() {
+	wallet.clear();
+
+}
+
+
+
 
 
 

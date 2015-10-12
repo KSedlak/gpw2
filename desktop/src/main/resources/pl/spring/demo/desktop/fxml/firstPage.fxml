@@ -23,6 +23,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <DatePicker fx:id="picker" prefHeight="42.0" prefWidth="264.0" GridPane.columnIndex="1" />
@@ -37,22 +38,24 @@
                         <Font name="System Bold" size="31.0" />
                      </font>
                   </Label>
-                  <Button fx:id="next" mnemonicParsing="false" onAction="#nextDay" prefHeight="48.0" prefWidth="156.0" GridPane.rowIndex="3">
-                     <graphic>
-                        <FontAwesomeIconView glyphName="ARROW_RIGHT" size="40" wrappingWidth="48.2857141494751" />
-                     </graphic>
-                  </Button>
-                  <Button fx:id="startButton" mnemonicParsing="false" onAction="#startAction" prefHeight="48.0" prefWidth="165.0" text="START" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                     <font>
-                        <Font name="System Bold" size="22.0" />
-                     </font>
-                  </Button>
                   <Label text="STRATEGY" GridPane.rowIndex="2">
                      <font>
                         <Font name="System Bold" size="31.0" />
                      </font>
                   </Label>
                   <ComboBox fx:id="combo" prefHeight="42.0" prefWidth="178.0" promptText="Wybierz Strategie" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="PLN" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="System Bold" size="31.0" />
+                     </font>
+                  </Label>
+                  <Label text="EURO" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="System Bold" size="31.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="plnTextField" prefHeight="42.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="euroTextField" prefHeight="42.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
             </GridPane>
          </children>
@@ -122,5 +125,10 @@
             <TableColumn fx:id="allColumn" maxWidth="129.0" minWidth="-1.0" prefWidth="89.0" text="ALL" />
         </columns>
       </TableView>
+      <Button fx:id="startButton" layoutX="107.0" layoutY="247.0" mnemonicParsing="false" onAction="#startAction" prefHeight="48.0" prefWidth="165.0" text="START">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

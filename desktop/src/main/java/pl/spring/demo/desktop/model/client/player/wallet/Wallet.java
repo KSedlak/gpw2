@@ -7,5 +7,6 @@ public interface Wallet {
 	void addToWallet(Currency c, Double n);
 	double getMoney(Currency c);
 	void removeFromWallet(Currency c, Double number);
+	void clear();
 
 }

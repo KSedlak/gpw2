@@ -1,5 +1,6 @@
 package pl.spring.demo.desktop.model.client.player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.apache.log4j.Logger;
@@ -81,14 +82,15 @@ public class Player extends Person
 	}
 
 	private void makeTodayOperationsOnMarket() {
-		doTodayBuyTransactions();
-		doTodaySellTransactions();
+		List <StockDailyRecordTo> buyedToday=doTodayBuyTransactions();
+		doTodaySellTransactions(buyedToday);
 		logger.info("Client end all operations in brokerageOffice");
 	}
 
-	private void doTodayBuyTransactions() {
+	private List <StockDailyRecordTo> doTodayBuyTransactions() {
 		logger.info("Client ask strategy for BUY transactions");
 		double availableMoney = wallet.getMoney(Currency.PLN);
+		List <StockDailyRecordTo> buyedToday =new ArrayList<StockDailyRecordTo>();
 		List<MarketBuyTransaction> todayBuy = currentStrategy.whatShouldClientBuy(availableMoney);
 		logger.info("Client start ask brokerageOffice to make transactions");
 		for (MarketBuyTransaction buy : todayBuy) {
@@ -100,18 +102,20 @@ public class Player extends Person
 				logger.info("Client reject brokerageOfficeOffer");
 			}
 
-			if (response.getChangeValueOFTransaction() <= TRANSACTION_CHANGE_PERCENT_TOLLERANCE) {
+			if (response.getChangeValueOFTransaction() <= TRANSACTION_CHANGE_PERCENT_TOLLERANCE && canAffordThatTransaction(availableMoney, response)) {
 				logger.info("Client accept conditions and make that deal");
 				availableMoney = acceptBuyTransaction(availableMoney, response);
+				buyedToday.add(response.getStock());
 
 			}
 		}
+		return buyedToday;
 	}
 
-	public void doTodaySellTransactions() {
+	public void doTodaySellTransactions(List <StockDailyRecordTo> buyedToday) {
 		logger.info("Client ask strategy for SELL transactions");
 		HashMap<StockDailyRecordTo, Integer> showToStrategy = stockWallet.showWallet();
-		List<MarketSellTransaction> todaySell = currentStrategy.whatShouldClientSell(showToStrategy);
+		List<MarketSellTransaction> todaySell = currentStrategy.whatShouldClientSell(showToStrategy,buyedToday);
 		logger.info("Client start ask brokerageOffice to make transactions");
 		for (MarketSellTransaction sell : todaySell) {
 

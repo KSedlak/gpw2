@@ -101,8 +101,7 @@ public class TimeMananagerImpl implements TimeManager {
 			}
 		}));
 		int days = (int) startDate.until(endDate, ChronoUnit.DAYS);
-		double time=(tickTime*(days+1))/60;
-		logger.info("Symulacja bedzie trwac: "+(days+1)+" ok: "+time);
+
 		simulator.setCycleCount(days + 1);
 		simulator.play();
 

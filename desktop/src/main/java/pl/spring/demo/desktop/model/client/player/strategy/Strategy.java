@@ -9,6 +9,6 @@ public interface Strategy {
 
 
 List<MarketBuyTransaction> whatShouldClientBuy(double PLN);
-List<MarketSellTransaction> whatShouldClientSell(HashMap<StockDailyRecordTo,Integer> stocks);
+List<MarketSellTransaction> whatShouldClientSell(HashMap<StockDailyRecordTo,Integer> stocks, List <StockDailyRecordTo> buyedToday);
 
 }

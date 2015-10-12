@@ -27,6 +27,10 @@ public class RandomStrategy implements Strategy {
 	@Value("${randomStrategy.name}")
 	String name;
 
+	@Value("${randomStrategy.minimumSellPercent}")
+	double minimumSellPercent;
+
+
 	@Autowired
 	BrokerageOffice brokerageOffice;
 
@@ -71,8 +75,13 @@ public class RandomStrategy implements Strategy {
 
 		for(Integer i:indexes){
 			choosenStock=stocksWhichClientHave.get(i);
+			if(buyedToday.contains(choosenStock)){
+				logger.info("that stock was buyed today");
+			}
+
 			if(!buyedToday.contains(choosenStock)){
-				int numberOfStockToSell=getRandomInt(1,stocks.get(choosenStock));
+				int minimum=(int)(stocks.get(choosenStock)*minimumSellPercent/100);
+				int numberOfStockToSell=getRandomInt(minimum,stocks.get(choosenStock));
 					result.add(factory.createSellTransaction(choosenStock, numberOfStockToSell));
 			}
 		}

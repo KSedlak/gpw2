@@ -178,6 +178,7 @@ public class FirstPageController implements ApplicationListener<NoMoreActionToda
 
 	@FXML
 	public void startAction(ActionEvent event) {
+		loggingView.setText("");
 		historic.clear();
 		wallet.clear();
 		stockWallet.clear();

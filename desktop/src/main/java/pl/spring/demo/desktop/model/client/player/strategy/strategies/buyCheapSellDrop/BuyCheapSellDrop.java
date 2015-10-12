@@ -28,6 +28,8 @@ public class BuyCheapSellDrop implements Strategy {
 	String name;
 	@Autowired
 	BrokerageOffice brokerageOffice;
+	@Value("${buyCheapStrategy.minimumSellPercent}")
+	double minimumSellPercent;
 
 	@Autowired
 	MarketTransactionFactory factory;
@@ -62,8 +64,12 @@ public class BuyCheapSellDrop implements Strategy {
 		List<StockDailyRecordTo> toSell=getWhatDropsAllTheTime(stocksWhichClientHave);
 		if(toSell.size()>0){
 		for(StockDailyRecordTo s:toSell){
+			if(buyedToday.contains(s)){
+				logger.info("that stock was buyed today");
+			}
 			if(!buyedToday.contains(s)){
-				int numberOfStockToSell=getRandomInt(1,stocks.get(s));
+				int minimum=(int)(stocks.get(s)*minimumSellPercent/100);
+				int numberOfStockToSell=getRandomInt(minimum,stocks.get(s));
 					result.add(factory.createSellTransaction(s, numberOfStockToSell));
 			}
 		}}
